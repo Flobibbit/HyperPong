@@ -1,19 +1,41 @@
-import Racket from "./Racket";
-import Ball from "./ball";
-import InputHandler from "./input";
+import Racket from "/src/pages/Racket.js";
+import Ball from "/src/pages/ball.js";
+import InputHandler from "/src/pages/input.js";
 
+const GAMESTATE = {
+  PAUSED: 0,
+  RUNNING: 1,
+  MENU_TITLE: 2,
+  MENU_CONTROLS: 3,
+  GAMEOVER: 4
+};
 export default class Game {
-  constructor() {}
+  constructor(gameWidht, gameHeight) {
+    this.gameWidht = gameWidht;
+    this.gameHeight = gameHeight;
+  }
   start() {
-    const ball = new Ball(this);
+    //ALL GAMEOBJECTS
+    this.ball = new Ball(this);
 
-    const racketL = new Racket();
-    const racketR = new Racket();
-    const rackets = [racketL, racketR];
-    new InputHandler(rackets);
+    this.racketL = new Racket(this, "l");
+    this.racketR = new Racket(this, "r");
+    this.rackets = [this.racketL, this.racketR];
+
+    //LIST for one time draw/update of each OBJ
+    this.gameObjects = [this.racketL, this.racketR, this.ball];
+    new InputHandler(this.rackets);
   }
 
-  draw() {}
+  draw(ctx) {
+    for (const obj of this.gameObjects) {
+      obj.draw(ctx);
+    }
+  }
 
-  update() {}
+  update(deltatime) {
+    for (const obj of this.gameObjects) {
+      obj.update(deltatime);
+    }
+  }
 }

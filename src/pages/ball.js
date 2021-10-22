@@ -1,13 +1,13 @@
 export default class Ball {
-  constructor(widht, height) {
+  constructor(game) {
     this.image = document.getElementById("img_pongBall");
 
     this.position = { x: 200, y: 20 };
-    this.speed = { x: 5, y: -5 };
+    this.speed = { x: 3, y: -3 };
 
     this.size = 18;
-    this.height = height;
-    this.widht = widht;
+    this.gameHeight = game.gameHeight;
+    this.gameWidht = game.gameWidht;
   }
 
   draw(ctx) {
@@ -24,11 +24,11 @@ export default class Ball {
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
 
-    if (this.position.y > this.height - this.size) this.speed.y = -5;
+    if (this.position.y > this.gameHeight - this.size) this.speed.y = -5;
     if (this.position.y < 0) this.speed.y = 5;
 
     //Ball score right
-    if (this.position.x > this.widht - this.size) {
+    if (this.position.x > this.gameWidht - this.size) {
       //spawn towards left
       this.resetSpawn();
       this.speed.x = -5;
@@ -45,9 +45,9 @@ export default class Ball {
 
   resetSpawn() {
     const randomSpawnPoint = Math.floor(
-      Math.random() * this.height - this.size
+      Math.random() * this.gameHeight - this.size
     );
-    this.position.x = this.widht / 2 - this.size / 2;
+    this.position.x = this.gameWidht / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;
   }
 }

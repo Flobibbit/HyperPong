@@ -1,6 +1,6 @@
 export default class Racket {
-  constructor(gameWidht, gameHeight, location) {
-    this.gameHeight = gameHeight;
+  constructor(game, location) {
+    this.gameHeight = game.gameHeight;
 
     this.width = 20;
     this.height = 100;
@@ -11,14 +11,14 @@ export default class Racket {
     switch (location) {
       case "l":
         this.position = {
-          x: gameWidht - gameWidht + 40,
-          y: gameHeight / 2 - this.height / 2
+          x: game.gameWidht - game.gameWidht + 40,
+          y: game.gameHeight / 2 - this.height / 2
         };
         break;
       case "r":
         this.position = {
-          x: gameWidht - this.width - 40,
-          y: gameHeight / 2 - this.height / 2
+          x: game.gameWidht - this.width - 40,
+          y: game.gameHeight / 2 - this.height / 2
         };
         break;
       default:
@@ -46,6 +46,7 @@ export default class Racket {
   update(deltaTime) {
     this.position.y += this.speed;
 
+    //Border control
     if (this.position.y < 0) this.position.y = 0;
     if (this.position.y + this.height > this.gameHeight)
       this.position.y = this.gameHeight - this.height;
