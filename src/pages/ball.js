@@ -30,26 +30,28 @@ export default class Ball {
     if (this.position.y > this.gameHeight - this.size) this.speed.y = -5;
     if (this.position.y < 0) this.speed.y = 5;
     //abprallen von den Rackets und Punkt ende
-    if(this.position.x<this.game.racketL.position.x+this.game.racketL.width){
-      if(this.position.y>=this.game.racketL.position.y&&this.position.y<=this.game.racketL.position.y+this.game.racketL.height){
+    //linker Racket
+    if(this.position.x<=this.game.racketL.position.x+this.game.racketL.width){
+      if(this.position.y+this.size/2>=this.game.racketL.position.y&&this.position.y-this.size/2<=this.game.racketL.position.y+this.game.racketL.height){
+        //hit
         this.speed.x*=-1
-        console.log("hit L")
+        
       }else{
-        console.log("miss L")
+        //miss
         this.resetSpawn();
         this.speed.x = 5;
       }
     }
-    if(this.position.x>this.game.racketR.position.x-this.game.racketR.width){
-      if(this.position.y>=this.game.racketR.position.y&&this.position.y<=this.game.racketR.position.y+this.game.racketR.height){
+    //rechter Racket
+    if(this.position.x>=this.game.racketR.position.x-this.game.racketR.width){
+      if(this.position.y+this.size/2>=this.game.racketR.position.y&&this.position.y-this.size/2<=this.game.racketR.position.y+this.game.racketR.height){
+        //hit
         this.speed.x*=-1
-        console.log("hit R")
-      }else{
-        console.log("miss R")
+        }else{
+        //miss
         this.resetSpawn();
       this.speed.x = -5;
       }
-      //if(this.position.y)
     }
     
   }
