@@ -10,6 +10,8 @@ let lastTime = 0;
 
 const game = new Game(GAME_WIDHT, GAME_HEIGHT);
 game.start();
+game.createParticles();
+
 
 //runs every frame -- calculates how much time has passed -- clears the screen -- updates the paddle --redraws the racket -- calls gameloop again with the next frames-timestamp
 function gameLoop(timeStamp) {
@@ -22,7 +24,7 @@ function gameLoop(timeStamp) {
   ctx.fillRect(0, 0, GAME_WIDHT, GAME_HEIGHT);
 
   game.draw(ctx);
-  game.update(deltaTime);
+  game.update();
 
   //when next frame is ready -- every frame --source of the timestamp
   requestAnimationFrame(gameLoop);

@@ -43,7 +43,7 @@ export default class Racket {
     ctx.fillStyle = "#ff0";
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
-  update(deltaTime) {
+  update() {
     this.position.y += this.speed;
 
     //Border control
