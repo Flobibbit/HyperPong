@@ -39,6 +39,9 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = 5;
+        this.game.scoreR += 1
+        console.log("ScoreR:")
+        console.log(this.game.scoreR)
       }
     }
     //rechter Racket
@@ -50,6 +53,9 @@ export default class Ball {
         //miss
         this.resetSpawn();
       this.speed.x = -5;
+      this.game.scoreL += 1
+      console.log("ScoreL:")
+      console.log(this.game.scoreL)
       }
     }
     
@@ -61,5 +67,6 @@ export default class Ball {
     );
     this.position.x = this.gameWidht / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;
+
   }
 }

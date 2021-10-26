@@ -32,7 +32,8 @@ export default class Game {
       racketR: racketR,
       ball: ball
     };
-
+    this.scoreL = 0
+    this.scoreR = 0
     new InputHandler(this, this.gameObjects.rackets);
   }
   start() {
@@ -54,6 +55,15 @@ export default class Game {
       ctx.textAlign = "center";
       ctx.fillText("Paused", this.gameWidht / 2, this.gameHeight / 2);
     }
+    ctx.font = "60px Arial";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
+      
+      ctx.font = "60px Arial";
+      ctx.fillStyle = "white";
+      ctx.textAlign = "center";
+      ctx.fillText(this.scoreR, (this.gameWidht / 4)*3, this.gameHeight / 8);
   }
 
   update() {
@@ -89,7 +99,7 @@ export default class Game {
       );
 
       /* Adds new items like particle*/
-      this.particleObjects.appendChild(particle);
+      //this.particleObjects.appendChild(particle);
     }
   }
 }

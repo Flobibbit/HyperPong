@@ -6,11 +6,11 @@ export default class InputHandler {
     const racketR = game.gameObjects.racketR;
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "a") racketL.moveUp();
-      if (event.key === "d") racketL.moveDown();
+      if (event.key === "w") racketL.moveUp();
+      if (event.key === "s") racketL.moveDown();
 
-      if (event.key === "ArrowLeft") racketR.moveDown();
-      if (event.key === "ArrowRight") racketR.moveUp();
+      if (event.key === "ArrowDown") racketR.moveDown();
+      if (event.key === "ArrowUp") racketR.moveUp();
 
       if (event.key === "Escape") {
         game.togglePause();
@@ -19,11 +19,11 @@ export default class InputHandler {
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (event.key === "a") if (racketL.speed < 0) racketL.stop();
-      if (event.key === "d") if (racketL.speed > 0) racketL.stop();
+      if (event.key === "w") if (racketL.speed < 0) racketL.stop();
+      if (event.key === "s") if (racketL.speed > 0) racketL.stop();
 
-      if (event.key === "ArrowLeft") if (racketR.speed > 0) racketR.stop();
-      if (event.key === "ArrowRight") if (racketR.speed < 0) racketR.stop();
+      if (event.key === "ArrowDown") if (racketR.speed > 0) racketR.stop();
+      if (event.key === "ArrowUp") if (racketR.speed < 0) racketR.stop();
     });
   }
 }
