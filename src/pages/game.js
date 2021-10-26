@@ -53,16 +53,12 @@ export default class Game {
       ctx.fillText("Paused", this.gameWidht / 2, this.gameHeight / 2);
     }
 
-    // Score Plates l
-    ctx.font = "60px Arial";
+    // Score Plates l & r
+    ctx.font = "40px PressStart2P";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
 
-    //score Plates r
-    ctx.font = "60px Arial";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
+    ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
     ctx.fillText(this.scoreR, (this.gameWidht / 4) * 3, this.gameHeight / 8);
   }
 
