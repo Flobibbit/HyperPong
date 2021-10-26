@@ -8,10 +8,8 @@ const GAME_HEIGHT = 900;
 
 let lastTime = 0;
 
-const game = new Game(GAME_WIDHT, GAME_HEIGHT);
+const game = new Game(GAME_WIDHT, GAME_HEIGHT, ctx);
 game.start();
-game.createParticles();
-
 
 //runs every frame -- calculates how much time has passed -- clears the screen -- updates the paddle --redraws the racket -- calls gameloop again with the next frames-timestamp
 function gameLoop(timeStamp) {

@@ -11,29 +11,25 @@ const GAMESTATE = {
   GAMEOVER: 4
 };
 export default class Game {
-  constructor(gameWidht, gameHeight) {
+  constructor(gameWidht, gameHeight, ctx) {
     this.gameWidht = gameWidht;
     this.gameHeight = gameHeight;
+    this.ctx = ctx;
 
     this.gamestate = GAMESTATE.RUNNING;
 
     //ALL GAMEOBJECTS
-    const ball = new Ball(this);
     const racketL = new Racket(this, "l");
     const racketR = new Racket(this, "r");
-
-    //wenn das nicht funktioniert  mit particle einfach auskommentieren
-    const particle = new Particle(this, 10, 6, -6);
-
-    this.particleObjects = {};
+    const ball = new Ball(this, ctx);
 
     this.gameObjects = {
       racketL: racketL,
       racketR: racketR,
       ball: ball
     };
-    this.scoreL = 0
-    this.scoreR = 0
+    this.scoreL = 0;
+    this.scoreR = 0;
     new InputHandler(this, this.gameObjects.rackets);
   }
   start() {
@@ -46,24 +42,28 @@ export default class Game {
     }
 
     if (this.gamestate == GAMESTATE.PAUSED) {
+      ctx.rect(0, 0, this.gameWidht, this.gameHeight);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
 
       //Quit + Pause game screen
-      ctx.font = "60px Arial";
+      ctx.font = "60px PressStart2P";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       ctx.fillText("Paused", this.gameWidht / 2, this.gameHeight / 2);
     }
+
+    // Score Plates l
     ctx.font = "60px Arial";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
-      
-      ctx.font = "60px Arial";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(this.scoreR, (this.gameWidht / 4)*3, this.gameHeight / 8);
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
+
+    //score Plates r
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(this.scoreR, (this.gameWidht / 4) * 3, this.gameHeight / 8);
   }
 
   update() {
@@ -81,25 +81,6 @@ export default class Game {
       this.gamestate = GAMESTATE.RUNNING;
     } else {
       this.gamestate = GAMESTATE.PAUSED;
-    }
-  }
-
-  createParticles() {
-    //ist hier der richtige Datentyp beim Zähler ?
-    for (let i = 0; i <= 150; i++) {
-      let dx = (Math.random() - 0.5) * (Math.random() * 6);
-      let dy = (Math.random() - 0.5) * (Math.random() * 6);
-      let radius = Math.random() * 3;
-      let particle = new Particle(
-        this.gameWidht,
-        this.gameHeight,
-        radius,
-        dx,
-        dy
-      );
-
-      /* Adds new items like particle*/
-      //this.particleObjects.appendChild(particle);
     }
   }
 }
