@@ -24,7 +24,8 @@ export default class Particle {
     /* Restore the recent canvas context*/
     ctx.restore();
   }
-  update() {
+  update(ctx) {
+    this.draw(ctx)
     this.alpha -= 0.01;
     this.x += this.dx;
     this.y += this.dy;

@@ -6,12 +6,16 @@ export default class Ball {
 
     this.image = document.getElementById("img_pongBall");
 
-    this.position = { x: 200, y: 20 };
-    this.speed = { x: 3, y: -3 };
-
     this.size = 18;
     this.gameHeight = game.gameHeight;
     this.gameWidht = game.gameWidht;
+
+    this.position = {
+      x: game.gameWidht / 2 - this.size / 2,
+      y: game.gameHeight - 100
+    };
+
+    this.speed = { x: 5, y: 5 };
 
     this.particleObjects = [];
   }
@@ -33,9 +37,15 @@ export default class Ball {
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
     //Bounce of Wall
-    if (this.position.y > this.gameHeight - this.size) this.speed.y = -5;
-    if (this.position.y < 0) this.speed.y = 5;
+    if (this.position.y > this.gameHeight - this.size) this.speed.y *= -1;
+    if (this.position.y < 0) this.speed.y *= -1;
     //Bounce of rackets und Punkt ende
+
+    //MINE
+
+    //CheckHit with Racket
+    //CheckHit with Wall --> Bounce off wall
+
     //left Racket
     if (this.position.x <= racketL.position.x + racketL.width) {
       if (
@@ -78,10 +88,9 @@ export default class Ball {
 
     this.particleObjects.forEach((particle, i) => {
       if (particle.alpha <= 0) {
-        particles.splice(i, 1);
+        this.particleObjects.splice(i, 1);
       } else {
-        particle.draw(this.game.ctx);
-        particle.update();
+        particle.update(this.game.ctx);
       }
     });
     // wait
@@ -113,5 +122,10 @@ export default class Ball {
       /* Adds new items like particle*/
       this.particleObjects.push(particle);
     }
+  }
+
+  bounceOff() {
+    //change speed -5 ->> Bounce off wall ->> Bounce off racketL
+    //change speed +5 ->> Bounce off wall ->> Bounce off racketR
   }
 }
