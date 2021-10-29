@@ -16,7 +16,7 @@ function gameLoop(timeStamp) {
   let deltaTime = timeStamp - lastTime;
   lastTime = timeStamp;
 
-  ctx.clearRect(0, 0, GAME_WIDHT, GAME_HEIGHT);
+  ctx.clearRect(0, 0, GAME_WIDHT, GAME_HEIGHT);2
 
   ctx.fillStyle = "#242321";
   ctx.fillRect(0, 0, GAME_WIDHT, GAME_HEIGHT);
