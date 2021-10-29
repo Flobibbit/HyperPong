@@ -1,3 +1,4 @@
+import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 const GAMESTATE = {
   PAUSED: 0,
   RUNNING: 1,
@@ -8,12 +9,8 @@ const GAMESTATE = {
 };
 
 export default class Menu {
-  constructor(game) {
+  constructor() {
     this.gamestate = GAMESTATE.MENU_TITLE;
-
-   
-    this.gameHeight = game.gameHeight;
-    this.gameWidht = game.gameWidht;
   }
 
   draw(ctx) {
@@ -23,19 +20,20 @@ export default class Menu {
       this.gamestate != GAMESTATE.RUNNING &&
       this.gamestate != GAMESTATE.PAUSED
     ) {
-      ctx.rect(0, 0, this.gameWidht, this.gameHeight);
+      ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
+
       //Title
       ctx.font = "80px PressStart2P";
       ctx.fillStyle = "Yellow";
       ctx.textAlign = "center";
-      ctx.fillText("Hyperpong", this.gameWidht / 2, 90);
+      ctx.fillText("Hyperpong", GAME_WIDHT / 2, 90);
     }
 
     //PAUSED
     if (this.gamestate == GAMESTATE.PAUSED) {
-      ctx.rect(0, 0, this.gameWidht, this.gameHeight);
+      ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
 
@@ -43,7 +41,7 @@ export default class Menu {
       ctx.font = "60px PressStart2P";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      ctx.fillText("Paused", this.gameWidht / 2, this.gameHeight / 2);
+      ctx.fillText("Paused", GAME_WIDHT / 2, GAME_HEIGHT / 2);
     }
 
     //MAIN MENU
@@ -53,9 +51,9 @@ export default class Menu {
       ctx.font = "60px PressStart2P";
       ctx.fillStyle = "white";
 
-      ctx.fillText("Start", this.gameWidht / 2, 320);
-      ctx.fillText("Settings", this.gameWidht / 2, 430);
-      ctx.fillText("Manual", this.gameWidht / 2, 550);
+      ctx.fillText("Start", GAME_WIDHT / 2, 320);
+      ctx.fillText("Settings", GAME_WIDHT / 2, 430);
+      ctx.fillText("Manual", GAME_WIDHT / 2, 550);
     }
 
     //IN-GAME
@@ -64,8 +62,8 @@ export default class Menu {
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       // Score Plates l & r
-      ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
-      ctx.fillText(this.scoreR, (this.gameWidht / 4) * 3, this.gameHeight / 8);
+      ctx.fillText(this.scoreL, GAME_WIDHT / 4, GAME_HEIGHT / 8);
+      ctx.fillText(this.scoreR, (GAME_WIDHT / 4) * 3, GAME_HEIGHT / 8);
     }
 
     //SETTINGS
@@ -74,9 +72,9 @@ export default class Menu {
       ctx.font = "60px PressStart2P";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      ctx.fillText("Music", this.gameWidht / 2, 320);
-      ctx.fillText("Sounds", this.gameWidht / 2, 430);
-      ctx.fillText("Back", this.gameWidht / 2, 540);
+      ctx.fillText("Music", GAME_WIDHT / 2, 320);
+      ctx.fillText("Sounds", GAME_WIDHT / 2, 430);
+      ctx.fillText("Back", GAME_WIDHT / 2, 540);
     }
 
     //MANUAL
@@ -85,7 +83,7 @@ export default class Menu {
       ctx.font = "60px PressStart2P";
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      ctx.fillText("Back", this.gameWidht / 2, 540);
+      ctx.fillText("Back", GAME_WIDHT / 2, 540);
     }
   }
 

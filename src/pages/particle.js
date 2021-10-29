@@ -1,7 +1,7 @@
 export default class Particle {
-  constructor(x,y,radius, dx, dy) {
-  this.x=x
-  this.y=y
+  constructor(x, y, radius, dx, dy) {
+    this.x = x;
+    this.y = y;
     this.radius = radius;
     this.dx = dx;
     this.dy = dy;
@@ -25,7 +25,7 @@ export default class Particle {
     ctx.restore();
   }
   update(ctx) {
-    this.draw(ctx)
+    this.draw(ctx);
     this.alpha -= 0.01;
     this.x += this.dx;
     this.y += this.dy;

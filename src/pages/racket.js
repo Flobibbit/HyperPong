@@ -1,7 +1,6 @@
+import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class Racket {
-  constructor(game, location) {
-    this.gameHeight = game.gameHeight;
-
+  constructor(location) {
     this.width = 20;
     this.height = 100;
 
@@ -11,18 +10,18 @@ export default class Racket {
     switch (location) {
       case "l":
         this.position = {
-          x: game.gameWidht - game.gameWidht + 40,
-          y: game.gameHeight / 2 - this.height / 2
+          x: 40,
+          y: GAME_HEIGHT / 2 - this.height / 2
         };
         break;
       case "r":
         this.position = {
-          x: game.gameWidht - this.width - 40,
-          y: game.gameHeight / 2 - this.height / 2
+          x: GAME_WIDHT - this.width - 40,
+          y: GAME_HEIGHT / 2 - this.height / 2
         };
         break;
       default:
-        alert("Keine Location angegeben L/R etc.");
+        alert("No location passed  L/R etc.");
         break;
     }
   }
@@ -48,7 +47,7 @@ export default class Racket {
 
     //Border control
     if (this.position.y < 0) this.position.y = 0;
-    if (this.position.y + this.height > this.gameHeight)
-      this.position.y = this.gameHeight - this.height;
+    if (this.position.y + this.height > GAME_HEIGHT)
+      this.position.y = GAME_HEIGHT - this.height;
   }
 }

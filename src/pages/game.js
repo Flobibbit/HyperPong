@@ -1,32 +1,59 @@
+import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 import Racket from "/src/pages/Racket.js";
-import Ball from "/src/pages/ball.js";
-import InputHandler from "/src/pages/input.js";
-import Menu from "/src/pages/menu.js";
+import Ball from "/src/pages/Ball.js";
+import InputHandler from "/src/pages/Input.js";
+import Menu from "/src/pages/Menu.js";
+import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
 
 const GAMESTATE = {
   MENU: 0,
   INGAME: 1
 };
 export default class Game {
-  constructor(gameWidht, gameHeight, ctx) {
-    this.gameWidht = gameWidht;
-    this.gameHeight = gameHeight;
+  constructor(ctx) {
     this.ctx = ctx;
 
     this.gamestate = GAMESTATE.MENU;
 
-    this.menu = new Menu(this);
-  
+    this.menu = new Menu();
+
     //ALL GAMEOBJECTS
-    const racketL = new Racket(this, "l");
-    const racketR = new Racket(this, "r");
-    const ball = new Ball(this, ctx);
+    const racketL = new Racket("l");
+    const racketR = new Racket("r");
+    const ball = new Ball(this);
+
+    //ALL MENUOBJECTS
+    const start = new MenuCanvasEl(60, "Start");
+    const settings = new MenuCanvasEl(60, "Settings");
+    const manual = new MenuCanvasEl(60, "Manual");
+
+    const characterBlue = new MenuCanvasEl(60, "BLUE");
+    const characterRed = new MenuCanvasEl(60, "RED");
+    const characterYellow = new MenuCanvasEl(60, "RED");
+    const characterOrange = new MenuCanvasEl(60, "Orange");
+    const backStart = new MenuCanvasEl(60, "Back");
+
+    const music = new MenuCanvasEl(60, "Music");
+    const sound = new MenuCanvasEl(60, "Sound");
+    const backSettings = new MenuCanvasEl(60, "Back");
+
+    const backManual = new MenuCanvasEl(60, "Back");
 
     this.gameObjects = {
       racketL: racketL,
       racketR: racketR,
       ball: ball
     };
+
+    //will über den index auf die view zugreifen
+    /*   this.menuObjects={
+      menuTitle: [start,settings,manual],
+      startScreen:[]
+      settings :[music,sound,backSettings],
+      manual :[backManual],
+
+    };*/
+
     this.scoreL = 0;
     this.scoreR = 0;
     //Ingame
@@ -34,7 +61,7 @@ export default class Game {
     //Menu
   }
   start() {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
   }
 
   draw(ctx) {
@@ -53,8 +80,8 @@ export default class Game {
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       // Score Plates l & r
-      ctx.fillText(this.scoreL, this.gameWidht / 4, this.gameHeight / 8);
-      ctx.fillText(this.scoreR, (this.gameWidht / 4) * 3, this.gameHeight / 8);
+      ctx.fillText(this.scoreL, GAME_HEIGHT / 4, GAME_WIDHT / 8);
+      ctx.fillText(this.scoreR, (GAME_WIDHT / 4) * 3, GAME_HEIGHT / 8);
     }
   }
 

@@ -6,7 +6,7 @@ export default class InputHandler {
     const racketR = game.gameObjects.racketR;
 
     document.addEventListener("keydown", (event) => {
-     //INGAMExc
+      //INGAMExc
       if (game.gamestate == 1) {
         if (event.key === "w") racketL.moveUp();
         if (event.key === "s") racketL.moveDown();
@@ -18,7 +18,7 @@ export default class InputHandler {
           game.togglePause();
         }
       } else {
-        //MenuSteuerung Spieler 1
+        /*   //MenuSteuerung Spieler 1
         if (event.key === "w") CursorPL1.moveUp();
         if (event.key === "s") CursorPL1.moveDown();
 
@@ -26,11 +26,10 @@ export default class InputHandler {
         //MenuSteuerung Zweitspieler Spieler 2
         if (event.key === "ArrowDown") CursorPL2.moveDown();
         if (event.key === "ArrowUp") CursorPL2.moveUp();
-
+*/
         if (event.key === "Escape") {
           game.togglePause();
         }
-        
       }
     });
 

@@ -1,4 +1,5 @@
-import Particle from "/src/pages/particle.js";
+import Particle from "/src/pages/Particle.js";
+import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class Ball {
   constructor(game) {
@@ -7,12 +8,10 @@ export default class Ball {
     this.image = document.getElementById("img_pongBall");
 
     this.size = 18;
-    this.gameHeight = game.gameHeight;
-    this.gameWidht = game.gameWidht;
 
     this.position = {
-      x: game.gameWidht / 2 - this.size / 2,
-      y: game.gameHeight - 100
+      x: GAME_WIDHT / 2 - this.size / 2,
+      y: GAME_HEIGHT - 100
     };
 
     this.speed = { x: 5, y: 5 };
@@ -37,7 +36,7 @@ export default class Ball {
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
     //Bounce of Wall
-    if (this.position.y > this.gameHeight - this.size) this.speed.y *= -1;
+    if (this.position.y > GAME_HEIGHT - this.size) this.speed.y *= -1;
     if (this.position.y < 0) this.speed.y *= -1;
     //Bounce of rackets und Punkt ende
 
@@ -97,9 +96,9 @@ export default class Ball {
     //  setTimeout(function () {
     // Code, der erst nach 2 Sekunden ausgeführt wird
     const randomSpawnPoint = Math.floor(
-      Math.random() * this.gameHeight - this.size
+      Math.random() * GAME_HEIGHT - this.size
     );
-    this.position.x = this.gameWidht / 2 - this.size / 2;
+    this.position.x = GAME_WIDHT / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;
 
     //}, 2000);
