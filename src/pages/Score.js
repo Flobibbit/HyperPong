@@ -32,5 +32,7 @@ this.scoreL.draw(ctx)
 this.scoreR.draw(ctx)
 
   }
-  update() {}
+  update(ctx) {
+      
+  }
 }

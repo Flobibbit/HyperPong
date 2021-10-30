@@ -1,10 +1,10 @@
 export default class InputHandler {
-  constructor(game) {
+  constructor(racketL, racketR) {
+    this.racketL = racketL;
+    this.racketR = racketR;
+
     //Braucht man zwei enventlistener ? pro sparte
     //KeyDown
-    const racketL = game.gameObjects.racketL;
-    const racketR = game.gameObjects.racketR;
-
     document.addEventListener("keydown", (event) => {
       //INGAMExc
       if (game.gamestate == 1) {

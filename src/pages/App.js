@@ -1,4 +1,4 @@
-import Game from "/src/pages/GameMaster.js";
+import GameMaster from "/src/pages/GameMaster.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 
 let canvas = document.getElementById("gameScreen");
@@ -7,7 +7,7 @@ let ctx = canvas.getContext("2d");
 let lastTime = 0;
 
 //Create and start the game
-const game = new Game(ctx);
+const game = new GameMaster(ctx);
 game.start();
 
 //runs every frame -- calculates how much time has passed -- clears the screen -- updates the paddle --redraws the racket -- calls gameloop again with the next frames-timestamp

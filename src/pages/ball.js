@@ -47,12 +47,11 @@ export default class Ball {
     //CheckHit with Wall --> Bounce off wall
 
     //left Racket
-    console.log(this.racketL.position.x)
     if (this.position.x <= this.racketL.position.x + this.racketL.width) {
       if (
-        this.position.y + this.size / 2 >= racketL.position.y &&
+        this.position.y + this.size / 2 >= this.racketL.position.y &&
         this.position.y - this.size / 2 <=
-          racketL.position.y + this.racketL.height
+          this.racketL.position.y + this.racketL.height
       ) {
         //hit
         this.speed.x *= -1;
@@ -60,7 +59,7 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = 5;
-        this.scoreR.scoreUP();
+        //this.scoreR.scoreUp();
       }
     }
     //right Racket
@@ -76,22 +75,22 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = -5;
-        this.scoreR.scoreUP();
+        //this.scoreL.scoreUp();
       }
     }
   }
 
   resetSpawn() {
     //explode mechanism
-    this.createParticles();
+    //createParticles();
 
-    this.particleObjects.forEach((particle, i) => {
+    /*this.particleObjects.forEach((particle, i) => {
       if (particle.alpha <= 0) {
         this.particleObjects.splice(i, 1);
       } else {
         particle.update(this.game.ctx);
       }
-    });
+    });*/
     // wait
     //  setTimeout(function () {
     // Code, der erst nach 2 Sekunden ausgeführt wird
