@@ -2,8 +2,11 @@ import Particle from "/src/pages/Particle.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class Ball {
-  constructor(game) {
-    this.game = game;
+  constructor(racketL, racketR, scoreL, scoreR) {
+    this.racketL = racketL;
+    this.racketR = racketR;
+    this.scoreL = scoreL;
+    this.scoreR = scoreR;
 
     this.image = document.getElementById("img_pongBall");
 
@@ -30,8 +33,6 @@ export default class Ball {
   }
 
   update() {
-    const racketL = this.game.gameObjects.racketL;
-    const racketR = this.game.gameObjects.racketR;
     //change Ball position
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
@@ -46,10 +47,12 @@ export default class Ball {
     //CheckHit with Wall --> Bounce off wall
 
     //left Racket
-    if (this.position.x <= racketL.position.x + racketL.width) {
+    console.log(this.racketL.position.x)
+    if (this.position.x <= this.racketL.position.x + this.racketL.width) {
       if (
         this.position.y + this.size / 2 >= racketL.position.y &&
-        this.position.y - this.size / 2 <= racketL.position.y + racketL.height
+        this.position.y - this.size / 2 <=
+          racketL.position.y + this.racketL.height
       ) {
         //hit
         this.speed.x *= -1;
@@ -57,16 +60,15 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = 5;
-        this.game.scoreR += 1;
-        console.log("ScoreR:");
-        console.log(this.game.scoreR);
+        this.scoreR.scoreUP();
       }
     }
     //right Racket
-    if (this.position.x >= racketR.position.x - racketR.width) {
+    if (this.position.x >= this.racketR.position.x - this.racketR.width) {
       if (
-        this.position.y + this.size / 2 >= racketR.position.y &&
-        this.position.y - this.size / 2 <= racketR.position.y + racketR.height
+        this.position.y + this.size / 2 >= this.racketR.position.y &&
+        this.position.y - this.size / 2 <=
+          this.racketR.position.y + this.racketR.height
       ) {
         //hit
         this.speed.x *= -1;
@@ -74,9 +76,7 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = -5;
-        this.game.scoreL += 1;
-        console.log("ScoreL:");
-        console.log(this.game.scoreL);
+        this.scoreR.scoreUP();
       }
     }
   }

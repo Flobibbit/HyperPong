@@ -15,7 +15,7 @@ export default class InputHandler {
         if (event.key === "ArrowUp") racketR.moveUp();
 
         if (event.key === "Escape") {
-          game.togglePause();
+          game.menu.togglePause();
         }
       } else {
         /*   //MenuSteuerung Spieler 1
@@ -28,7 +28,7 @@ export default class InputHandler {
         if (event.key === "ArrowUp") CursorPL2.moveUp();
 */
         if (event.key === "Escape") {
-          game.togglePause();
+          game.menu.togglePause();
         }
       }
     });

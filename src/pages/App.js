@@ -1,4 +1,4 @@
-import Game from "/src/pages/Game.js";
+import Game from "/src/pages/GameMaster.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 
 let canvas = document.getElementById("gameScreen");

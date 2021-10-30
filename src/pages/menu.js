@@ -1,21 +1,61 @@
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
 const GAMESTATE = {
   PAUSED: 0,
   RUNNING: 1,
-  MENU_TITLE: 2,
-  MENU_SETTINGS: 3,
-  MENU_MANUAL: 4,
+  MENU_TITLE: "menuTitle",
+  START: "startScreen",
+  MENU_SETTINGS: "settings",
+  MENU_MANUAL: "manual",
   GAMEOVER: 5
 };
 
 export default class Menu {
   constructor() {
     this.gamestate = GAMESTATE.MENU_TITLE;
+
+    //ALL MENUOBJECTS
+    this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
+    this.pause = new MenuCanvasEl("Paused", GAME_HEIGHT / 2);
+
+    const start = new MenuCanvasEl("Start", 320);
+    const settings = new MenuCanvasEl("Settings", 430);
+    const manual = new MenuCanvasEl("Manual", 540);
+
+    const characterBlue = new MenuCanvasEl("BLUE", 320);
+    const characterRed = new MenuCanvasEl("RED", 430);
+    const characterYellow = new MenuCanvasEl("YELLOW", 540);
+    const characterOrange = new MenuCanvasEl("ORANGE", 650);
+    const backStart = new MenuCanvasEl("Back", 760);
+
+    const music = new MenuCanvasEl("Music", 320);
+    const sound = new MenuCanvasEl("Sound", 430);
+    const backSettings = new MenuCanvasEl("Back", 540);
+
+    const backManual = new MenuCanvasEl("Back", 650);
+
+    this.menuObjects = {
+      menuTitle: [start, settings, manual],
+      startScreen: [
+        characterBlue,
+        characterRed,
+        characterYellow,
+        characterOrange,
+        backStart
+      ],
+      settings: [music, sound, backSettings],
+      manual: [backManual]
+    };
+    console.log(this.menuObjects);
   }
 
   draw(ctx) {
-    //TITLE HEADER and BACKGROUND
+    for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
+      this.menuObjects[this.gamestate][i].draw(ctx);
+    }
+  
 
+    //TITLE HEADER and BACKGROUND
     if (
       this.gamestate != GAMESTATE.RUNNING &&
       this.gamestate != GAMESTATE.PAUSED
@@ -23,12 +63,8 @@ export default class Menu {
       ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
-
       //Title
-      ctx.font = "80px PressStart2P";
-      ctx.fillStyle = "Yellow";
-      ctx.textAlign = "center";
-      ctx.fillText("Hyperpong", GAME_WIDHT / 2, 90);
+      this.titleHeader.draw(ctx);
     }
 
     //PAUSED
@@ -38,32 +74,20 @@ export default class Menu {
       ctx.fill();
 
       //paused
-      ctx.font = "60px PressStart2P";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText("Paused", GAME_WIDHT / 2, GAME_HEIGHT / 2);
+      this.pause.draw(ctx);
     }
 
     //MAIN MENU
 
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
+      //  for (let i = 0; i < this.menuObjects.menuTitle.length; i++) {
+      //  this.menuObjects.menuTitle[i].draw(ctx);
+      // }
       //Start Settings Manual
-      ctx.font = "60px PressStart2P";
-      ctx.fillStyle = "white";
-
-      ctx.fillText("Start", GAME_WIDHT / 2, 320);
-      ctx.fillText("Settings", GAME_WIDHT / 2, 430);
-      ctx.fillText("Manual", GAME_WIDHT / 2, 550);
     }
 
     //IN-GAME
     if (this.gamestate == GAMESTATE.RUNNING) {
-      ctx.font = "40px PressStart2P";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      // Score Plates l & r
-      ctx.fillText(this.scoreL, GAME_WIDHT / 4, GAME_HEIGHT / 8);
-      ctx.fillText(this.scoreR, (GAME_WIDHT / 4) * 3, GAME_HEIGHT / 8);
     }
 
     //SETTINGS
@@ -88,4 +112,15 @@ export default class Menu {
   }
 
   update() {}
+
+  togglePause() {
+    if (this.gamestate == GAMESTATE.PAUSED) {
+      this.gamestate = GAMESTATE.RUNNING;
+    } else {
+      this.gamestate = GAMESTATE.PAUSED;
+    }
+  }
+  toggleMenuTitle() {}
+  toggleSettings() {}
+  changePicedState() {}
 }
