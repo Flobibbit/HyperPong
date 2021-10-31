@@ -1,18 +1,19 @@
 export default class InputHandler {
-  constructor(racketL, racketR) {
-    this.racketL = racketL;
-    this.racketR = racketR;
+  constructor(gameObjects, gamestate) {
+    this.racketL = gameObjects.racketL;
+    this.racketR = gameObjects.racketR;
+    this.gamestate = gamestate;
 
-    //Braucht man zwei enventlistener ? pro sparte
     //KeyDown
     document.addEventListener("keydown", (event) => {
-      //INGAMExc
-      if (game.gamestate == 1) {
-        if (event.key === "w") racketL.moveUp();
-        if (event.key === "s") racketL.moveDown();
+      //INGAME
 
-        if (event.key === "ArrowDown") racketR.moveDown();
-        if (event.key === "ArrowUp") racketR.moveUp();
+      if (this.gamestate == "running") {
+        if (event.key === "w") this.racketL.moveUp();
+        if (event.key === "s") this.racketL.moveDown();
+
+        if (event.key === "ArrowDown") this.racketR.moveDown();
+        if (event.key === "ArrowUp") this.racketR.moveUp();
 
         if (event.key === "Escape") {
           game.menu.togglePause();
@@ -35,12 +36,14 @@ export default class InputHandler {
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (game.gamestate == 1) {
-        if (event.key === "w") if (racketL.speed < 0) racketL.stop();
-        if (event.key === "s") if (racketL.speed > 0) racketL.stop();
+      if (this.gamestate == "running") {
+        if (event.key === "w") if (this.racketL.speed < 0) this.racketL.stop();
+        if (event.key === "s") if (this.racketL.speed > 0) this.racketL.stop();
 
-        if (event.key === "ArrowDown") if (racketR.speed > 0) racketR.stop();
-        if (event.key === "ArrowUp") if (racketR.speed < 0) racketR.stop();
+        if (event.key === "ArrowDown")
+          if (this.racketR.speed > 0) this.racketR.stop();
+        if (event.key === "ArrowUp")
+          if (this.racketR.speed < 0) this.racketR.stop();
       }
     });
   }

@@ -13,7 +13,7 @@ export default class GameMaster {
     this.menu = new Menu();
     this.game = new Game();
 
-    new InputHandler(this.game.racketL, this.game.racketR);
+    new InputHandler(this.game.gameObjects,this.menu.gamestate);
   }
 
   start() {

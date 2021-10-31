@@ -2,11 +2,10 @@ import Particle from "/src/pages/Particle.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class Ball {
-  constructor(racketL, racketR, scoreL, scoreR) {
+  constructor(racketL, racketR, score) {
     this.racketL = racketL;
     this.racketR = racketR;
-    this.scoreL = scoreL;
-    this.scoreR = scoreR;
+    this.score = score;
 
     this.image = document.getElementById("img_pongBall");
 
@@ -59,7 +58,8 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = 5;
-        //this.scoreR.scoreUp();
+        this.score.scoreUp(this.score.scoreR);
+        // this.score.scoreR.sName += 1;
       }
     }
     //right Racket
@@ -75,7 +75,8 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = -5;
-        //this.scoreL.scoreUp();
+        this.score.scoreUp(this.score.scoreL);
+        //    this.score.scoreL.sName += 1;
       }
     }
   }

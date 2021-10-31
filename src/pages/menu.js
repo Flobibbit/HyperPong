@@ -2,7 +2,7 @@ import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
 const GAMESTATE = {
   PAUSED: 0,
-  RUNNING: 1,
+  RUNNING: "running",
   MENU_TITLE: "menuTitle",
   START: "startScreen",
   MENU_SETTINGS: "settings",
@@ -12,7 +12,8 @@ const GAMESTATE = {
 
 export default class Menu {
   constructor() {
-    this.gamestate = GAMESTATE.MENU_TITLE;
+    this.gamestate = GAMESTATE.RUNNING;
+    this.currentCursorposition = 1;
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
@@ -53,7 +54,6 @@ export default class Menu {
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
       this.menuObjects[this.gamestate][i].draw(ctx);
     }
-  
 
     //TITLE HEADER and BACKGROUND
     if (
@@ -78,12 +78,7 @@ export default class Menu {
     }
 
     //MAIN MENU
-
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
-      //  for (let i = 0; i < this.menuObjects.menuTitle.length; i++) {
-      //  this.menuObjects.menuTitle[i].draw(ctx);
-      // }
-      //Start Settings Manual
     }
 
     //IN-GAME
@@ -92,22 +87,10 @@ export default class Menu {
 
     //SETTINGS
     if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
-      //Music Sounds Back
-      ctx.font = "60px PressStart2P";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText("Music", GAME_WIDHT / 2, 320);
-      ctx.fillText("Sounds", GAME_WIDHT / 2, 430);
-      ctx.fillText("Back", GAME_WIDHT / 2, 540);
     }
 
     //MANUAL
     if (this.gamestate == GAMESTATE.MENU_MANUAL) {
-      //Back
-      ctx.font = "60px PressStart2P";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText("Back", GAME_WIDHT / 2, 540);
     }
   }
 
@@ -122,5 +105,6 @@ export default class Menu {
   }
   toggleMenuTitle() {}
   toggleSettings() {}
-  changePicedState() {}
+  changePicedStateUp() {}
+  changePicedStateDown() {}
 }

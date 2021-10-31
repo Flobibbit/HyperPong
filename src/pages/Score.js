@@ -14,25 +14,20 @@ export default class Score {
     );
 
     this.scoreR = new MenuCanvasEl(
-        this.score,
-        GAME_HEIGHT / 8,
-        40,
-        null,
-        (GAME_WIDHT / 4) * 3
-      );
-
-
+      this.score,
+      GAME_HEIGHT / 8,
+      40,
+      null,
+      (GAME_WIDHT / 4) * 3
+    );
   }
 
-  scoreUp() {
-    this.score += 1;
+  scoreUp(scoreBoard) {
+    scoreBoard.sName += 1;
   }
   draw(ctx) {
-this.scoreL.draw(ctx)
-this.scoreR.draw(ctx)
-
+    this.scoreL.draw(ctx);
+    this.scoreR.draw(ctx);
   }
-  update(ctx) {
-      
-  }
+  update(ctx) {}
 }
