@@ -13,11 +13,11 @@ export default class GameMaster {
     this.menu = new Menu();
     this.game = new Game();
 
-    new InputHandler(this.game.gameObjects,this.menu.gamestate);
+    new InputHandler(this.game.gameObjects,this.menu);
   }
 
   start() {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
   }
 
   draw(ctx) {

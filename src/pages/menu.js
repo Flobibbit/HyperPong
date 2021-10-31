@@ -12,8 +12,8 @@ const GAMESTATE = {
 
 export default class Menu {
   constructor() {
-    this.gamestate = GAMESTATE.RUNNING;
-    this.currentCursorposition = 1;
+    this.gamestate = GAMESTATE.MENU_TITLE;
+    this.currentCursorposition = 0;
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
@@ -51,10 +51,6 @@ export default class Menu {
   }
 
   draw(ctx) {
-    for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
-      this.menuObjects[this.gamestate][i].draw(ctx);
-    }
-
     //TITLE HEADER and BACKGROUND
     if (
       this.gamestate != GAMESTATE.RUNNING &&
@@ -65,6 +61,10 @@ export default class Menu {
       ctx.fill();
       //Title
       this.titleHeader.draw(ctx);
+    }
+
+    for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
+      this.menuObjects[this.gamestate][i].draw(ctx);
     }
 
     //PAUSED
@@ -105,6 +105,39 @@ export default class Menu {
   }
   toggleMenuTitle() {}
   toggleSettings() {}
-  changePicedStateUp() {}
-  changePicedStateDown() {}
+
+  curCursorPositionUp() {
+    //go up with the  cursorposition --> MOVE DOWN in menu
+    if (
+      this.currentCursorposition <
+      this.menuObjects[this.gamestate].length-1
+    ) {
+      this.currentCursorposition += 1;
+      this.paintMenuColors();
+    } else {
+      this.currentCursorposition = 0;
+      this.paintMenuColors();
+    }
+  }
+  curCursorPositionDown() {
+    console.log("PRESSED: W");
+    //go down with the cursorposition  --> MOVE UP in menu
+    if (this.currentCursorposition > 0) {
+      this.currentCursorposition -= 1;
+      this.paintMenuColors();
+    } else {
+      this.currentCursorposition = this.menuObjects[this.gamestate].length - 1;
+      this.paintMenuColors();
+    }
+  }
+  paintMenuColors() {
+    //first paint all white
+    for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
+      this.menuObjects[this.gamestate][i].picedState = false;
+    }
+    //then current Menupoint paint red
+    this.menuObjects[this.gamestate][
+      this.currentCursorposition
+    ].picedState = true;
+  }
 }

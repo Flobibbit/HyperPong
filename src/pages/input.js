@@ -1,8 +1,9 @@
 export default class InputHandler {
-  constructor(gameObjects, gamestate) {
+  constructor(gameObjects, menu) {
     this.racketL = gameObjects.racketL;
     this.racketR = gameObjects.racketR;
-    this.gamestate = gamestate;
+    this.gamestate = menu.gamestate;
+    this.menu=menu
 
     //KeyDown
     document.addEventListener("keydown", (event) => {
@@ -19,6 +20,11 @@ export default class InputHandler {
           game.menu.togglePause();
         }
       } else {
+
+        if (event.key === "w") this.menu.curCursorPositionDown();
+        if (event.key === "s") this.menu.curCursorPositionUp();
+     
+
         /*   //MenuSteuerung Spieler 1
         if (event.key === "w") CursorPL1.moveUp();
         if (event.key === "s") CursorPL1.moveDown();
