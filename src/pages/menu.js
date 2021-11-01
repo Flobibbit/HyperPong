@@ -12,7 +12,7 @@ const GAMESTATE = {
 
 export default class Menu {
   constructor() {
-    this.gamestate = GAMESTATE.RUNNING;
+    this.gamestate = GAMESTATE.MENU_TITLE;
     this.currentCursorposition = 0;
 
     //ALL MENUOBJECTS
@@ -47,7 +47,9 @@ export default class Menu {
       Settings: [music, sound, backSettings],
       Manual: [backManual]
     };
-    console.log(this.menuObjects);
+
+    this.menuPath = [this.gamestate];
+    this.paintMenuColors();
   }
 
   draw(ctx) {
@@ -75,22 +77,6 @@ export default class Menu {
 
       //paused
       this.pause.draw(ctx);
-    }
-
-    //MAIN MENU
-    if (this.gamestate == GAMESTATE.MENU_TITLE) {
-    }
-
-    //IN-GAME
-    if (this.gamestate == GAMESTATE.RUNNING) {
-    }
-
-    //SETTINGS
-    if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
-    }
-
-    //MANUAL
-    if (this.gamestate == GAMESTATE.MENU_MANUAL) {
     }
   }
 
@@ -131,19 +117,40 @@ export default class Menu {
     }
   }
   paintMenuColors() {
-    //first paint all white
+    //first paint all white , normal size
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
       this.menuObjects[this.gamestate][i].picedState = false;
+      this.menuObjects[this.gamestate][i].pxSize = "60";
     }
-    //then current Menupoint paint red
+    //then current Menupoint paint red and bigger size
     this.menuObjects[this.gamestate][
       this.currentCursorposition
     ].picedState = true;
+    this.menuObjects[this.gamestate][this.currentCursorposition].pxSize = "65";
   }
   changeGamestate() {
-    //wir haben den akt. roten punkt und seinen namen
-
-    this.gamestate =
-      this.menuObjects[this.gamestate][this.currentCursorposition].sName;
+    //look at the last Element in each list
+    if (
+      this.gamestate != "menuTitle" &&
+      this.currentCursorposition == this.menuObjects[this.gamestate].length - 1
+    ) {
+      //VIEW CLOSE
+      console.log(this.currentCursorposition);
+      //take and set  next-to-last gamestate
+      this.gamestate = this.menuPath[this.menuPath.length - 2];
+      //delete the last view
+      this.menuPath.pop();
+      console.log("DELETED:" + this.menuPath);
+    } else {
+      //VIEW OPEN
+      this.gamestate =
+        this.menuObjects[this.gamestate][this.currentCursorposition].sName;
+      this.menuPath.push(this.gamestate);
+      console.log("ADDED:" + this.menuPath);
+    }
+    //take the first one again
+    this.currentCursorposition = 0;
+    this.paintMenuColors();
+    console.log("View gewechselt" + this.currentCursorposition);
   }
 }

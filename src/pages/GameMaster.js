@@ -8,18 +8,18 @@ const GAMESTATE = {
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
 
     this.menu = new Menu();
     this.game = new Game();
 
-    new InputHandler(this.game.gameObjects, this.menu);
+    new InputHandler(this.game.gameObjects, this.menu, this.gamestate);
   }
 
   start() {
     this.gamestate = GAMESTATE.MENU;
   }
-
+  
   draw(ctx) {
     if (this.gamestate == GAMESTATE.MENU) {
       //Draw the menu

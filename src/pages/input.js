@@ -1,15 +1,16 @@
 export default class InputHandler {
-  constructor(gameObjects, menu) {
+  constructor(gameObjects, menu, gamestate1) {
     this.racketL = gameObjects.racketL;
     this.racketR = gameObjects.racketR;
     this.gamestate = menu.gamestate;
-    this.menu=menu
+    this.menu = menu;
+    this.gameMasterState = gamestate1;
 
     //KeyDown
     document.addEventListener("keydown", (event) => {
       //INGAME
 
-      if (this.gamestate == "running") {
+      if (this.gameMasterState == "1") {
         if (event.key === "w") this.racketL.moveUp();
         if (event.key === "s") this.racketL.moveDown();
 
@@ -20,12 +21,9 @@ export default class InputHandler {
           game.menu.togglePause();
         }
       } else {
-
         if (event.key === "w") this.menu.curCursorPositionDown();
         if (event.key === "s") this.menu.curCursorPositionUp();
         if (event.key === "Enter") this.menu.changeGamestate();
-        
-     
 
         /*   //MenuSteuerung Spieler 1
         if (event.key === "w") CursorPL1.moveUp();
@@ -44,7 +42,7 @@ export default class InputHandler {
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (this.gamestate == "running") {
+      if (this.gameMasterState == "1") {
         if (event.key === "w") if (this.racketL.speed < 0) this.racketL.stop();
         if (event.key === "s") if (this.racketL.speed > 0) this.racketL.stop();
 
