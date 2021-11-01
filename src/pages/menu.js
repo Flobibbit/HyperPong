@@ -4,15 +4,15 @@ const GAMESTATE = {
   PAUSED: 0,
   RUNNING: "running",
   MENU_TITLE: "menuTitle",
-  START: "startScreen",
-  MENU_SETTINGS: "settings",
-  MENU_MANUAL: "manual",
+  START: "Start",
+  MENU_SETTINGS: "Settings",
+  MENU_MANUAL: "Manual",
   GAMEOVER: 5
 };
 
 export default class Menu {
   constructor() {
-    this.gamestate = GAMESTATE.MENU_TITLE;
+    this.gamestate = GAMESTATE.RUNNING;
     this.currentCursorposition = 0;
 
     //ALL MENUOBJECTS
@@ -37,15 +37,15 @@ export default class Menu {
 
     this.menuObjects = {
       menuTitle: [start, settings, manual],
-      startScreen: [
+      Start: [
         characterBlue,
         characterRed,
         characterYellow,
         characterOrange,
         backStart
       ],
-      settings: [music, sound, backSettings],
-      manual: [backManual]
+      Settings: [music, sound, backSettings],
+      Manual: [backManual]
     };
     console.log(this.menuObjects);
   }
@@ -110,7 +110,7 @@ export default class Menu {
     //go up with the  cursorposition --> MOVE DOWN in menu
     if (
       this.currentCursorposition <
-      this.menuObjects[this.gamestate].length-1
+      this.menuObjects[this.gamestate].length - 1
     ) {
       this.currentCursorposition += 1;
       this.paintMenuColors();
@@ -139,5 +139,11 @@ export default class Menu {
     this.menuObjects[this.gamestate][
       this.currentCursorposition
     ].picedState = true;
+  }
+  changeGamestate() {
+    //wir haben den akt. roten punkt und seinen namen
+
+    this.gamestate =
+      this.menuObjects[this.gamestate][this.currentCursorposition].sName;
   }
 }

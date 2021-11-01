@@ -23,6 +23,8 @@ export default class InputHandler {
 
         if (event.key === "w") this.menu.curCursorPositionDown();
         if (event.key === "s") this.menu.curCursorPositionUp();
+        if (event.key === "Enter") this.menu.changeGamestate();
+        
      
 
         /*   //MenuSteuerung Spieler 1

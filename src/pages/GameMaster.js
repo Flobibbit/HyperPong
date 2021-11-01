@@ -8,12 +8,12 @@ const GAMESTATE = {
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
 
     this.menu = new Menu();
     this.game = new Game();
 
-    new InputHandler(this.game.gameObjects,this.menu);
+    new InputHandler(this.game.gameObjects, this.menu);
   }
 
   start() {
