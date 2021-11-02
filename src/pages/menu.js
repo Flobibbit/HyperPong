@@ -7,13 +7,14 @@ const GAMESTATE = {
   START: "Start",
   MENU_SETTINGS: "Settings",
   MENU_MANUAL: "Manual",
-  GAMEOVER: 5
+  GAMEOVER: 5,
 };
 
 export default class Menu {
   constructor() {
     this.gamestate = GAMESTATE.MENU_TITLE;
-    this.currentCursorposition = 0;
+    this.currentCursorpositionP1 = 0;
+    this.currentCursorpositionP2 = 2;
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
@@ -42,10 +43,10 @@ export default class Menu {
         characterRed,
         characterYellow,
         characterOrange,
-        backStart
+        backStart,
       ],
       Settings: [music, sound, backSettings],
-      Manual: [backManual]
+      Manual: [backManual],
     };
 
     this.menuPath = [this.gamestate];
@@ -95,24 +96,26 @@ export default class Menu {
   curCursorPositionUp() {
     //go up with the  cursorposition --> MOVE DOWN in menu
     if (
-      this.currentCursorposition <
+      this.currentCursorpositionP1 <
       this.menuObjects[this.gamestate].length - 1
     ) {
-      this.currentCursorposition += 1;
+      console.log("HI");
+      this.currentCursorpositionP1 += 1;
       this.paintMenuColors();
     } else {
-      this.currentCursorposition = 0;
+      this.currentCursorpositionP1 = 0;
       this.paintMenuColors();
     }
   }
   curCursorPositionDown() {
-    console.log("PRESSED: W");
+    console.log("PRESSED: Arrow UP or W");
     //go down with the cursorposition  --> MOVE UP in menu
-    if (this.currentCursorposition > 0) {
-      this.currentCursorposition -= 1;
+    if (this.currentCursorpositionP1 > 0) {
+      this.currentCursorpositionP1 -= 1;
       this.paintMenuColors();
     } else {
-      this.currentCursorposition = this.menuObjects[this.gamestate].length - 1;
+      this.currentCursorpositionP1 =
+        this.menuObjects[this.gamestate].length - 1;
       this.paintMenuColors();
     }
   }
@@ -124,33 +127,42 @@ export default class Menu {
     }
     //then current Menupoint paint red and bigger size
     this.menuObjects[this.gamestate][
-      this.currentCursorposition
+      this.currentCursorpositionP1
     ].picedState = true;
-    this.menuObjects[this.gamestate][this.currentCursorposition].pxSize = "65";
+    this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
+      "65";
+    //then current Menupoint oaint Blue and bigger size
   }
   changeGamestate() {
     //look at the last Element in each list
     if (
       this.gamestate != "menuTitle" &&
-      this.currentCursorposition == this.menuObjects[this.gamestate].length - 1
+      this.currentCursorpositionP1 ==
+        this.menuObjects[this.gamestate].length - 1
     ) {
       //VIEW CLOSE
-      console.log(this.currentCursorposition);
       //take and set  next-to-last gamestate
       this.gamestate = this.menuPath[this.menuPath.length - 2];
       //delete the last view
       this.menuPath.pop();
       console.log("DELETED:" + this.menuPath);
+      //take the first one again
+      this.resetCursorPosition();
     } else {
-      //VIEW OPEN
-      this.gamestate =
-        this.menuObjects[this.gamestate][this.currentCursorposition].sName;
-      this.menuPath.push(this.gamestate);
-      console.log("ADDED:" + this.menuPath);
+      //not for music and sound
+      if (this.gamestate != GAMESTATE.MENU_SETTINGS) {
+        this.gamestate =
+          this.menuObjects[this.gamestate][this.currentCursorpositionP1].sName;
+        this.menuPath.push(this.gamestate);
+        console.log("ADDED:" + this.menuPath);
+        this.resetCursorPosition();
+      }
     }
+  }
+  resetCursorPosition() {
     //take the first one again
-    this.currentCursorposition = 0;
+    this.currentCursorpositionP1 = 0;
     this.paintMenuColors();
-    console.log("View gewechselt" + this.currentCursorposition);
+    console.log("View changed" + this.currentCursorpositionP1);
   }
 }

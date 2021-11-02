@@ -18,11 +18,14 @@ export default class InputHandler {
         if (event.key === "ArrowUp") this.racketR.moveUp();
 
         if (event.key === "Escape") {
-          game.menu.togglePause();
+          this.menu.togglePause();
         }
       } else {
         if (event.key === "w") this.menu.curCursorPositionDown();
         if (event.key === "s") this.menu.curCursorPositionUp();
+        if (event.key === "ArrowUp") this.menu.curCursorPositionDown();
+        if (event.key === "ArrowDown") this.menu.curCursorPositionUp();
+
         if (event.key === "Enter") this.menu.changeGamestate();
 
         /*   //MenuSteuerung Spieler 1
@@ -34,9 +37,6 @@ export default class InputHandler {
         if (event.key === "ArrowDown") CursorPL2.moveDown();
         if (event.key === "ArrowUp") CursorPL2.moveUp();
 */
-        if (event.key === "Escape") {
-          game.menu.togglePause();
-        }
       }
     });
 
