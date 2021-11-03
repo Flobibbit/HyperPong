@@ -26,7 +26,8 @@ export default class MenuCanvasEl {
       ctx.fillStyle = this.colorActive;
       this.textWidht = ctx.measureText(this.sName).width;
       ctx.lineWidth = "9";
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "blue";
+      2;
       ctx.strokeRect(
         this.locationWidht - 30 - this.textWidht / 2,
         this.locationHeight - 7 - this.pxSize,
