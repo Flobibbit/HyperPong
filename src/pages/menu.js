@@ -1,3 +1,4 @@
+import MovingElTitle from "/src/pages/movingElTitle.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
 const GAMESTATE = {
@@ -23,6 +24,7 @@ export default class Menu {
     const start = new MenuCanvasEl("Start", 320);
     const settings = new MenuCanvasEl("Settings", 430);
     const manual = new MenuCanvasEl("Manual", 540);
+    this.movingELTitle = new MovingElTitle();
 
     const characterBlue = new MenuCanvasEl("BLUE", 320);
     const characterRed = new MenuCanvasEl("RED", 430);
@@ -79,9 +81,16 @@ export default class Menu {
       //paused
       this.pause.draw(ctx);
     }
+    if (this.gamestate == GAMESTATE.MENU_TITLE) {
+      this.movingELTitle.draw(ctx);
+    }
   }
 
-  update() {}
+  update() {
+    if (this.gamestate == GAMESTATE.MENU_TITLE) {
+      this.movingELTitle.update();
+    }
+  }
 
   togglePause() {
     if (this.gamestate == GAMESTATE.PAUSED) {
