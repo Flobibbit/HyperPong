@@ -1,6 +1,7 @@
 import MovingElTitle from "/src/pages/movingElTitle.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
+import Triangle from "/src/pages/Triangle.js";
 const GAMESTATE = {
   PAUSED: 0,
   RUNNING: "running",
@@ -8,29 +9,35 @@ const GAMESTATE = {
   START: "Start",
   MENU_SETTINGS: "Settings",
   MENU_MANUAL: "Manual",
-  GAMEOVER: 5,
+  GAMEOVER: 5
 };
 
 export default class Menu {
   constructor() {
     this.gamestate = GAMESTATE.MENU_TITLE;
     this.currentCursorpositionP1 = 0;
-    this.currentCursorpositionP2 = 2;
+    this.currentCursorpositionP2 = 3;
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
+    this.titleHeaderShade = new MenuCanvasEl("Hyperpong", 93, 84, "black");
+
     this.pause = new MenuCanvasEl("Paused", GAME_HEIGHT / 2);
 
-    const start = new MenuCanvasEl("Start", 320);
-    const settings = new MenuCanvasEl("Settings", 430);
-    const manual = new MenuCanvasEl("Manual", 540);
+    //mainTitle
+    const start = new MenuCanvasEl("Start", 230);
+    const settings = new MenuCanvasEl("Settings", 340);
+    const manual = new MenuCanvasEl("Manual", 450);
     this.movingELTitle = new MovingElTitle();
 
-    const characterBlue = new MenuCanvasEl("BLUE", 320);
-    const characterRed = new MenuCanvasEl("RED", 430);
-    const characterYellow = new MenuCanvasEl("YELLOW", 540);
-    const characterOrange = new MenuCanvasEl("ORANGE", 650);
-    const backStart = new MenuCanvasEl("Back", 760);
+    //Start
+    this.trianglePl1 = new Triangle();
+    this.trianglePl2 = new Triangle();
+    const characterBlue = new MenuCanvasEl("RED", 230, null, "red");
+    const characterRed = new MenuCanvasEl("BLUE", 340, null, "blue");
+    const characterYellow = new MenuCanvasEl("YELLOW", 450, null, "yellow");
+    const characterOrange = new MenuCanvasEl("GREEN", 560, null, "green");
+    const backStart = new MenuCanvasEl("Back", 650);
 
     const music = new MenuCanvasEl("Music", 320);
     const sound = new MenuCanvasEl("Sound", 430);
@@ -45,10 +52,10 @@ export default class Menu {
         characterRed,
         characterYellow,
         characterOrange,
-        backStart,
+        backStart
       ],
       Settings: [music, sound, backSettings],
-      Manual: [backManual],
+      Manual: [backManual]
     };
 
     this.menuPath = [this.gamestate];
@@ -61,11 +68,15 @@ export default class Menu {
       this.gamestate != GAMESTATE.RUNNING &&
       this.gamestate != GAMESTATE.PAUSED
     ) {
-      ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
-      ctx.fillStyle = "#000000AA";
+      // ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
+      //ctx.fillStyle = "#000000AA";
       ctx.fill();
-      //Title
+      //Title and Shader
+      this.titleHeaderShade.draw(ctx);
       this.titleHeader.draw(ctx);
+      ctx.fillStyle = "#ff0";
+      ctx.fillRect(0, 35, 250, 10);
+      ctx.fillRect(GAME_WIDHT - 250, 35, GAME_WIDHT, 10);
     }
 
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
@@ -83,6 +94,11 @@ export default class Menu {
     }
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingELTitle.draw(ctx);
+    }
+    //START
+    if (this.gamestate == GAMESTATE.START) {
+      //this.trianglePl1.draw(ctx);
+      //this.trianglePl1.draw(ctx);
     }
   }
 
@@ -102,45 +118,84 @@ export default class Menu {
   toggleMenuTitle() {}
   toggleSettings() {}
 
-  curCursorPositionUp() {
+  curCursorPositionUp(eventKey) {
     //go up with the  cursorposition --> MOVE DOWN in menu
-    if (
-      this.currentCursorpositionP1 <
-      this.menuObjects[this.gamestate].length - 1
-    ) {
-      console.log("HI");
-      this.currentCursorpositionP1 += 1;
-      this.paintMenuColors();
-    } else {
-      this.currentCursorpositionP1 = 0;
-      this.paintMenuColors();
+    if (eventKey == "ArrowDown") {
+      if (
+        this.currentCursorpositionP1 <
+        this.menuObjects[this.gamestate].length - 1
+      ) {
+        this.currentCursorpositionP1 += 1;
+        this.paintMenuColors();
+      } else {
+        this.currentCursorpositionP1 = 0;
+        this.paintMenuColors();
+      }
+    }
+    if (eventKey == "s") {
+      if (
+        this.currentCursorpositionP2 <
+        this.menuObjects[this.gamestate].length - 1
+      ) {
+        this.currentCursorpositionP2 += 1;
+        this.paintMenuColors();
+      } else {
+        this.currentCursorpositionP2 = 0;
+        this.paintMenuColors();
+      }
     }
   }
-  curCursorPositionDown() {
-    console.log("PRESSED: Arrow UP or W");
-    //go down with the cursorposition  --> MOVE UP in menu
-    if (this.currentCursorpositionP1 > 0) {
-      this.currentCursorpositionP1 -= 1;
+  curCursorPositionDown(eventKey) {
+    if (eventKey == "ArrowUp") {
+      if (this.currentCursorpositionP1 > 0) {
+        this.currentCursorpositionP1 -= 1;
+      } else {
+        this.currentCursorpositionP1 =
+          this.menuObjects[this.gamestate].length - 1;
+      }
       this.paintMenuColors();
-    } else {
-      this.currentCursorpositionP1 =
-        this.menuObjects[this.gamestate].length - 1;
+      return;
+    }
+    if (eventKey == "w") {
+      if (this.currentCursorpositionP2 > 0) {
+        this.currentCursorpositionP2 -= 1;
+      } else {
+        this.currentCursorpositionP2 =
+          this.menuObjects[this.gamestate].length - 1;
+      }
       this.paintMenuColors();
     }
+    console.log("PRESSED: Arrow UP or W");
+    //go down with the cursorposition  --> MOVE UP in menu
   }
   paintMenuColors() {
     //first paint all white , normal size
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
-      this.menuObjects[this.gamestate][i].picedState = false;
+      this.menuObjects[this.gamestate][i].picedStatePl1 = false;
+      this.menuObjects[this.gamestate][i].picedStatePl2 = false;
       this.menuObjects[this.gamestate][i].pxSize = "60";
     }
-    //then current Menupoint paint red and bigger size
-    this.menuObjects[this.gamestate][
-      this.currentCursorpositionP1
-    ].picedState = true;
-    this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
-      "65";
-    //then current Menupoint oaint Blue and bigger size
+    if (this.gamestate != GAMESTATE.START) {
+      //then current Menupoint paint yellow and bigger size
+      //POSITION PL1
+
+      this.menuObjects[this.gamestate][
+        this.currentCursorpositionP1
+      ].picedStatePl1 = true;
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
+        "65";
+    } else {
+    
+      //POSITION PL2
+      this.menuObjects[this.gamestate][
+        this.currentCursorpositionP2
+      ].picedStatePl2 = true;
+
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
+        "65";
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].pxSize =
+        "65";
+    }
   }
   changeGamestate() {
     //look at the last Element in each list

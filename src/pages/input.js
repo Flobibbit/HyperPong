@@ -21,10 +21,10 @@ export default class InputHandler {
           this.menu.togglePause();
         }
       } else {
-        if (event.key === "w") this.menu.curCursorPositionDown();
-        if (event.key === "s") this.menu.curCursorPositionUp();
-        if (event.key === "ArrowUp") this.menu.curCursorPositionDown();
-        if (event.key === "ArrowDown") this.menu.curCursorPositionUp();
+        if (event.key === "w") this.menu.curCursorPositionDown(event.key);
+        if (event.key === "s") this.menu.curCursorPositionUp(event.key);
+        if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
+        if (event.key === "ArrowDown") this.menu.curCursorPositionUp(event.key );
 
         if (event.key === "Enter") this.menu.changeGamestate();
 
@@ -52,5 +52,23 @@ export default class InputHandler {
           if (this.racketR.speed < 0) this.racketR.stop();
       }
     });
+    
+//Anti scroll logic
+    var keys = {};
+window.addEventListener("keydown",
+    function(e){
+        keys[e.code] = true;
+        switch(e.code){
+            case "ArrowUp": case "ArrowDown": case "ArrowLeft": case "ArrowRight":
+            case "Space": e.preventDefault(); break;//block the default action of the event (moving the viewpoint of the browser)
+            default: break; // do not block other keys
+        }
+    },
+false);
+window.addEventListener('keyup',
+    function(e){
+        keys[e.code] = false;
+    },
+false);
   }
 }

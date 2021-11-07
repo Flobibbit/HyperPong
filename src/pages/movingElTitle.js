@@ -6,12 +6,11 @@ export default class MovingElTitle {
 
     this.position = {
       x: GAME_WIDHT / 2 - this.size / 2,
-      y: GAME_HEIGHT - 250,
+      y: GAME_HEIGHT - GAME_HEIGHT / 4
     };
 
     this.speedX = 3;
     this.image = document.getElementById("img_PongSmiley");
-    //this.image = document.getElementById("img_pongBall");
   }
   draw(ctx) {
     ctx.drawImage(
@@ -21,12 +20,11 @@ export default class MovingElTitle {
       this.size,
       this.size
     );
-    console.log("Draw MovingEL: ");
   }
   update() {
     //change Ball position
     this.position.x += this.speedX;
-    console.log("Moin");
+
     //Element Physics
     if (
       this.position.x >= GAME_WIDHT - this.borderDistance - this.size ||

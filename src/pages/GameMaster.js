@@ -4,11 +4,11 @@ import Game from "/src/pages/game.js";
 
 const GAMESTATE = {
   MENU: 0,
-  INGAME: 1,
+  INGAME: 1
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
 
     this.menu = new Menu();
     this.game = new Game();
@@ -17,7 +17,7 @@ export default class GameMaster {
   }
 
   start() {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
   }
 
   draw(ctx) {
