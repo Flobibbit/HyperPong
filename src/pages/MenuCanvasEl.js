@@ -28,9 +28,14 @@ export default class MenuCanvasEl {
     //ctx.fill();
     if (this.picedStateColor == true) {
       ctx.fillStyle = this.colorActive;
+      this.textWidht = ctx.measureText(this.sName).width;
+      this.drawTrianglePl1(ctx);
+    } else {
+      ctx.fillStyle = this.color;
     }
     if (this.picedStatePl1 == true) {
       this.textWidht = ctx.measureText(this.sName).width;
+      this.drawTrianglePl1(ctx);
       /* ctx.lineWidth = "9";
       ctx.strokeStyle = "red";
       2;
@@ -40,20 +45,20 @@ export default class MenuCanvasEl {
         this.textWidht + 50,
         70
       );*/
-      this.drawTriangle(ctx);
-      if (this.picedStatePl2 == true) {
-        this.drawTriangle(ctx);
-      }
-    } else {
-      ctx.fillStyle = this.color;
+
+      
     }
+    if (this.picedStatePl2 == true) {
+      this.textWidht = ctx.measureText(this.sName).width;
+        this.drawTrianglePl2(ctx);
+      }
 
     ctx.font = this.pxSize + "px PressStart2P";
     ctx.textAlign = "center";
     ctx.fillText(this.sName, this.locationWidht, this.locationHeight);
   }
 
-  drawTriangle(ctx) {
+  drawTrianglePl1(ctx) {
     ctx.beginPath();
     ctx.moveTo(
       GAME_WIDHT / 2 - this.textWidht / 2 - 30,
@@ -67,13 +72,23 @@ export default class MenuCanvasEl {
       GAME_WIDHT / 2 - this.textWidht / 2 - 70,
       this.locationHeight - this.pxSize / 2 - 5 - 20
     );
+    ctx.fill();
+  }
+  drawTrianglePl2(ctx) {
 
-    /*ctx.beginPath();
-    ctx.moveTo(this.position.x, this.position.y);
-    ctx.lineTo(this.position.x+50,this.position.y+25);
-    ctx.lineTo(this.position.x, this.position.x+50);
-    ctx.fill()*/
-
+    ctx.beginPath();
+    ctx.moveTo(
+      GAME_WIDHT / 2 + this.textWidht / 2 +30,
+      this.locationHeight - this.pxSize / 2 - 5
+    );
+    ctx.lineTo(
+      GAME_WIDHT / 2 + this.textWidht / 2 + 70,    
+      this.locationHeight - this.pxSize / 2 - 5 + 20
+    );
+    ctx.lineTo(
+      GAME_WIDHT / 2 + this.textWidht / 2 + 70,
+      this.locationHeight - this.pxSize / 2 - 5 - 20
+    );
     ctx.fill();
   }
 }

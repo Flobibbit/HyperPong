@@ -16,11 +16,11 @@ export default class Menu {
   constructor() {
     this.gamestate = GAMESTATE.MENU_TITLE;
     this.currentCursorpositionP1 = 0;
-    this.currentCursorpositionP2 = 3;
+    this.currentCursorpositionP2 = 0;
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
-    this.titleHeaderShade = new MenuCanvasEl("Hyperpong", 93, 84, "black");
+    this.titleHeaderShader = new MenuCanvasEl("Hyperpong", 93, 84, "black");
 
     this.pause = new MenuCanvasEl("Paused", GAME_HEIGHT / 2);
 
@@ -72,7 +72,7 @@ export default class Menu {
       //ctx.fillStyle = "#000000AA";
       ctx.fill();
       //Title and Shader
-      this.titleHeaderShade.draw(ctx);
+      this.titleHeaderShader.draw(ctx);
       this.titleHeader.draw(ctx);
       ctx.fillStyle = "#ff0";
       ctx.fillRect(0, 35, 250, 10);
@@ -116,7 +116,6 @@ export default class Menu {
     }
   }
   toggleMenuTitle() {}
-  toggleSettings() {}
 
   curCursorPositionUp(eventKey) {
     //go up with the  cursorposition --> MOVE DOWN in menu
@@ -171,6 +170,7 @@ export default class Menu {
   paintMenuColors() {
     //first paint all white , normal size
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
+      this.menuObjects[this.gamestate][i].picedStateColor = false;
       this.menuObjects[this.gamestate][i].picedStatePl1 = false;
       this.menuObjects[this.gamestate][i].picedStatePl2 = false;
       this.menuObjects[this.gamestate][i].pxSize = "60";
@@ -178,14 +178,18 @@ export default class Menu {
     if (this.gamestate != GAMESTATE.START) {
       //then current Menupoint paint yellow and bigger size
       //POSITION PL1
-
+      this.menuObjects[this.gamestate][
+        this.currentCursorpositionP1
+      ].picedStateColor = true;
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
+        "65";
+    } else {
+      //POSITION PL1
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP1
       ].picedStatePl1 = true;
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
         "65";
-    } else {
-    
       //POSITION PL2
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP2
@@ -213,8 +217,8 @@ export default class Menu {
       //take the first one again
       this.resetCursorPosition();
     } else {
-      //not for music and sound
-      if (this.gamestate != GAMESTATE.MENU_SETTINGS) {
+      //not for music and sound // and not for red yellow.. etc
+      if (this.gamestate != GAMESTATE.MENU_SETTINGS&&this.gamestate!=GAMESTATE.START) {
         this.gamestate =
           this.menuObjects[this.gamestate][this.currentCursorpositionP1].sName;
         this.menuPath.push(this.gamestate);
@@ -226,7 +230,11 @@ export default class Menu {
   resetCursorPosition() {
     //take the first one again
     this.currentCursorpositionP1 = 0;
+    this.currentCursorpositionP2=0;
     this.paintMenuColors();
     console.log("View changed" + this.currentCursorpositionP1);
   }
+
+
+  
 }
