@@ -14,8 +14,8 @@ export default class GameMaster {
     this.menu = new Menu();
     this.game = new Game();
     this.musicPl = new MusicPlayer();
-this.musicPl.audio.play()
-    new InputHandler(this.game.gameObjects, this.menu, this.gamestate);
+    this.musicPl.audio.play();
+    new InputHandler(this.game.gameObjects, this.menu, this.gamestate,this.musicPl);
   }
 
   start() {

@@ -1,7 +1,8 @@
 import MovingElTitle from "/src/pages/movingElTitle.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
-import MenuCanvasEl from "/src/pages/MenuCanvasEl.js";
-import Triangle from "/src/pages/Triangle.js";
+import MenuElement from "./MenuElement";
+import AudioPlayer from "./AudioPlayer";
+
 const GAMESTATE = {
   PAUSED: 0,
   RUNNING: "running",
@@ -17,33 +18,40 @@ export default class Menu {
     this.gamestate = GAMESTATE.MENU_TITLE;
     this.currentCursorpositionP1 = 0;
     this.currentCursorpositionP2 = 0;
+    this.checkBoxsize = 60;
+
+    //AUDIO
+    this.audioPlayer = new AudioPlayer();
+
+    //const check = new MenuCheckbox([...params])
+    //this.beispiel = new MenuElement(..., check)
 
     //ALL MENUOBJECTS
-    this.titleHeader = new MenuCanvasEl("Hyperpong", 90, 80, "yellow");
-    this.titleHeaderShader = new MenuCanvasEl("Hyperpong", 93, 84, "black");
+    this.titleHeader = new MenuElement("Hyperpong", 90, 80, "yellow");
+    this.titleHeaderShader = new MenuElement("Hyperpong", 93, 84, "black");
 
-    this.pause = new MenuCanvasEl("Paused", GAME_HEIGHT / 2);
+    this.pause = new MenuElement("Paused", GAME_HEIGHT / 2);
 
     //mainTitle
-    const start = new MenuCanvasEl("Start", 230);
-    const settings = new MenuCanvasEl("Settings", 340);
-    const manual = new MenuCanvasEl("Manual", 450);
-    this.movingELTitle = new MovingElTitle();
+    const start = new MenuElement("Start", 230);
+    const settings = new MenuElement("Settings", 340);
+    const manual = new MenuElement("Manual", 450);
+    this.movingElTitle = new MovingElTitle();
 
     //Start
-    this.trianglePl1 = new Triangle();
-    this.trianglePl2 = new Triangle();
-    const characterBlue = new MenuCanvasEl("RED", 230, null, "red");
-    const characterRed = new MenuCanvasEl("BLUE", 340, null, "blue");
-    const characterYellow = new MenuCanvasEl("YELLOW", 450, null, "yellow");
-    const characterOrange = new MenuCanvasEl("GREEN", 560, null, "green");
-    const backStart = new MenuCanvasEl("Back", 650);
+    const characterBlue = new MenuElement("RED", 230, null, "red");
+    const characterRed = new MenuElement("BLUE", 340, null, "blue");
+    const characterYellow = new MenuElement("YELLOW", 450, null, "yellow");
+    const characterOrange = new MenuElement("GREEN", 560, null, "green");
+    const backStart = new MenuElement("Back", 650);
 
-    const music = new MenuCanvasEl("Music", 320);
-    const sound = new MenuCanvasEl("Sound", 430);
-    const backSettings = new MenuCanvasEl("Back", 540);
+    //Settings
+    const music = new MenuElement("Music", 320);
+    const sound = new MenuElement("Sound", 430);
+    const backSettings = new MenuElement("Back", 540);
 
-    const backManual = new MenuCanvasEl("Back", 650);
+    //MANUAL
+    const backManual = new MenuElement("Back", 650);
 
     this.menuObjects = {
       menuTitle: [start, settings, manual],
@@ -65,12 +73,9 @@ export default class Menu {
   draw(ctx) {
     //TITLE HEADER and BACKGROUND
     if (
-      this.gamestate != GAMESTATE.RUNNING &&
-      this.gamestate != GAMESTATE.PAUSED
+      this.gamestate !== GAMESTATE.RUNNING &&
+      this.gamestate !== GAMESTATE.PAUSED
     ) {
-      // ctx.rect(0, 0, GAME_WIDHT, GAME_HEIGHT);
-      //ctx.fillStyle = "#000000AA";
-      ctx.fill();
       //Title and Shader
       this.titleHeaderShader.draw(ctx);
       this.titleHeader.draw(ctx);
@@ -93,18 +98,106 @@ export default class Menu {
       this.pause.draw(ctx);
     }
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
-      this.movingELTitle.draw(ctx);
+      this.movingElTitle.draw(ctx);
     }
     //START
     if (this.gamestate == GAMESTATE.START) {
-      //this.trianglePl1.draw(ctx);
-      //this.trianglePl1.draw(ctx);
+    }
+    //SETTINGS
+    if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
+      ctx.beginPath();
+      ctx.fillStyle = "orange";
+      this.checkBoxsize = 60;
+
+      if (this.currentCursorpositionP1 == 0) {
+        this.checkBoxsize = 60;
+        ctx.fillRect(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2,
+          260,
+          this.checkBoxsize,
+          this.checkBoxsize
+        ); //big music
+        ctx.moveTo(GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2, 260);
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2 + this.checkBoxsize,
+          260 + this.checkBoxsize
+        );
+        ctx.moveTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2 + this.checkBoxsize,
+          260
+        );
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2,
+          260 + this.checkBoxsize
+        );
+      } else {
+        this.checkBoxsize = 55;
+        ctx.fillRect(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50,
+          265,
+          this.checkBoxsize,
+          this.checkBoxsize
+        ); //small music
+
+        ctx.moveTo(GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50, 265);
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 + this.checkBoxsize,
+          265 + this.checkBoxsize
+        );
+        ctx.moveTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 + this.checkBoxsize,
+          265
+        );
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50,
+          265 + this.checkBoxsize
+        );
+      }
+      if (this.currentCursorpositionP1 == 1) {
+        this.checkBoxsize = 60;
+        ctx.fillRect(GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2, 365, 60, 60); //big sound
+        ctx.moveTo(GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2, 365);
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2 + this.checkBoxsize,
+          365 + this.checkBoxsize
+        );
+        ctx.moveTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2 + this.checkBoxsize,
+          365
+        );
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 - 2,
+          365 + this.checkBoxsize
+        );
+      } else {
+        this.checkBoxsize = 55;
+        ctx.fillRect(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50,
+          370,
+          this.checkBoxsize,
+          this.checkBoxsize
+        ); //small sound
+        ctx.moveTo(GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50, 370);
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 + this.checkBoxsize,
+          370 + this.checkBoxsize
+        );
+        ctx.moveTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50 + this.checkBoxsize,
+          370
+        );
+        ctx.lineTo(
+          GAME_WIDHT / 2 + GAME_WIDHT / 5 - 50,
+          370 + this.checkBoxsize
+        );
+      }
+      ctx.stroke();
     }
   }
 
   update() {
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
-      this.movingELTitle.update();
+      this.movingElTitle.update();
     }
   }
 
@@ -125,10 +218,8 @@ export default class Menu {
         this.menuObjects[this.gamestate].length - 1
       ) {
         this.currentCursorpositionP1 += 1;
-        this.paintMenuColors();
       } else {
         this.currentCursorpositionP1 = 0;
-        this.paintMenuColors();
       }
     }
     if (eventKey == "s") {
@@ -137,12 +228,11 @@ export default class Menu {
         this.menuObjects[this.gamestate].length - 1
       ) {
         this.currentCursorpositionP2 += 1;
-        this.paintMenuColors();
       } else {
         this.currentCursorpositionP2 = 0;
-        this.paintMenuColors();
       }
     }
+    this.paintMenuColors();
   }
   curCursorPositionDown(eventKey) {
     if (eventKey == "ArrowUp") {
@@ -152,8 +242,6 @@ export default class Menu {
         this.currentCursorpositionP1 =
           this.menuObjects[this.gamestate].length - 1;
       }
-      this.paintMenuColors();
-      return;
     }
     if (eventKey == "w") {
       if (this.currentCursorpositionP2 > 0) {
@@ -162,38 +250,38 @@ export default class Menu {
         this.currentCursorpositionP2 =
           this.menuObjects[this.gamestate].length - 1;
       }
-      this.paintMenuColors();
     }
+    this.paintMenuColors();
     console.log("PRESSED: Arrow UP or W");
     //go down with the cursorposition  --> MOVE UP in menu
   }
   paintMenuColors() {
     //first paint all white , normal size
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
-      this.menuObjects[this.gamestate][i].picedStateColor = false;
-      this.menuObjects[this.gamestate][i].picedStatePl1 = false;
-      this.menuObjects[this.gamestate][i].picedStatePl2 = false;
+      this.menuObjects[this.gamestate][i].pickedStateColor = false;
+      this.menuObjects[this.gamestate][i].pickedStatePl1 = false;
+      this.menuObjects[this.gamestate][i].pickedStatePl2 = false;
       this.menuObjects[this.gamestate][i].pxSize = "60";
     }
-    if (this.gamestate != GAMESTATE.START) {
+    if (this.gamestate !== GAMESTATE.START) {
       //then current Menupoint paint yellow and bigger size
       //POSITION PL1
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP1
-      ].picedStateColor = true;
+      ].pickedStateColor = true;
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
         "65";
     } else {
       //POSITION PL1
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP1
-      ].picedStatePl1 = true;
+      ].pickedStatePl1 = true;
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
         "65";
       //POSITION PL2
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP2
-      ].picedStatePl2 = true;
+      ].pickedStatePl2 = true;
 
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
         "65";
@@ -204,7 +292,7 @@ export default class Menu {
   changeGamestate() {
     //look at the last Element in each list
     if (
-      this.gamestate != "menuTitle" &&
+      this.gamestate !== "menuTitle" &&
       this.currentCursorpositionP1 ==
         this.menuObjects[this.gamestate].length - 1
     ) {
@@ -214,27 +302,32 @@ export default class Menu {
       //delete the last view
       this.menuPath.pop();
       console.log("DELETED:" + this.menuPath);
-      //take the first one again
-      this.resetCursorPosition();
     } else {
       //not for music and sound // and not for red yellow.. etc
-      if (this.gamestate != GAMESTATE.MENU_SETTINGS&&this.gamestate!=GAMESTATE.START) {
+      if (
+        this.gamestate !== GAMESTATE.MENU_SETTINGS &&
+        this.gamestate !== GAMESTATE.START
+      ) {
         this.gamestate =
           this.menuObjects[this.gamestate][this.currentCursorpositionP1].sName;
         this.menuPath.push(this.gamestate);
         console.log("ADDED:" + this.menuPath);
-        this.resetCursorPosition();
+      }
+      if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
+        this.changeCheckedState();
       }
     }
+    //take the first one again
+    this.resetCursorPosition();
   }
+
+  changeCheckedState() {}
+
   resetCursorPosition() {
     //take the first one again
     this.currentCursorpositionP1 = 0;
-    this.currentCursorpositionP2=0;
+    this.currentCursorpositionP2 = 0;
     this.paintMenuColors();
     console.log("View changed" + this.currentCursorpositionP1);
   }
-
-
-  
 }

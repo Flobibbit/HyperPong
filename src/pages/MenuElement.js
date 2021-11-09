@@ -1,14 +1,21 @@
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
-export default class MenuCanvasEl {
+
+constuctor({p1 = 'string',p2 = false, p3, p4} = {}) {
+  
+}
+
+new MenuElement({p4: false, p1: '', })
+
+export default class MenuElement {
   constructor(
     sName,
     locationHeight,
     pxSize = null,
     color = null,
     locationWidht = null,
-    picedStateColor = false,
-    picedStatePl1 = false,
-    picedStatePl2 = false,
+    pickedStateColor = false,
+    pickedStatePl1 = false,
+    pickedStatePl2 = false,
     colorActive = null
   ) {
     this.sName = sName;
@@ -16,9 +23,9 @@ export default class MenuCanvasEl {
     this.pxSize = pxSize || "50";
     this.color = color || "white";
     this.locationWidht = locationWidht || GAME_WIDHT / 2;
-    this.picedStateColor = picedStateColor;
-    this.picedStatePl1 = picedStatePl1;
-    this.picedStatePl2 = picedStatePl1;
+    this.pickedStateColor = pickedStateColor;
+    this.pickedStatePl1 = pickedStatePl1;
+    this.pickedStatePl2 = pickedStatePl1;
     this.colorActive = colorActive || "yellow";
     this.textWidht = 0;
   }
@@ -26,32 +33,20 @@ export default class MenuCanvasEl {
     // ctx.rect(0, 0, this.gameWidht, this.gameHeight);
     //ctx.fillStyle = "#000000AA";
     //ctx.fill();
-    if (this.picedStateColor == true) {
-      ctx.fillStyle = this.colorActive;
-      this.textWidht = ctx.measureText(this.sName).width;
+    this.textWidht = ctx.measureText(this.sName).width;
+    if (this.pickedStateColor == true) {
+      ctx.fillStyle = "red";
       this.drawTrianglePl1(ctx);
+      ctx.fillStyle = this.colorActive;
     } else {
       ctx.fillStyle = this.color;
     }
-    if (this.picedStatePl1 == true) {
-      this.textWidht = ctx.measureText(this.sName).width;
+    if (this.pickedStatePl1 == true) {
       this.drawTrianglePl1(ctx);
-      /* ctx.lineWidth = "9";
-      ctx.strokeStyle = "red";
-      2;
-      ctx.strokeRect(
-        this.locationWidht - 30 - this.textWidht / 2,
-        this.locationHeight - 7 - this.pxSize,
-        this.textWidht + 50,
-        70
-      );*/
-
-      
     }
-    if (this.picedStatePl2 == true) {
-      this.textWidht = ctx.measureText(this.sName).width;
-        this.drawTrianglePl2(ctx);
-      }
+    if (this.pickedStatePl2 == true) {
+      this.drawTrianglePl2(ctx);
+    }
 
     ctx.font = this.pxSize + "px PressStart2P";
     ctx.textAlign = "center";
@@ -75,14 +70,13 @@ export default class MenuCanvasEl {
     ctx.fill();
   }
   drawTrianglePl2(ctx) {
-
     ctx.beginPath();
     ctx.moveTo(
-      GAME_WIDHT / 2 + this.textWidht / 2 +30,
+      GAME_WIDHT / 2 + this.textWidht / 2 + 30,
       this.locationHeight - this.pxSize / 2 - 5
     );
     ctx.lineTo(
-      GAME_WIDHT / 2 + this.textWidht / 2 + 70,    
+      GAME_WIDHT / 2 + this.textWidht / 2 + 70,
       this.locationHeight - this.pxSize / 2 - 5 + 20
     );
     ctx.lineTo(
