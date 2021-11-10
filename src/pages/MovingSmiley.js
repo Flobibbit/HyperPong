@@ -1,5 +1,5 @@
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
-export default class MovingElTitle {
+export default class MovingSmiley {
   constructor() {
     this.size = 130;
     this.borderDistance = 200;
@@ -22,8 +22,7 @@ export default class MovingElTitle {
     );
   }
   update() {
-    //change Ball position
-    this.position.x += this.speedX;
+    this.position.x += this.speedX; //change Element position on x
 
     //Element Physics
     if (

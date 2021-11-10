@@ -1,7 +1,8 @@
-import MovingElTitle from "/src/pages/movingElTitle.js";
+import MovingSmiley from "/src/pages/MovingSmiley.js";
 import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
-import MenuElement from "./MenuElement";
-import AudioPlayer from "./AudioPlayer";
+import MenuElement from "./MenuElement.js";
+import AudioPlayer from "./AudioPlayer.js";
+import MenuCheckbox from "./MenuCheckbox.js";
 
 const GAMESTATE = {
   PAUSED: 0,
@@ -23,36 +24,82 @@ export default class Menu {
     //AUDIO
     this.audioPlayer = new AudioPlayer();
 
-    //const check = new MenuCheckbox([...params])
-    //this.beispiel = new MenuElement(..., check)
-
     //ALL MENUOBJECTS
-    this.titleHeader = new MenuElement("Hyperpong", 90, 80, "yellow");
-    this.titleHeaderShader = new MenuElement("Hyperpong", 93, 84, "black");
+    this.titleHeader = new MenuElement({
+      name: "Hyperpong",
+      locationHeight: 90,
+      pxSize: 80,
+      color: "yellow"
+    });
 
-    this.pause = new MenuElement("Paused", GAME_HEIGHT / 2);
+    console.log(this.titleHeader.name);
+    this.titleHeaderShader = new MenuElement({
+      name: "Hyperpong",
+      locationHeight: 93,
+      pxSize: 84,
+      color: "black"
+    });
+
+    this.pause = new MenuElement({
+      name: "Paused",
+      locationHeight: GAME_HEIGHT / 2
+    });
 
     //mainTitle
-    const start = new MenuElement("Start", 230);
-    const settings = new MenuElement("Settings", 340);
-    const manual = new MenuElement("Manual", 450);
-    this.movingElTitle = new MovingElTitle();
+    const start = new MenuElement({ name: "Start", locationHeight: 230 });
+    const settings = new MenuElement({
+      name: "Settings",
+      locationHeight: 340
+    });
+    const manual = new MenuElement({ name: "Manual", locationHeight: 450 });
+    this.movingSmiley = new MovingSmiley();
 
     //Start
-    const characterBlue = new MenuElement("RED", 230, null, "red");
-    const characterRed = new MenuElement("BLUE", 340, null, "blue");
-    const characterYellow = new MenuElement("YELLOW", 450, null, "yellow");
-    const characterOrange = new MenuElement("GREEN", 560, null, "green");
-    const backStart = new MenuElement("Back", 650);
+    const characterBlue = new MenuElement({
+      name: "RED",
+      locationHeight: 230,
+      color: "red"
+    });
+    const characterRed = new MenuElement({
+      name: "BLUE",
+      locationHeight: 340,
+      color: "blue"
+    });
+    const characterYellow = new MenuElement({
+      name: "YELLOW",
+      locationHeight: 450,
+      color: "yellow"
+    });
+    const characterOrange = new MenuElement({
+      name: "GREEN",
+      locationHeight: 560,
+      color: "green"
+    });
+    const backStart = new MenuElement({ name: "Back", locationHeight: 650 });
 
-    //Settings
-    const music = new MenuElement("Music", 320);
-    const sound = new MenuElement("Sound", 430);
-    const backSettings = new MenuElement("Back", 540);
+    //Settingss
+    const music = new MenuElement({
+      name: "Music",
+      locationHeight: 320,
+      checkBox: checkBoxMusic
+    });
+    const sound = new MenuElement({
+      name: "Sound",
+      locationHeight: 430,
+      checkBox: checkBoxSound
+    });
+    const backSettings = new MenuElement({
+      name: "Back",
+      locationHeight: 540
+    });
+
+    const checkBoxMusic = new MenuCheckbox();
+    const checkBoxSound = new MenuCheckbox();
 
     //MANUAL
-    const backManual = new MenuElement("Back", 650);
+    const backManual = new MenuElement({ name: "Back", locationHeight: 650 });
 
+    //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein
     this.menuObjects = {
       menuTitle: [start, settings, manual],
       Start: [
@@ -84,6 +131,7 @@ export default class Menu {
       ctx.fillRect(GAME_WIDHT - 250, 35, GAME_WIDHT, 10);
     }
 
+    //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
       this.menuObjects[this.gamestate][i].draw(ctx);
     }
@@ -98,7 +146,7 @@ export default class Menu {
       this.pause.draw(ctx);
     }
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
-      this.movingElTitle.draw(ctx);
+      this.movingSmiley.draw(ctx);
     }
     //START
     if (this.gamestate == GAMESTATE.START) {
@@ -197,7 +245,7 @@ export default class Menu {
 
   update() {
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
-      this.movingElTitle.update();
+      this.movingSmiley.update();
     }
   }
 
@@ -221,6 +269,10 @@ export default class Menu {
       } else {
         this.currentCursorpositionP1 = 0;
       }
+      if (this.audioPlayer.soundState) {
+        //play scroll sound
+        // this.audioPlayer.soundScroll.play();
+      }
     }
     if (eventKey == "s") {
       if (
@@ -241,6 +293,10 @@ export default class Menu {
       } else {
         this.currentCursorpositionP1 =
           this.menuObjects[this.gamestate].length - 1;
+      }
+      if (this.audioPlayer.soundState) {
+        //play scroll sound
+        //this.audioPlayer.soundScroll.play();
       }
     }
     if (eventKey == "w") {
@@ -309,7 +365,7 @@ export default class Menu {
         this.gamestate !== GAMESTATE.START
       ) {
         this.gamestate =
-          this.menuObjects[this.gamestate][this.currentCursorpositionP1].sName;
+          this.menuObjects[this.gamestate][this.currentCursorpositionP1].name;
         this.menuPath.push(this.gamestate);
         console.log("ADDED:" + this.menuPath);
       }

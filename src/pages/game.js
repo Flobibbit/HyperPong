@@ -1,6 +1,6 @@
 import Racket from "/src/pages/Racket.js";
 import Ball from "/src/pages/Ball.js";
-import InputHandler from "/src/pages/Input.js";
+import InputHandler from "/src/pages/InputHandler.js";
 import Score from "/src/pages/Score.js";
 
 export default class Game {

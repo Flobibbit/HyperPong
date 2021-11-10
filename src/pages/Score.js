@@ -23,7 +23,7 @@ export default class Score {
   }
 
   scoreUp(scoreBoard) {
-    scoreBoard.sName += 1;
+    scoreBoard.name += 1;
   }
   draw(ctx) {
     this.scoreL.draw(ctx);

@@ -1,7 +1,7 @@
-import InputHandler from "/src/pages/Input.js";
+import InputHandler from "/src/pages/InputHandler.js";
 import Menu from "/src/pages/Menu.js";
 import Game from "/src/pages/game.js";
-import MusicPlayer from "/src/pages/MusicPLayer.js";
+import AudioPlayer from "./AudioPlayer.js";
 
 const GAMESTATE = {
   MENU: 0,
@@ -13,9 +13,14 @@ export default class GameMaster {
 
     this.menu = new Menu();
     this.game = new Game();
-    this.musicPl = new MusicPlayer();
-    this.musicPl.audio.play();
-    new InputHandler(this.game.gameObjects, this.menu, this.gamestate,this.musicPl);
+    this.audioPlayer = new AudioPlayer();
+    //this.audioPlayer.music.play();
+    new InputHandler(
+      this.game.gameObjects,
+      this.menu,
+      this.gamestate,
+      this.audioPlayer
+    );
   }
 
   start() {

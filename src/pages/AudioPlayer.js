@@ -7,8 +7,26 @@ export default class AudioPlayer {
 
     this.musicTracks = [this.music];
     this.sounds = [this.soundScroll, this.soundEnter];
+
+    this.musicState = true;
+    this.soundState = true;
   }
-  changeAudioState() {}
+  changeMusicState() {
+    if (this.musicState) {
+      this.musicState = false;
+      this.musicStop();
+    } else {
+      this.musicState = true;
+    }
+  }
+  changeSoundState() {
+    if (this.soundState) {
+      this.soundState = false;
+      this.soundStop();
+    } else {
+      this.soundState = true;
+    }
+  }
   musicStop() {
     for (const obj of Object.values(this.musicTracks)) {
       obj.stop();

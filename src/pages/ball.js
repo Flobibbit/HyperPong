@@ -59,7 +59,7 @@ export default class Ball {
         this.resetSpawn();
         this.speed.x = 5;
         this.score.scoreUp(this.score.scoreR);
-        // this.score.scoreR.sName += 1;
+        // this.score.scoreR.name += 1;
       }
     }
     //right Racket
@@ -76,7 +76,7 @@ export default class Ball {
         this.resetSpawn();
         this.speed.x = -5;
         this.score.scoreUp(this.score.scoreL);
-        //    this.score.scoreL.sName += 1;
+        //    this.score.scoreL.name += 1;
       }
     }
   }
