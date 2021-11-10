@@ -1,5 +1,5 @@
 import Particle from "/src/pages/Particle.js";
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class Ball {
   constructor(racketL, racketR, score) {
@@ -12,7 +12,7 @@ export default class Ball {
     this.size = 18;
 
     this.position = {
-      x: GAME_WIDHT / 2 - this.size / 2,
+      x: GAME_WIDTH / 2 - this.size / 2,
       y: GAME_HEIGHT - 100
     };
 
@@ -98,7 +98,7 @@ export default class Ball {
     const randomSpawnPoint = Math.floor(
       Math.random() * GAME_HEIGHT - this.size
     );
-    this.position.x = GAME_WIDHT / 2 - this.size / 2;
+    this.position.x = GAME_WIDTH / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;
 
     //}, 2000);

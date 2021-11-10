@@ -1,4 +1,4 @@
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class MenuCheckbox {
   constructor() {
@@ -8,10 +8,9 @@ export default class MenuCheckbox {
   draw(ctx) {
     //Malen
     if (this.checkedState) {
-        //draw mit x 
-    }
-    else{
-        //draw ohne x
+      //draw mit x
+    } else {
+      //draw ohne x
     }
   }
 }

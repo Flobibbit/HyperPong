@@ -1,4 +1,4 @@
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuElement from "/src/pages/MenuElement.js";
 
 export default class Score {
@@ -10,7 +10,7 @@ export default class Score {
       GAME_HEIGHT / 8,
       40,
       null,
-      GAME_WIDHT / 4
+      GAME_WIDTH / 4
     );
 
     this.scoreR = new MenuElement(
@@ -18,7 +18,7 @@ export default class Score {
       GAME_HEIGHT / 8,
       40,
       null,
-      (GAME_WIDHT / 4) * 3
+      (GAME_WIDTH / 4) * 3
     );
   }
 

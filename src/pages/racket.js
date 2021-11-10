@@ -1,4 +1,4 @@
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class Racket {
   constructor(location) {
     this.width = 20;
@@ -16,7 +16,7 @@ export default class Racket {
         break;
       case "r":
         this.position = {
-          x: GAME_WIDHT - this.width - 40,
+          x: GAME_WIDTH - this.width - 40,
           y: GAME_HEIGHT / 2 - this.height / 2
         };
         break;

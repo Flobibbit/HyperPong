@@ -1,11 +1,11 @@
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class MovingSmiley {
   constructor() {
     this.size = 130;
     this.borderDistance = 200;
 
     this.position = {
-      x: GAME_WIDHT / 2 - this.size / 2,
+      x: GAME_WIDTH / 2 - this.size / 2,
       y: GAME_HEIGHT - GAME_HEIGHT / 4
     };
 
@@ -26,7 +26,7 @@ export default class MovingSmiley {
 
     //Element Physics
     if (
-      this.position.x >= GAME_WIDHT - this.borderDistance - this.size ||
+      this.position.x >= GAME_WIDTH - this.borderDistance - this.size ||
       this.position.x <= this.borderDistance
     ) {
       this.speedX *= -1;

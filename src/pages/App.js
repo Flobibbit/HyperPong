@@ -1,5 +1,5 @@
 import GameMaster from "/src/pages/GameMaster.js";
-import { GAME_WIDHT, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
@@ -15,11 +15,11 @@ function gameLoop(timeStamp) {
   let deltaTime = timeStamp - lastTime;
   lastTime = timeStamp;
 
-  ctx.clearRect(0, 0, GAME_WIDHT, GAME_HEIGHT);
+  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
   2;
 
   ctx.fillStyle = "#242321";
-  ctx.fillRect(0, 0, GAME_WIDHT, GAME_HEIGHT);
+  ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
   game.draw(ctx);
   game.update();
