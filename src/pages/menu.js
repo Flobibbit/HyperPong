@@ -58,22 +58,26 @@ export default class Menu {
     const characterBlue = new MenuElement({
       name: "RED",
       locationHeight: 230,
-      color: "red"
+      color: "red",
+      disableColorActive: true
     });
     const characterRed = new MenuElement({
       name: "BLUE",
       locationHeight: 340,
-      color: "blue"
+      color: "blue",
+      disableColorActive: true
     });
     const characterYellow = new MenuElement({
       name: "YELLOW",
       locationHeight: 450,
-      color: "yellow"
+      color: "yellow",
+      disableColorActive: true
     });
     const characterOrange = new MenuElement({
       name: "GREEN",
       locationHeight: 560,
-      color: "green"
+      color: "green",
+      disableColorActive: true
     });
     const backStart = new MenuElement({ name: "Back", locationHeight: 650 });
 
@@ -99,7 +103,7 @@ export default class Menu {
     //MANUAL
     const backManual = new MenuElement({ name: "Back", locationHeight: 650 });
 
-    //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw vom menuElement
+    //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der  MenuElement Klasse
     this.menuObjects = {
       menuTitle: [start, settings, manual],
       Start: [
@@ -135,6 +139,7 @@ export default class Menu {
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
       this.menuObjects[this.gamestate][i].draw(ctx);
     }
+    //console.log(this.menuObjects[GAMESTATE.MENU_SETTINGS][0].textWidth);
 
     //PAUSED
     if (this.gamestate == GAMESTATE.PAUSED) {
@@ -148,9 +153,7 @@ export default class Menu {
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.draw(ctx);
     }
-    //START
-    if (this.gamestate == GAMESTATE.START) {
-    }
+
     //SETTINGS
     if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
       ctx.beginPath();
@@ -317,50 +320,37 @@ export default class Menu {
   paintMenuColors() {
     //first paint all white , normal size
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
-      this.menuObjects[this.gamestate][i].pickedStatePl1 = false;
-      this.menuObjects[this.gamestate][i].pickedStatePl2 = false;
+      this.menuObjects[this.gamestate][i].statePl1 = false;
+      this.menuObjects[this.gamestate][i].statePl2 = false;
       this.menuObjects[this.gamestate][i].pxSize = "60";
     }
-    //Color & Size selected element by PL1
+
+    //Color & Size bigger... selected element by PL1
     this.menuObjects[this.gamestate][
       this.currentCursorpositionP1
-    ].pickedStatePl1 = true;
+    ].statePl1 = true;
     this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
       "65";
-    //Color & Size selected element by PL1 (only show in Start)
+
     if (this.gamestate == GAMESTATE.START) {
+      //Color & Size bigger ...selected element by PL2 (only show in Start)
       this.menuObjects[this.gamestate][
         this.currentCursorpositionP2
-      ].pickedStatePl2 = true;
-
+      ].statePl2 = true;
       this.menuObjects[this.gamestate][this.currentCursorpositionP2].pxSize =
         "65";
     }
   }
   changeGamestate() {
-    //look at the last Element in the current list of menuOjects
-    if (
-      this.gamestate !== "menuTitle" &&
-      this.currentCursorpositionP1 ==
-        this.menuObjects[this.gamestate].length - 1
-    ) {
+    if (this.gamestate !== "menuTitle") {
       // CLOSE VIEW
       this.gamestate = this.menuPath[this.menuPath.length - 2]; //take and set  next-to-last gamestate
       this.menuPath.pop(); //delete the last view
     } else {
-      //not for music and sound // and not for red yellow.. etc
-      if (
-        this.gamestate !== GAMESTATE.MENU_SETTINGS &&
-        this.gamestate !== GAMESTATE.START
-      ) {
-        //OPEN VIEW
-        this.gamestate =
-          this.menuObjects[this.gamestate][this.currentCursorpositionP1].name;
-        this.menuPath.push(this.gamestate); //add the current view
-      }
-      if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
-        this.changeCheckedState();
-      }
+      //OPEN VIEW
+      this.gamestate =
+        this.menuObjects[this.gamestate][this.currentCursorpositionP1].name; //to open this view ->set gamestate to the current menuElement name
+      this.menuPath.push(this.gamestate); //adds the current view
     }
     this.resetCursorPosition(); //select the first element
     this.paintMenuColors(); //repaint

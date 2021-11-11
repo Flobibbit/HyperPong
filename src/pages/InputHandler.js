@@ -1,9 +1,10 @@
 export default class InputHandler {
   constructor(gameObjects, menu, gamestate1, audioPlayer) {
-    this.racketL = gameObjects.racketL;
-    this.racketR = gameObjects.racketR;
-    this.gamestate = menu.gamestate;
+    this.racketL = gameObjects.racketL; //racket L from the gameObject list
+    this.racketR = gameObjects.racketR; //racket R from the gameObject list
+
     this.menu = menu;
+
     this.gameMasterState = gamestate1;
     this.audioPlayer = audioPlayer;
 
@@ -22,22 +23,32 @@ export default class InputHandler {
         }
       } else {
         //MENU
+
+        //navigation for PL1->
+        if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
+        if (event.key === "ArrowDown") this.menu.curCursorPositionUp(event.key);
+        //navigation for PL2->
         if (event.key === "w") this.menu.curCursorPositionDown(event.key);
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
 
-        if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
-        if (event.key === "ArrowDown") this.menu.curCursorPositionUp(event.key);
-
-        if (event.key === "Enter") this.menu.changeGamestate();
-
         //Audio Changes
         if (this.menu.gamestate == "Settings") {
+          //cursor at Music
           if (this.menu.currentCursorpositionP1 == 0) {
             if (event.key === "Enter") this.menu.audioPlayer.changeMusicState();
           }
-          if (this.currentCursorpositionP1 == 1) {
+          //cursor at Sound
+          if (this.menu.currentCursorpositionP1 == 1) {
             if (event.key === "Enter") this.menu.audioPlayer.changeSoundState();
           }
+        }
+        //Open and Close Views --> changeGameState
+        if (
+          this.menu.gamestate == "menuTitle" ||
+          this.menu.currentCursorpositionP1 ==
+            this.menu.menuObjects[this.menu.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
+        ) {
+          if (event.key === "Enter") this.menu.changeGamestate();
         }
       }
     });
