@@ -3,20 +3,21 @@ import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class Ball {
   constructor(racketL, racketR, score) {
-    this.racketL = racketL;
-    this.racketR = racketR;
-    this.score = score;
+    this.racketL = racketL; //take care of collisions  via position of racketL
+    this.racketR = racketR; //take care of collisions via position of racketR
+    this.score = score; //to change the correct score, if the ball hits the target/score area
 
-    this.image = document.getElementById("img_pongBall");
+    this.image = document.getElementById("img_pongBall"); //recieves an image from the index.html
 
-    this.size = 18;
+    this.size = 18; //size of the ball in px
 
+    //current position of the ball on the canvas x & y
     this.position = {
       x: GAME_WIDTH / 2 - this.size / 2,
       y: GAME_HEIGHT - 100
     };
 
-    this.speed = { x: 5, y: 5 };
+    this.speed = { x: 5, y: 5 }; //the px lenght that the ball moves with each update into x & y
 
     this.particleObjects = [];
   }
@@ -58,8 +59,7 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = 5;
-        this.score.scoreUp(this.score.scoreR);
-        // this.score.scoreR.name += 1;
+        this.score.scoreUp("r");
       }
     }
     //right Racket
@@ -75,8 +75,7 @@ export default class Ball {
         //miss
         this.resetSpawn();
         this.speed.x = -5;
-        this.score.scoreUp(this.score.scoreL);
-        //    this.score.scoreL.name += 1;
+        this.score.scoreUp("l");
       }
     }
   }
@@ -96,7 +95,7 @@ export default class Ball {
     //  setTimeout(function () {
     // Code, der erst nach 2 Sekunden ausgeführt wird
     const randomSpawnPoint = Math.floor(
-      Math.random() * GAME_HEIGHT - this.size
+      Math.random() * (GAME_HEIGHT - this.size)
     );
     this.position.x = GAME_WIDTH / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;

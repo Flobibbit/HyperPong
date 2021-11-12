@@ -9,7 +9,7 @@ const GAMESTATE = {
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
 
     this.menu = new Menu();
     this.game = new Game();
@@ -24,12 +24,12 @@ export default class GameMaster {
   }
 
   start() {
-    this.gamestate = GAMESTATE.MENU;
+    this.gamestate = GAMESTATE.INGAME;
   }
 
   draw(ctx) {
     if (this.gamestate == GAMESTATE.MENU) {
-      //Draw the menu
+      //Draw Menu-Elements
       this.menu.draw(ctx);
     } else {
       //Draw Game-Elements

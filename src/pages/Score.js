@@ -1,33 +1,38 @@
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
-import MenuElement from "/src/pages/MenuElement.js";
+import MenuElement from "./MenuElement.js";
 
 export default class Score {
   constructor() {
-    this.score = 0;
+    this.scoreLInt = 0; //number of the score for player ->left side
+    this.scoreRInt = 0; //number of the score for player ->right side
 
-    this.scoreL = new MenuElement(
-      this.score,
-      GAME_HEIGHT / 8,
-      40,
-      null,
-      GAME_WIDTH / 4
-    );
+    this.scoreL = new MenuElement({
+      name: "0",
+      pxSize: 40,
+      locationHeight: GAME_HEIGHT / 8,
+      locationWidth: GAME_WIDTH / 4
+    });
+    console.log(this.scoreL);
 
-    this.scoreR = new MenuElement(
-      this.score,
-      GAME_HEIGHT / 8,
-      40,
-      null,
-      (GAME_WIDTH / 4) * 3
-    );
+    this.scoreR = new MenuElement({
+      name: "0",
+      pxSize: 40,
+      locationHeight: GAME_HEIGHT / 8,
+      locationWidth: (GAME_WIDTH / 4) * 3
+    });
   }
 
-  scoreUp(scoreBoard) {
-    scoreBoard.name += 1;
+  scoreUp(playerSide) {
+    if (playerSide === "r") {
+      this.scoreRInt += 1;
+      this.scoreR.name = this.scoreRInt.toString();
+    } else {
+      this.scoreLInt += 1;
+      this.scoreL.name = this.scoreLInt.toString();
+    }
   }
   draw(ctx) {
     this.scoreL.draw(ctx);
     this.scoreR.draw(ctx);
   }
-  update(ctx) {}
 }

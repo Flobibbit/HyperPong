@@ -7,17 +7,11 @@ export default class Game {
   constructor() {
     //ALL GAMEOBJECTS
     this.score = new Score();
-    this.scoreL=new Score()
-    this.scoreR=new Score();
 
     const racketL = new Racket("l");
     const racketR = new Racket("r");
 
-    const ball = new Ball(
-      racketL,
-      racketR,
-      this.score
-    );
+    const ball = new Ball(racketL, racketR, this.score);
 
     this.gameObjects = {
       racketL: racketL,
@@ -25,13 +19,12 @@ export default class Game {
       ball: ball
     };
   }
+  //capable of drawing all Objects in the gameObjects list
   draw(ctx) {
     for (const obj of Object.values(this.gameObjects)) {
       obj.draw(ctx);
     }
-    //Scoreboards
-    this.score.scoreL.draw(ctx);
-    this.score.scoreR.draw(ctx);
+    this.score.draw(ctx);
   }
 
   update() {
