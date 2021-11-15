@@ -14,7 +14,7 @@ game.start();
 function gameLoop(timeStamp) {
   //let deltaTime = timeStamp - lastTime;.........................???
   lastTime = timeStamp;
-
+  
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
   2;
 
@@ -22,7 +22,7 @@ function gameLoop(timeStamp) {
   ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
   game.draw(ctx);
-  game.update();
+  game.update(lastTime);
 
   //when next frame is ready -- every frame --source of the timestamp
   requestAnimationFrame(gameLoop);

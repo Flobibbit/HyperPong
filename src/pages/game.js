@@ -2,6 +2,7 @@ import Racket from "/src/pages/Racket.js";
 import Ball from "/src/pages/Ball.js";
 import InputHandler from "/src/pages/InputHandler.js";
 import Score from "/src/pages/Score.js";
+import gameMods from "/src/pages/gameMod.js"
 
 export default class Game {
   constructor() {
@@ -12,11 +13,12 @@ export default class Game {
     const racketR = new Racket("r");
 
     const ball = new Ball(racketL, racketR, this.score);
-
+    const mods = new gameMods()
     this.gameObjects = {
       racketL: racketL,
       racketR: racketR,
-      ball: ball
+      ball: ball,
+      mods: mods
     };
   }
   //capable of drawing all Objects in the gameObjects list
@@ -27,9 +29,9 @@ export default class Game {
     this.score.draw(ctx);
   }
 
-  update() {
+  update(timestamp) {
     for (const obj of Object.values(this.gameObjects)) {
-      obj.update();
+      obj.update(timestamp);
     }
   }
 }

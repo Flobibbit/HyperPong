@@ -37,8 +37,8 @@ export default class GameMaster {
     }
   }
 
-  update() {
-    this.game.update();
+  update(timestamp) {
+    this.game.update(timestamp);
     this.menu.update();
   }
 }
