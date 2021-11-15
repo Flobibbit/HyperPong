@@ -1,6 +1,6 @@
 import Particle from "/src/pages/Particle.js";
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
-
+//test
 export default class Ball {
   constructor(racketL, racketR, score) {
     this.racketL = racketL; //take care of collisions  via position of racketL
