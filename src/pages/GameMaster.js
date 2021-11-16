@@ -5,11 +5,11 @@ import AudioPlayer from "./AudioPlayer.js";
 
 const GAMESTATE = {
   MENU: 0,
-  INGAME: 1
+  INGAME: 1,
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
 
     this.menu = new Menu();
     this.game = new Game();
@@ -24,7 +24,7 @@ export default class GameMaster {
   }
 
   start() {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
   }
 
   draw(ctx) {

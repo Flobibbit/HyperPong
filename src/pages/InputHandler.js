@@ -32,15 +32,6 @@ export default class InputHandler {
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
 
         if (event.key === "Enter") {
-          //Open and Close Views --> changeGameState
-          if (
-            this.menu.gamestate == "menuTitle" ||
-            this.menu.currentCursorpositionP1 ==
-              this.menu.menuObjects[this.menu.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
-          ) {
-            this.menu.changeGamestate();
-          }
-
           //Audio Changes
           if (this.menu.gamestate == "Settings") {
             switch (this.menu.currentCursorpositionP1) {
@@ -55,6 +46,14 @@ export default class InputHandler {
               default:
               //  return;
             }
+          }
+          //Open and Close Views --> changeGameState
+          if (
+            this.menu.gamestate == "menuTitle" ||
+            this.menu.currentCursorpositionP1 ==
+              this.menu.menuObjects[this.menu.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
+          ) {
+            this.menu.changeGamestate();
           }
         }
       }
