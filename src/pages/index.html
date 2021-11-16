@@ -30,7 +30,10 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const canvas = document.querySelector("canvas");
+        const music = document.getElementById("music"); //recieves an audio included into the index.html
         canvas.focus();
+        canvas.click();
+        music.play();
       });
     </script>
     <script type="module" src="App.js"></script>
