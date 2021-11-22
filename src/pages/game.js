@@ -7,13 +7,14 @@ import gameMods from "/src/pages/gameMod.js"
 export default class Game {
   constructor() {
     //ALL GAMEOBJECTS
+    const mods = new gameMods()
     this.score = new Score();
 
     const racketL = new Racket("l");
     const racketR = new Racket("r");
 
-    const ball = new Ball(racketL, racketR, this.score);
-    const mods = new gameMods()
+    const ball = new Ball(racketL, racketR, this.score, mods);
+    
     this.gameObjects = {
       racketL: racketL,
       racketR: racketR,

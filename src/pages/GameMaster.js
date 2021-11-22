@@ -14,12 +14,13 @@ export default class GameMaster {
     this.menu = new Menu();
     this.game = new Game();
     this.audioPlayer = new AudioPlayer();
+    console.log(this.game)
     //this.audioPlayer.music.play();
     new InputHandler(
       this.game.gameObjects,
       this.menu,
       this.gamestate,
-      this.audioPlayer
+      this.audioPlayer,
     );
   }
 

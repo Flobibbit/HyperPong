@@ -2,14 +2,13 @@ import Particle from "/src/pages/Particle.js";
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 //test
 export default class Ball {
-  constructor(racketL, racketR, score) {
+  constructor(racketL, racketR, score, mod) {
     this.racketL = racketL; //take care of collisions  via position of racketL
     this.racketR = racketR; //take care of collisions via position of racketR
     this.score = score; //to change the correct score, if the ball hits the target/score area
-
     this.image = document.getElementById("img_pongBall"); //recieves an image from the index.html
-
     this.size = 18; //size of the ball in px
+    this.mod=mod
 
     //current position of the ball on the canvas x & y
     this.position = {
@@ -17,8 +16,9 @@ export default class Ball {
       y: GAME_HEIGHT - 100
     };
 
-    this.speed = { x: 5, y: 5 }; //the px lenght that the ball moves with each update into x & y
-
+    
+    this.ballSpeedSum = 10 //the sum of the speed for the x and y
+    this.speed = { x: this.ballSpeedSum/2, y: this.ballSpeedSum/2 }; //the px lenght that the ball moves with each update into x & y
     this.particleObjects = [];
   }
 
@@ -33,12 +33,46 @@ export default class Ball {
   }
 
   update() {
+    if(this.mod.speedUp()){
+      this.ballSpeedSum=16
+      var oldSum=Math.abs(this.speed.x)+Math.abs(this.speed.y)
+      if(oldSum!=this.ballSpeedSum){
+        this.speed.x*=this.ballSpeedSum/oldSum
+        this.speed.y*=this.ballSpeedSum/oldSum
+      }
+    }else{
+      this.ballSpeedSum=10
+      var oldSum=Math.abs(this.speed.x)+Math.abs(this.speed.y)
+      this.speed.x*=this.ballSpeedSum/oldSum
+        this.speed.y*=this.ballSpeedSum/oldSum
+    }
     //change Ball position
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
-    //Bounce of Wall
-    if (this.position.y > GAME_HEIGHT - this.size) this.speed.y *= -1;
-    if (this.position.y < 0) this.speed.y *= -1;
+    //Bounce of Walls
+    if(this.position.y > GAME_HEIGHT - this.size&&this.speed.y>0||this.position.y < 0&&this.speed.y<0){
+      this.speed.y *= -1
+      if(this.mod.randomBounce()){
+        if(this.speed.y>0){
+          this.speed.y = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )
+        }else{
+          this.speed.y = Math.floor(Math.random()*-(this.ballSpeedSum/2)-1 )
+        }
+        if(this.speed.x>0){
+          this.speed.x=this.ballSpeedSum-Math.abs(this.speed.y)
+        }else{
+          this.speed.x=(this.ballSpeedSum-Math.abs(this.speed.y))*-1
+        }
+        /*if(this.speed.x>0){
+          this.speed.x = Math.round(Math.random()*5+1 )
+        }else{
+          this.speed.x = Math.round(Math.random()*-5+1 )
+        }*/
+         //* (this.speed.y/Math.sqrt(Math.pow(this.speed.y)))
+        console.log(this.speed)
+        
+      }
+    }
     //Bounce of rackets und Punkt ende
 
     //MINE
@@ -55,10 +89,20 @@ export default class Ball {
       ) {
         //hit
         this.speed.x *= -1;
+        if(this.mod.randomBounce()){
+          this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )
+          if(Math.floor(Math.random()*2)==0){
+            this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
+          }else{
+            this.speed.y=(this.ballSpeedSum-Math.abs(this.speed.x))*-1
+          }
+          console.log(this.speed)
+        }
       } else {
         //miss
         this.resetSpawn();
-        this.speed.x = 5;
+        this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 );
+        this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
         this.score.scoreUp("r");
       }
     }
@@ -71,15 +115,26 @@ export default class Ball {
       ) {
         //hit
         this.speed.x *= -1;
+        if(this.mod.randomBounce()){
+          this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )*-1
+          if(Math.floor(Math.random()*2)==0){
+            this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
+          }else{
+            this.speed.y=(this.ballSpeedSum-Math.abs(this.speed.x))*-1
+          }
+          
+          console.log(this.speed)
+        }
       } else {
         //miss
         this.resetSpawn();
-        this.speed.x = -5;
+        this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 )*-1;
+        this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
         this.score.scoreUp("l");
       }
     }
   }
-
+  
   resetSpawn() {
     //explode mechanism
     //createParticles();
