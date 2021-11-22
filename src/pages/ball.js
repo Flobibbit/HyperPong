@@ -9,7 +9,9 @@ export default class Ball {
     this.image = document.getElementById("img_pongBall"); //recieves an image from the index.html
     this.size = 18; //size of the ball in px
     this.mod=mod
-
+    this.lMissed=false
+    this.rMissed=false
+    this.lastPoint="/"
     //current position of the ball on the canvas x & y
     this.position = {
       x: GAME_WIDTH / 2 - this.size / 2,
@@ -63,14 +65,7 @@ export default class Ball {
         }else{
           this.speed.x=(this.ballSpeedSum-Math.abs(this.speed.y))*-1
         }
-        /*if(this.speed.x>0){
-          this.speed.x = Math.round(Math.random()*5+1 )
-        }else{
-          this.speed.x = Math.round(Math.random()*-5+1 )
-        }*/
-         //* (this.speed.y/Math.sqrt(Math.pow(this.speed.y)))
         console.log(this.speed)
-        
       }
     }
     //Bounce of rackets und Punkt ende
@@ -81,7 +76,7 @@ export default class Ball {
     //CheckHit with Wall --> Bounce off wall
 
     //left Racket
-    if (this.position.x <= this.racketL.position.x + this.racketL.width) {
+    if (this.position.x <= this.racketL.position.x + this.racketL.width&&this.lMissed==false) {
       if (
         this.position.y + this.size / 2 >= this.racketL.position.y &&
         this.position.y - this.size / 2 <=
@@ -100,14 +95,12 @@ export default class Ball {
         }
       } else {
         //miss
-        this.resetSpawn();
-        this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 );
-        this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
-        this.score.scoreUp("r");
+        this.lMissed=true
+        this.lastPoint="right"
       }
     }
     //right Racket
-    if (this.position.x >= this.racketR.position.x - this.racketR.width) {
+    if (this.position.x >= this.racketR.position.x - this.racketR.width&&this.rMissed==false) {
       if (
         this.position.y + this.size / 2 >= this.racketR.position.y &&
         this.position.y - this.size / 2 <=
@@ -126,12 +119,29 @@ export default class Ball {
           console.log(this.speed)
         }
       } else {
+        this.rMissed=true
+        this.lastPoint="left"
         //miss
-        this.resetSpawn();
+        /*this.resetSpawn();
         this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 )*-1;
         this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
-        this.score.scoreUp("l");
+        this.score.scoreUp("l");*/
       }
+      
+    }
+    if(this.position.x+this.size<=0||this.position.x>=GAME_WIDTH){
+      this.lMissed=false
+      this.rMissed=false
+      this.resetSpawn();
+      this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 );
+      this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
+      if(this.lastPoint=="left"){
+        this.score.scoreUp("l")
+        this.speed.x*=-1
+      }else{
+        this.score.scoreUp("r")
+      }
+      
     }
   }
   
