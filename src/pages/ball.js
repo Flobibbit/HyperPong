@@ -76,8 +76,8 @@ export default class Ball {
     //left Racket
     if (this.position.x <= this.racketL.position.x + this.racketL.width&&this.lMissed==false) {
       if (
-        !(this.position.y + this.size  < this.racketL.position.y ||
-        this.position.y  > this.racketL.position.y + this.racketL.height)
+        (this.position.y + this.size  < this.racketL.position.y ||
+        this.position.y  > this.racketL.position.y + this.racketL.height)==this.mod.racketMiss()
       ) {
         //hit
         this.speed.x *= -1;
@@ -99,8 +99,8 @@ export default class Ball {
     //right Racket
     if (this.position.x+this.size >= this.racketR.position.x&&this.rMissed==false) {
       if (
-        !(this.position.y + this.size  < this.racketR.position.y ||
-        this.position.y  > this.racketR.position.y + this.racketR.height)
+        (this.position.y + this.size  < this.racketR.position.y ||
+        this.position.y  > this.racketR.position.y + this.racketR.height)==this.mod.racketMiss()
       ) {
         //hit
         this.speed.x *= -1;
