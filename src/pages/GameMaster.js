@@ -17,7 +17,6 @@ export default class GameMaster {
     //this.audioPlayer.music.play();
     new InputHandler(
       this.menu,
-      this.gamestate,
       this.audioPlayer
     );
     this.start();

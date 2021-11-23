@@ -1,18 +1,18 @@
 import MovingSmiley from "/src/pages/MovingSmiley.js";
-import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "./constant.js";
 import MenuElement from "./MenuElement.js";
 import AudioPlayer from "./AudioPlayer.js";
 import MenuCheckbox from "./MenuCheckbox.js";
 import Game from "./game.js";
 
 const GAMESTATE = {
-  PAUSED: 0,
-  INGAME: 1,
+  PAUSED: "Paused",
+  INGAME: "Ingame",
   MENU_TITLE: "menuTitle",
   START: "Start",
   MENU_SETTINGS: "Settings",
   MENU_MANUAL: "Manual",
-  GAMEOVER: 5
+  GAMEOVER: "GameOver"
 };
 
 export default class Menu {
@@ -139,7 +139,10 @@ export default class Menu {
       ctx.fillRect(GAME_WIDTH - 250, 35, GAME_WIDTH, 10);
     }
 
-    if (this.gamestate !== GAMESTATE.INGAME) {
+    if (
+      this.gamestate !== GAMESTATE.INGAME &&
+      this.gamestate !== GAMESTATE.PAUSED
+    ) {
       //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
       for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
         this.menuObjects[this.gamestate][i].draw(ctx);
@@ -255,7 +258,6 @@ export default class Menu {
     //INGAME
     if (this.gamestate == GAMESTATE.INGAME) {
       this.game.draw(ctx);
-      console.log("Mama mia");
     }
   }
 
@@ -270,9 +272,11 @@ export default class Menu {
 
   togglePause() {
     if (this.gamestate == GAMESTATE.PAUSED) {
-      this.gamestate = GAMESTATE.RUNNING;
+      this.gamestate = GAMESTATE.INGAME;
+      //start zeit
     } else {
       this.gamestate = GAMESTATE.PAUSED;
+      //pause zeit
     }
   }
   toggleMenuTitle() {

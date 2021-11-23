@@ -1,17 +1,23 @@
 export default class InputHandler {
-  constructor(menu, gamestate1, audioPlayer, gameMaster) {
+  constructor(menu, audioPlayer, gameMaster) {
+    //Game
     this.racketL = null; //needed to move racket L from the gameObject list
     this.racketR = null; //needed to move racket R from the gameObject list
-    this.menu = menu; //needed to handle interactions with Objects in the menu
     this.mods = null;
-    this.gameMasterState = gamestate1; // state of the game-> INGAME | MENU
+
+    //Menu
+    this.menu = menu; //needed to handle interactions with Objects in the menu
+    this.gamestate = menu.gamestate;
+
+    //?
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
     this.gameMaster = gameMaster;
     console.log(gameMaster);
+
     //KeyDown
     document.addEventListener("keydown", (event) => {
       //INGAME
-      if (this.menu.gamestate == 1) {
+      if (this.gamestate == "Ingame") {
         if (!this.mods.invertedControlls()) {
           if (event.key === "w") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
           if (event.key === "s") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
@@ -25,12 +31,8 @@ export default class InputHandler {
           if (event.key === "ArrowUp") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
           if (event.key === "ArrowDown") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
         }
-        if (event.key === "Escape") {
-          this.menu.togglePause(); //when escape  pressed, pause | turn back  -to  the game
-        }
-        if (event.key == "k") this.gameMaster.gamestate = 0;
       } else {
-        //MENU --> gameMasterstate == 0
+        //MENU
 
         //navigation for PL1->
         if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
@@ -38,21 +40,24 @@ export default class InputHandler {
         //navigation for PL2->
         if (event.key === "w") this.menu.curCursorPositionDown(event.key);
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
-        if (event.key == "k") this.gameMaster.gamestate = 1;
 
         if (event.key === "Enter") {
-          if (this.menu.gamestate === "Start") {
+          if (
+            this.gamestate === "Start" &&
+            this.menu.currentCursorpositionP2 !==
+              this.menu.menuObjects[this.gamestate].length - 1
+          ) {
             this.menu.changeGamstateToIngame();
-            //if the game Object is instantiated ... 
+            //if the game Object is instantiated ...
             this.racketL = this.menu.game.gameObjects.racketL;
             this.racketR = this.menu.game.gameObjects.racketR;
             this.mods = this.menu.game.gameObjects.mods;
           } else {
             //Open and Close Views --> changeGameState
             if (
-              this.menu.gamestate == "menuTitle" ||
+              this.gamestate == "menuTitle" ||
               this.menu.currentCursorpositionP1 ==
-                this.menu.menuObjects[this.menu.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
+                this.menu.menuObjects[this.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
             ) {
               console.log("HI test");
               this.menu.changeGamestate();
@@ -60,7 +65,7 @@ export default class InputHandler {
           }
 
           //Audio Changes
-          if (this.menu.gamestate == "Settings") {
+          if (this.gamestate == "Settings") {
             switch (this.menu.currentCursorpositionP1) {
               //cursor at Music
               case 0:
@@ -76,11 +81,14 @@ export default class InputHandler {
           }
         }
       }
+      if (this.gamestate === "Paused" || this.gamestate == "Ingame") {
+        if (event.key == "Escape") this.menu.togglePause();
+      }
     });
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (this.menu.gamestate == 1) {
+      if (this.gamestate == "Ingame") {
         //key-up event for PL1->
         if (event.key === "ArrowUp") this.racketR.stop(); //to stop racketR moving up
         if (event.key === "ArrowDown") this.racketR.stop(); //to stop racketR moving down
