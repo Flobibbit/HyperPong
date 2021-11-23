@@ -139,7 +139,10 @@ export default class Menu {
       ctx.fillRect(GAME_WIDTH - 250, 35, GAME_WIDTH, 10);
     }
 
-    if (this.gamestate !== GAMESTATE.INGAME) {
+    if (
+      this.gamestate !== GAMESTATE.INGAME &&
+      this.gamestate !== GAMESTATE.PAUSED
+    ) {
       //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
       for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
         this.menuObjects[this.gamestate][i].draw(ctx);
@@ -269,10 +272,13 @@ export default class Menu {
   }
 
   togglePause() {
+    console.log("TEst");
     if (this.gamestate == GAMESTATE.PAUSED) {
-      this.gamestate = GAMESTATE.RUNNING;
+      this.gamestate = GAMESTATE.INGAME;
+      //start zeit 
     } else {
       this.gamestate = GAMESTATE.PAUSED;
+      //pause zeit
     }
   }
   toggleMenuTitle() {

@@ -25,11 +25,9 @@ export default class InputHandler {
           if (event.key === "ArrowUp") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
           if (event.key === "ArrowDown") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
         }
-        if (event.key === "Escape") {
-          this.menu.togglePause(); //when escape  pressed, pause | turn back  -to  the game
-        }
+
         if (event.key == "k") this.gameMaster.gamestate = 0;
-      } else {
+      } else if (this.menu.gamestate !== 0) {
         //MENU --> gameMasterstate == 0
 
         //navigation for PL1->
@@ -43,7 +41,7 @@ export default class InputHandler {
         if (event.key === "Enter") {
           if (this.menu.gamestate === "Start") {
             this.menu.changeGamstateToIngame();
-            //if the game Object is instantiated ... 
+            //if the game Object is instantiated ...
             this.racketL = this.menu.game.gameObjects.racketL;
             this.racketR = this.menu.game.gameObjects.racketR;
             this.mods = this.menu.game.gameObjects.mods;
@@ -75,6 +73,9 @@ export default class InputHandler {
             }
           }
         }
+      }
+      if (this.menu.gamestate == 0 || this.menu.gamestate == 1) {
+        if (event.key == "Escape") this.menu.togglePause();
       }
     });
 
