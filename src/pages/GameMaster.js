@@ -9,7 +9,7 @@ const GAMESTATE = {
 };
 export default class GameMaster {
   constructor(ctx) {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
 
     this.menu = new Menu();
     this.game = new Game();
@@ -21,11 +21,12 @@ export default class GameMaster {
       this.menu,
       this.gamestate,
       this.audioPlayer,
+      this
     );
   }
 
   start() {
-    this.gamestate = GAMESTATE.INGAME;
+    this.gamestate = GAMESTATE.MENU;
   }
 
   draw(ctx) {

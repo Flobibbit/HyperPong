@@ -1,16 +1,17 @@
 export default class InputHandler {
-  constructor(gameObjects, menu, gamestate1, audioPlayer, gameMod) {
+  constructor(gameObjects, menu, gamestate1, audioPlayer, gameMaster) {
     this.racketL = gameObjects.racketL; //needed to move racket L from the gameObject list
     this.racketR = gameObjects.racketR; //needed to move racket R from the gameObject list
     this.menu = menu; //needed to handle interactions with Objects in the menu
     this.mods=gameObjects.mods
     this.gameMasterState = gamestate1; // state of the game-> INGAME | MENU
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
-
+    this.gameMaster=gameMaster
+    console.log(gameMaster)
     //KeyDown
     document.addEventListener("keydown", (event) => {
       //INGAME
-      if (this.gameMasterState == "1") {
+      if (this.gameMaster.gamestate == "1") {
         if(!this.mods.invertedControlls()){
         if (event.key === "w") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
         if (event.key === "s") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
@@ -28,6 +29,7 @@ export default class InputHandler {
         if (event.key === "Escape") {
           this.menu.togglePause(); //when escape  pressed, pause | turn back  -to  the game
         }
+        if (event.key == "k") this.gameMaster.gamestate = 0
       } else {
         //MENU --> gameMasterstate == 0
 
@@ -37,6 +39,7 @@ export default class InputHandler {
         //navigation for PL2->
         if (event.key === "w") this.menu.curCursorPositionDown(event.key);
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
+        if (event.key == "k") this.gameMaster.gamestate = 1
 
         if (event.key === "Enter") {
           //Open and Close Views --> changeGameState
@@ -69,16 +72,14 @@ export default class InputHandler {
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (this.gameMasterState == "1") {
+      if (this.gameMaster.gamestate == "1") {
         //key-up event for PL1->
-        if (event.key === "ArrowUp")
-          if (this.racketR.speed != 0) this.racketR.stop(); //to stop racketR moving up
-        if (event.key === "ArrowDown")
-          if (this.racketR.speed != 0) this.racketR.stop(); //to stop racketR moving down
+        if (event.key === "ArrowUp") this.racketR.stop(); //to stop racketR moving up
+        if (event.key === "ArrowDown") this.racketR.stop(); //to stop racketR moving down
       }
       //key-up event for PL2->
-      if (event.key === "w") if (this.racketL.speed != 0) this.racketL.stop(); //to stop racketL moving up
-      if (event.key === "s") if (this.racketL.speed != 0) this.racketL.stop(); //to stop the racketL moving down
+      if (event.key === "w")  this.racketL.stop(); //to stop racketL moving up
+      if (event.key === "s")  this.racketL.stop(); //to stop the racketL moving down
     });
 
     //Anti scroll logic
