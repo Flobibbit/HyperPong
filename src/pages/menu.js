@@ -1,18 +1,18 @@
 import MovingSmiley from "/src/pages/MovingSmiley.js";
-import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "./constant.js";
 import MenuElement from "./MenuElement.js";
 import AudioPlayer from "./AudioPlayer.js";
 import MenuCheckbox from "./MenuCheckbox.js";
 import Game from "./game.js";
 
 const GAMESTATE = {
-  PAUSED: 0,
-  INGAME: 1,
+  PAUSED: "Paused",
+  INGAME: "Ingame",
   MENU_TITLE: "menuTitle",
   START: "Start",
   MENU_SETTINGS: "Settings",
   MENU_MANUAL: "Manual",
-  GAMEOVER: 5
+  GAMEOVER: "GameOver"
 };
 
 export default class Menu {
@@ -258,7 +258,6 @@ export default class Menu {
     //INGAME
     if (this.gamestate == GAMESTATE.INGAME) {
       this.game.draw(ctx);
-      console.log("Mama mia");
     }
   }
 
@@ -272,10 +271,9 @@ export default class Menu {
   }
 
   togglePause() {
-    console.log("TEst");
     if (this.gamestate == GAMESTATE.PAUSED) {
       this.gamestate = GAMESTATE.INGAME;
-      //start zeit 
+      //start zeit
     } else {
       this.gamestate = GAMESTATE.PAUSED;
       //pause zeit
