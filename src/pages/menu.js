@@ -372,13 +372,12 @@ export default class Menu {
         this.gamestate =
           this.menuObjects[this.gamestate][this.currentCursorpositionP1].name; //to open this view ->set gamestate to the current menuElement name
         this.menuPath.push(this.gamestate); //adds the current view
-      } else {
       }
     }
     this.resetCursorPosition(); //select the first element
     this.paintMenuColors(); //repaint
   }
-  changeGamstateToIngame() {
+  changeGamestateToIngame() {
     //Start the game with the choosen colors
     this.game = new Game(
       this.menuObjects[this.gamestate][this.currentCursorpositionP2].color,

@@ -7,7 +7,6 @@ export default class InputHandler {
 
     //Menu
     this.menu = menu; //needed to handle interactions with Objects in the menu
-    this.gamestate = menu.gamestate;
 
     //?
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
@@ -17,7 +16,7 @@ export default class InputHandler {
     //KeyDown
     document.addEventListener("keydown", (event) => {
       //INGAME
-      if (this.gamestate == "Ingame") {
+      if (this.menu.gamestate == "Ingame") {
         if (!this.mods.invertedControlls()) {
           if (event.key === "w") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
           if (event.key === "s") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
@@ -43,52 +42,65 @@ export default class InputHandler {
 
         if (event.key === "Enter") {
           if (
-            this.gamestate === "Start" &&
+            this.menu.gamestate === "Start" &&
+            this.menu.currentCursorpositionP1 !==
+              this.menu.menuObjects[this.menu.gamestate].length - 1 &&
             this.menu.currentCursorpositionP2 !==
-              this.menu.menuObjects[this.gamestate].length - 1
+              this.menu.menuObjects[this.menu.gamestate].length - 1
           ) {
-            this.menu.changeGamstateToIngame();
+            this.menu.changeGamestateToIngame();
+
             //if the game Object is instantiated ...
             this.racketL = this.menu.game.gameObjects.racketL;
             this.racketR = this.menu.game.gameObjects.racketR;
             this.mods = this.menu.game.gameObjects.mods;
-          } else {
-            //Open and Close Views --> changeGameState
-            if (
-              this.gamestate == "menuTitle" ||
-              this.menu.currentCursorpositionP1 ==
-                this.menu.menuObjects[this.gamestate].length - 1 //cursorposition is at the last Element (Back) in the current list of menuOjects
-            ) {
-              console.log("HI test");
-              this.menu.changeGamestate();
-            }
           }
 
-          //Audio Changes
-          if (this.gamestate == "Settings") {
-            switch (this.menu.currentCursorpositionP1) {
-              //cursor at Music
-              case 0:
-                this.menu.audioPlayer.changeMusicState();
-                break;
-              //cursor at Sound
-              case 1:
-                this.menu.audioPlayer.changeSoundState();
-                break;
-              default:
-              //  return;
-            }
+          //Open and Close Views --> changemenu.gamestate
+          else if (
+            this.menu.gamestate == "menuTitle" ||
+            this.menu.currentCursorpositionP1 ==
+              this.menu.menuObjects[this.menu.gamestate].length - 1
+          ) {
+            this.menu.changeGamestate();
+            console.log("aktueller menu.gamestate: " + this.menu.gamestate);
+          } else if (
+            this.menu.currentCursorpositionP2 ==
+            this.menu.menuObjects[this.menu.gamestate].length - 1
+          ) {
+            this.menu.changeGamestate();
+            console.log(this.menu.gamestate);
+          }
+        }
+
+        //Audio Changes
+        if (this.menu.gamestate == "Settings") {
+          switch (this.menu.currentCursorpositionP1) {
+            //cursor at Music
+            case 0:
+              this.menu.audioPlayer.changeMusicState();
+              break;
+            //cursor at Sound
+            case 1:
+              this.menu.audioPlayer.changeSoundState();
+              break;
+            default:
+            //  return;
           }
         }
       }
-      if (this.gamestate === "Paused" || this.gamestate == "Ingame") {
+
+      if (
+        this.menu.gamestate === "Paused" ||
+        this.menu.gamestate === "Ingame"
+      ) {
         if (event.key == "Escape") this.menu.togglePause();
       }
     });
 
     //KeyUp
     document.addEventListener("keyup", (event) => {
-      if (this.gamestate == "Ingame") {
+      if (this.menu.gamestate == "Ingame") {
         //key-up event for PL1->
         if (event.key === "ArrowUp") this.racketR.stop(); //to stop racketR moving up
         if (event.key === "ArrowDown") this.racketR.stop(); //to stop racketR moving down
