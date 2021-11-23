@@ -5,7 +5,7 @@ export default class gameMods{
   constructor(){
     this.modTime=3000.0
     this.modActive = [false, false, false, false]
-    this.modNames = ["Random Bounce", "Speed Up", "Inverted Controlls", "Dodgeball"]
+    this.modNames = ["Random Bounce", "Speed Up", "Inverted", "Dodgeball"]
     this.modStartTime = [0,0,0,0]
     this.modRemainingTime = [0,0,0,0]
     //timerStart=
