@@ -1,6 +1,8 @@
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class Racket {
-  constructor(location) {
+  constructor(location, color = "#ff0") {
+    this.color = color;
+
     this.width = 20;
     this.height = 100;
 
@@ -39,7 +41,7 @@ export default class Racket {
   }
 
   draw(ctx) {
-    ctx.fillStyle = "#ff0";
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
   update() {

@@ -3,10 +3,11 @@ import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuElement from "./MenuElement.js";
 import AudioPlayer from "./AudioPlayer.js";
 import MenuCheckbox from "./MenuCheckbox.js";
+import Game from "./game.js";
 
 const GAMESTATE = {
   PAUSED: 0,
-  RUNNING: "running",
+  INGAME: 1,
   MENU_TITLE: "menuTitle",
   START: "Start",
   MENU_SETTINGS: "Settings",
@@ -21,6 +22,8 @@ export default class Menu {
     this.currentCursorpositionP2 = 0;
     this.checkBoxsize = 60;
 
+    //GAME
+    this.game = null;
     //AUDIO
     this.audioPlayer = new AudioPlayer();
 
@@ -125,7 +128,8 @@ export default class Menu {
     //TITLE HEADER and BACKGROUND
     if (
       this.gamestate !== GAMESTATE.RUNNING &&
-      this.gamestate !== GAMESTATE.PAUSED
+      this.gamestate !== GAMESTATE.PAUSED &&
+      this.gamestate !== GAMESTATE.INGAME
     ) {
       //Title and Shader
       this.titleHeaderShader.draw(ctx);
@@ -135,10 +139,13 @@ export default class Menu {
       ctx.fillRect(GAME_WIDTH - 250, 35, GAME_WIDTH, 10);
     }
 
-    //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
-    for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
-      this.menuObjects[this.gamestate][i].draw(ctx);
+    if (this.gamestate !== GAMESTATE.INGAME) {
+      //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
+      for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
+        this.menuObjects[this.gamestate][i].draw(ctx);
+      }
     }
+
     //console.log(this.menuObjects[GAMESTATE.MENU_SETTINGS][0].textWidth);
 
     //PAUSED
@@ -244,11 +251,20 @@ export default class Menu {
       }
       ctx.stroke();
     }
+
+    //INGAME
+    if (this.gamestate == GAMESTATE.INGAME) {
+      this.game.draw(ctx);
+      console.log("Mama mia");
+    }
   }
 
-  update() {
+  update(lastTime) {
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.update(); // move the smiley
+    }
+    if (this.gamestate == GAMESTATE.INGAME) {
+      this.game.update(lastTime);
     }
   }
 
@@ -347,15 +363,28 @@ export default class Menu {
       this.gamestate = this.menuPath[this.menuPath.length - 2]; //take and set  next-to-last gamestate
       this.menuPath.pop(); //delete the last view
     } else {
-      //OPEN VIEW
-      this.gamestate =
-        this.menuObjects[this.gamestate][this.currentCursorpositionP1].name; //to open this view ->set gamestate to the current menuElement name
-      this.menuPath.push(this.gamestate); //adds the current view
+      if (this.gamestate != GAMESTATE.START) {
+        //OPEN VIEW
+        this.gamestate =
+          this.menuObjects[this.gamestate][this.currentCursorpositionP1].name; //to open this view ->set gamestate to the current menuElement name
+        this.menuPath.push(this.gamestate); //adds the current view
+      } else {
+      }
     }
     this.resetCursorPosition(); //select the first element
     this.paintMenuColors(); //repaint
   }
+  changeGamstateToIngame() {
+    //Start the game with the choosen colors
+    this.game = new Game(
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].color,
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color
+    ); //LeftRacket = Pl2 ......RightRacket = Pl1
 
+    console.log(this.game);
+    this.gamestate = GAMESTATE.INGAME;
+    console.log(this.gamestate);
+  }
   changeCheckedState() {}
 
   resetCursorPosition() {
