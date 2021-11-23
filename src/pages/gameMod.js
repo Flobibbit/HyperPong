@@ -35,7 +35,6 @@ export default class gameMods{
       if(this.modActive[i]){
         if(timeStamp-this.modStartTime[i]>=this.modTime){
           this.modDeactivate(i)
-          console.log("Mod" + i +" deaktiviert")
         }
       }
     }
@@ -49,7 +48,6 @@ export default class gameMods{
     var activeMods = []
     for (let i in this.modActive){
       if(this.modActive[i]){
-        console.log("Dranhängen: " + i)
         activeMods.push(
           new MenuElement({
             name: this.modNames[i],
@@ -66,7 +64,6 @@ export default class gameMods{
       activeMods[i].locationWidth = GAME_WIDTH / (amountOfActiveMods+1)*(i+1)
     }
     this.modDisplayItems = activeMods
-    console.log(this.modDisplayItems)
   }
 
   amountOfModsActive(){
@@ -81,7 +78,6 @@ export default class gameMods{
   draw(ctx){
     this.timeLeft.draw(ctx)
     for(let i of this.modDisplayItems){
-      console.log(i)
       i.draw(ctx)
     }
     

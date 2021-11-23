@@ -65,12 +65,10 @@ export default class Ball {
         }else{
           this.speed.x=(this.ballSpeedSum-Math.abs(this.speed.y))*-1
         }
-        console.log(this.speed)
+        //console.log(this.speed)
       }
     }
     //Bounce of rackets und Punkt ende
-
-    //MINE
 
     //CheckHit with Racket
     //CheckHit with Wall --> Bounce off wall
@@ -78,9 +76,8 @@ export default class Ball {
     //left Racket
     if (this.position.x <= this.racketL.position.x + this.racketL.width&&this.lMissed==false) {
       if (
-        this.position.y + this.size / 2 >= this.racketL.position.y &&
-        this.position.y - this.size / 2 <=
-          this.racketL.position.y + this.racketL.height
+        !(this.position.y + this.size  < this.racketL.position.y ||
+        this.position.y  > this.racketL.position.y + this.racketL.height)
       ) {
         //hit
         this.speed.x *= -1;
@@ -91,7 +88,7 @@ export default class Ball {
           }else{
             this.speed.y=(this.ballSpeedSum-Math.abs(this.speed.x))*-1
           }
-          console.log(this.speed)
+         // console.log(this.speed)
         }
       } else {
         //miss
@@ -100,11 +97,10 @@ export default class Ball {
       }
     }
     //right Racket
-    if (this.position.x >= this.racketR.position.x - this.racketR.width&&this.rMissed==false) {
+    if (this.position.x+this.size >= this.racketR.position.x&&this.rMissed==false) {
       if (
-        this.position.y + this.size / 2 >= this.racketR.position.y &&
-        this.position.y - this.size / 2 <=
-          this.racketR.position.y + this.racketR.height
+        !(this.position.y + this.size  < this.racketR.position.y ||
+        this.position.y  > this.racketR.position.y + this.racketR.height)
       ) {
         //hit
         this.speed.x *= -1;
@@ -116,12 +112,13 @@ export default class Ball {
             this.speed.y=(this.ballSpeedSum-Math.abs(this.speed.x))*-1
           }
           
-          console.log(this.speed)
+          //console.log(this.speed)
         }
       } else {
+        //miss
         this.rMissed=true
         this.lastPoint="left"
-        //miss
+        
         /*this.resetSpawn();
         this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 )*-1;
         this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
