@@ -10,7 +10,6 @@ export default class InputHandler {
 
     //?
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
-  
 
     //KeyDown
     document.addEventListener("keydown", (event) => {
@@ -40,6 +39,22 @@ export default class InputHandler {
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
 
         if (event.key === "Enter") {
+          //Audio Changes
+          if (this.menu.gamestate == "Settings") {
+            switch (this.menu.currentCursorpositionP1) {
+              //cursor at Music
+              case 0:
+                this.menu.audioPlayer.changeMusicState();
+                break;
+              //cursor at Sound
+              case 1:
+                this.menu.audioPlayer.changeSoundState();
+                break;
+              default:
+              //  return;
+            }
+          }
+
           //cursor isn't on "back" , but on an element at start screen
           if (
             this.menu.gamestate === "Start" &&
@@ -48,7 +63,7 @@ export default class InputHandler {
             this.menu.currentCursorpositionP2 !==
               this.menu.menuObjects[this.menu.gamestate].length - 1
           ) {
-            this.menu.changeGamestateToIngame();//also instantiates the game Object
+            this.menu.changeGamestateToIngame(); //also instantiates the game Object
 
             //if the game Object is instantiated ... declare the following to handle events
             this.racketL = this.menu.game.gameObjects.racketL;
@@ -65,26 +80,11 @@ export default class InputHandler {
             console.log("aktueller menu.gamestate: " + this.menu.gamestate);
           } else if (
             this.menu.currentCursorpositionP2 ==
-            this.menu.menuObjects[this.menu.gamestate].length - 1
+              this.menu.menuObjects[this.menu.gamestate].length - 1 &&
+            menu.gamestate != "Settings"
           ) {
             this.menu.changeGamestate();
             console.log(this.menu.gamestate);
-          }
-        }
-
-        //Audio Changes
-        if (this.menu.gamestate == "Settings") {
-          switch (this.menu.currentCursorpositionP1) {
-            //cursor at Music
-            case 0:
-              this.menu.audioPlayer.changeMusicState();
-              break;
-            //cursor at Sound
-            case 1:
-              this.menu.audioPlayer.changeSoundState();
-              break;
-            default:
-            //  return;
           }
         }
       }

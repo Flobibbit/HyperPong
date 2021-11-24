@@ -35,7 +35,7 @@ export default class MenuElement {
 
     //draws the menu element with the following settings & based on the ctx fillstyle
     ctx.font = this.pxSize.toString() + "px PressStart2P";
-    console.log("NAME: "+this.name+" größe: "+ctx.font)
+  
     ctx.textAlign = "center";
     ctx.fillText(this.name, this.locationWidth, this.locationHeight);
   }
