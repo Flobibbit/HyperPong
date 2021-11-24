@@ -30,59 +30,54 @@ export default class Menu {
     //ALL MENUOBJECTS
     this.titleHeader = new MenuElement({
       name: "Hyperpong",
-      locationHeight: 90,
-      pxSize: 80,
+      locationHeight: 80,
+      pxSize: 70,
       color: "yellow"
     });
 
-    console.log(this.titleHeader.name);
     this.titleHeaderShader = new MenuElement({
       name: "Hyperpong",
-      locationHeight: 93,
-      pxSize: 84,
+      locationHeight: 83,
+      pxSize: 74,
       color: "black"
     });
 
-    this.pause = new MenuElement({
-      name: "Paused",
-      locationHeight: GAME_HEIGHT / 2
-    });
-
     //mainTitle
-    const start = new MenuElement({ name: "Start", locationHeight: 230 });
+    const start = new MenuElement({ name: "Start", locationHeight: 210 });
     const settings = new MenuElement({
       name: "Settings",
-      locationHeight: 340
+      locationHeight: 310
     });
-    const manual = new MenuElement({ name: "Manual", locationHeight: 450 });
+    const manual = new MenuElement({ name: "Manual", locationHeight: 410 });
     this.movingSmiley = new MovingSmiley();
 
     //Start
     const characterBlue = new MenuElement({
       name: "RED",
-      locationHeight: 230,
+      locationHeight: 185,
       color: "red",
       disableColorActive: true
     });
+    console.log(characterBlue.pxSize);
     const characterRed = new MenuElement({
       name: "BLUE",
-      locationHeight: 340,
+      locationHeight: 285,
       color: "blue",
       disableColorActive: true
     });
     const characterYellow = new MenuElement({
       name: "YELLOW",
-      locationHeight: 450,
+      locationHeight: 385,
       color: "yellow",
       disableColorActive: true
     });
     const characterOrange = new MenuElement({
       name: "GREEN",
-      locationHeight: 560,
+      locationHeight: 485,
       color: "green",
       disableColorActive: true
     });
-    const backStart = new MenuElement({ name: "Back", locationHeight: 650 });
+    const backStart = new MenuElement({ name: "Back", locationHeight: 580 });
 
     //Settingss
     const checkBoxMusic = new MenuCheckbox();
@@ -104,7 +99,13 @@ export default class Menu {
     });
 
     //MANUAL
-    const backManual = new MenuElement({ name: "Back", locationHeight: 650 });
+    const backManual = new MenuElement({ name: "Back", locationHeight: 500 });
+
+    //PAUSED
+    this.pause = new MenuElement({
+      name: "Paused",
+      locationHeight: GAME_HEIGHT / 2
+    });
 
     //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der  MenuElement Klasse
     this.menuObjects = {
@@ -135,8 +136,8 @@ export default class Menu {
       this.titleHeaderShader.draw(ctx);
       this.titleHeader.draw(ctx);
       ctx.fillStyle = "#ff0";
-      ctx.fillRect(0, 35, 250, 10);
-      ctx.fillRect(GAME_WIDTH - 250, 35, GAME_WIDTH, 10);
+      ctx.fillRect(0, 35, 210, 10);
+      ctx.fillRect(GAME_WIDTH - 220, 35, GAME_WIDTH, 10);
     }
 
     if (
@@ -148,8 +149,6 @@ export default class Menu {
         this.menuObjects[this.gamestate][i].draw(ctx);
       }
     }
-
-    //console.log(this.menuObjects[GAMESTATE.MENU_SETTINGS][0].textWidth);
 
     //PAUSED
     if (this.gamestate == GAMESTATE.PAUSED) {
@@ -342,7 +341,7 @@ export default class Menu {
     for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
       this.menuObjects[this.gamestate][i].statePl1 = false;
       this.menuObjects[this.gamestate][i].statePl2 = false;
-      this.menuObjects[this.gamestate][i].pxSize = "60";
+      this.menuObjects[this.gamestate][i].pxSize = "50";
     }
 
     //Color & Size bigger... selected element by PL1
@@ -350,7 +349,7 @@ export default class Menu {
       this.currentCursorpositionP1
     ].statePl1 = true;
     this.menuObjects[this.gamestate][this.currentCursorpositionP1].pxSize =
-      "65";
+      "55";
 
     if (this.gamestate == GAMESTATE.START) {
       //Color & Size bigger ...selected element by PL2 (only show in Start)
@@ -358,7 +357,7 @@ export default class Menu {
         this.currentCursorpositionP2
       ].statePl2 = true;
       this.menuObjects[this.gamestate][this.currentCursorpositionP2].pxSize =
-        "65";
+        "55";
     }
   }
   changeGamestate() {

@@ -10,8 +10,7 @@ export default class InputHandler {
 
     //?
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
-    this.gameMaster = gameMaster;
-    console.log(gameMaster);
+  
 
     //KeyDown
     document.addEventListener("keydown", (event) => {
@@ -41,6 +40,7 @@ export default class InputHandler {
         if (event.key === "s") this.menu.curCursorPositionUp(event.key);
 
         if (event.key === "Enter") {
+          //cursor isn't on "back" , but on an element at start screen
           if (
             this.menu.gamestate === "Start" &&
             this.menu.currentCursorpositionP1 !==
@@ -48,15 +48,14 @@ export default class InputHandler {
             this.menu.currentCursorpositionP2 !==
               this.menu.menuObjects[this.menu.gamestate].length - 1
           ) {
-            this.menu.changeGamestateToIngame();
+            this.menu.changeGamestateToIngame();//also instantiates the game Object
 
-            //if the game Object is instantiated ...
+            //if the game Object is instantiated ... declare the following to handle events
             this.racketL = this.menu.game.gameObjects.racketL;
             this.racketR = this.menu.game.gameObjects.racketR;
             this.mods = this.menu.game.gameObjects.mods;
           }
-
-          //Open and Close Views --> changemenu.gamestate
+          //Open and Close Views
           else if (
             this.menu.gamestate == "menuTitle" ||
             this.menu.currentCursorpositionP1 ==
