@@ -107,6 +107,12 @@ export default class Menu {
       locationHeight: GAME_HEIGHT / 2
     });
 
+    //GAMEOVER
+    this.gameOver = new MenuElement({
+      name: "GAME OVER",
+      locationHeight: GAME_HEIGHT / 2 - 50
+    });
+
     //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der  MenuElement Klasse
     this.menuObjects = {
       menuTitle: [start, settings, manual],
@@ -126,6 +132,30 @@ export default class Menu {
   }
 
   draw(ctx) {
+    //PAUSED
+    if (this.gamestate == GAMESTATE.PAUSED) {
+      ctx.rect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+      ctx.fillStyle = "#000000AA";
+      ctx.fill();
+      //paused
+      this.pause.draw(ctx);
+    }
+    //GAMEOVER
+    if (this.gamestate == GAMESTATE.GAMEOVER) {
+      ctx.fillStyle = "white";
+      ctx.fillRect(GAME_WIDTH / 2 - 5, GAME_HEIGHT / 2, 10, 200);
+
+      //Score Looser
+      this.game.score.scoreL.locationHeight *= 6;
+      this.game.score.scoreR.locationHeight *= 6;
+
+      this.game.score.scoreL.draw(ctx);
+      this.game.score.scoreR.draw(ctx);
+      //Score winner
+
+      //GameOver
+      this.gameOver.draw(ctx);
+    }
     //TITLE HEADER and BACKGROUND
     if (
       this.gamestate !== GAMESTATE.RUNNING &&
@@ -150,15 +180,6 @@ export default class Menu {
       }
     }
 
-    //PAUSED
-    if (this.gamestate == GAMESTATE.PAUSED) {
-      ctx.rect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-      ctx.fillStyle = "#000000AA";
-      ctx.fill();
-
-      //paused
-      this.pause.draw(ctx);
-    }
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.draw(ctx);
     }
@@ -266,6 +287,13 @@ export default class Menu {
     }
     if (this.gamestate == GAMESTATE.INGAME) {
       this.game.update(lastTime);
+
+      if (
+        this.game.score.scoreLInt >= this.game.score.gameOverScore ||
+        this.game.score.scoreRInt >= this.game.score.gameOverScore
+      ) {
+        this.gamestate = GAMESTATE.GAMEOVER;
+      }
     }
   }
 
@@ -383,9 +411,8 @@ export default class Menu {
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].color
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
 
-    console.log(this.game);
+   
     this.gamestate = GAMESTATE.INGAME;
-    console.log(this.gamestate);
   }
   changeCheckedState() {}
 
