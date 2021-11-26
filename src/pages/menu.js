@@ -21,7 +21,8 @@ export default class Menu {
     this.currentCursorpositionP1 = 0;
     this.currentCursorpositionP2 = 0;
     this.checkBoxsize = 60;
-
+    this.timeStamp = 0;
+    this.timePauseOn = 0;
     //GAME
     this.game = null;
     //AUDIO
@@ -282,6 +283,7 @@ export default class Menu {
   }
 
   update(lastTime) {
+    this.timeStamp=lastTime
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.update(); // move the smiley
     }
@@ -300,9 +302,14 @@ export default class Menu {
   togglePause() {
     if (this.gamestate == GAMESTATE.PAUSED) {
       this.gamestate = GAMESTATE.INGAME;
+      this.game.gameObjects.mods.timeLeftStart+=this.timeStamp-this.timePauseOn
+      for(let i in this.game.gameObjects.mods.modStartTime)[
+        this.game.gameObjects.mods.modStartTime[i]+=this.timeStamp-this.timePauseOn
+      ]
       //start zeit
     } else {
       this.gamestate = GAMESTATE.PAUSED;
+      this.timePauseOn = this.timeStamp;
       //pause zeit
     }
   }
