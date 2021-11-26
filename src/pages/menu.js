@@ -172,7 +172,8 @@ export default class Menu {
 
     if (
       this.gamestate !== GAMESTATE.INGAME &&
-      this.gamestate !== GAMESTATE.PAUSED
+      this.gamestate !== GAMESTATE.PAUSED &&
+      this.gamestate !== GAMESTATE.GAMEOVER
     ) {
       //capable of drawing all Objects in the menuObjects list (according to the current Gamestate)
       for (let i = 0; i < this.menuObjects[this.gamestate].length; i++) {
@@ -411,8 +412,10 @@ export default class Menu {
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].color
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
 
-   
     this.gamestate = GAMESTATE.INGAME;
+  }
+  changeGamestateToTitleScreen() {
+    this.gamestate == GAMESTATE.MENU_TITLE;
   }
   changeCheckedState() {}
 

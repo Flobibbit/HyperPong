@@ -54,7 +54,46 @@ export default class InputHandler {
               //  return;
             }
           }
+          switch (this.menu.gamestate) {
+            case "Start":
+              if (
+                this.menu.currentCursorpositionP1 !==
+                  this.menu.menuObjects[this.menu.gamestate].length - 1 &&
+                this.menu.currentCursorpositionP2 !==
+                  this.menu.menuObjects[this.menu.gamestate].length - 1
+              ) {
+                this.menu.changeGamestateToIngame(); //also instantiates the game Object
+                //if the game Object is instantiated ... declare the following to handle events
+                this.racketL = this.menu.game.gameObjects.racketL;
+                this.racketR = this.menu.game.gameObjects.racketR;
+                this.mods = this.menu.game.gameObjects.mods;
+              } else {
+                this.menu.changeGamestate();
+              }
+              break;
+            case "GameOver":
+              this.menu.changeGamestateToTitleScreen();
+              console.log("Titlescreen");
 
+            case "menuTitle":
+              this.menu.changeGamestate();
+              console.log("aktueller menu.gamestate: " + this.menu.gamestate);
+              break;
+
+            default:
+              if (
+                this.menu.currentCursorpositionP1 ==
+                  this.menu.menuObjects[this.menu.gamestate].length - 1 ||
+                this.menu.currentCursorpositionP2 ==
+                  this.menu.menuObjects[this.menu.gamestate].length - 1
+              ) {
+                this.menu.changeGamestate();
+                console.log("aktueller menu.gamestate: " + this.menu.gamestate);
+              }
+            //  return;
+          }
+
+          /*
           //cursor isn't on "back" , but on an element at start screen
           if (
             this.menu.gamestate === "Start" &&
@@ -69,6 +108,9 @@ export default class InputHandler {
             this.racketL = this.menu.game.gameObjects.racketL;
             this.racketR = this.menu.game.gameObjects.racketR;
             this.mods = this.menu.game.gameObjects.mods;
+          } else if (this.menu.gamestate == "GameOver") {
+            this.menu.changeGamestateToTitleScreen();
+            console.log("Titlescreen");
           }
           //Open and Close Views
           else if (
@@ -85,7 +127,7 @@ export default class InputHandler {
           ) {
             this.menu.changeGamestate();
             console.log(this.menu.gamestate);
-          }
+          }*/
         }
       }
 
