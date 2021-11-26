@@ -147,15 +147,12 @@ export default class Menu {
       ctx.fillRect(GAME_WIDTH / 2 - 5, GAME_HEIGHT / 2, 10, 200);
 
       //Score Looser
-      this.game.score.scoreL.locationHeight *= 6;
-      this.game.score.scoreR.locationHeight *= 6;
-
       this.game.score.scoreL.draw(ctx);
       this.game.score.scoreR.draw(ctx);
       //Score winner
+      this.gameOver.draw(ctx);
 
       //GameOver
-      this.gameOver.draw(ctx);
     }
     //TITLE HEADER and BACKGROUND
     if (
@@ -284,7 +281,7 @@ export default class Menu {
   }
 
   update(lastTime) {
-    this.timeStamp=lastTime
+    this.timeStamp = lastTime;
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.update(); // move the smiley
     }
@@ -295,6 +292,8 @@ export default class Menu {
         this.game.score.scoreLInt >= this.game.score.gameOverScore ||
         this.game.score.scoreRInt >= this.game.score.gameOverScore
       ) {
+        this.game.score.scoreL.locationHeight *= 6;
+        this.game.score.scoreR.locationHeight *= 6;
         this.gamestate = GAMESTATE.GAMEOVER;
       }
     }
@@ -303,10 +302,13 @@ export default class Menu {
   togglePause() {
     if (this.gamestate == GAMESTATE.PAUSED) {
       this.gamestate = GAMESTATE.INGAME;
-      this.game.gameObjects.mods.timeLeftStart+=this.timeStamp-this.timePauseOn
-      for(let i in this.game.gameObjects.mods.modStartTime)[
-        this.game.gameObjects.mods.modStartTime[i]+=this.timeStamp-this.timePauseOn
-      ]
+      this.game.gameObjects.mods.timeLeftStart +=
+        this.timeStamp - this.timePauseOn;
+      for (let i in this.game.gameObjects.mods.modStartTime)
+        [
+          (this.game.gameObjects.mods.modStartTime[i] +=
+            this.timeStamp - this.timePauseOn)
+        ];
       //start zeit
     } else {
       this.gamestate = GAMESTATE.PAUSED;
