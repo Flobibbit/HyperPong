@@ -4,7 +4,9 @@ import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class Ball {
   constructor(racketL, racketR, score, mod) {
     this.racketL = racketL; //take care of collisions  via position of racketL
+    this.racketL.ball = this
     this.racketR = racketR; //take care of collisions via position of racketR
+    this.racketR.ball = this
     this.score = score; //to change the correct score, if the ball hits the target/score area
     this.image = document.getElementById("img_pongBall"); //recieves an image from the index.html
     this.size = 18; //size of the ball in px
@@ -12,6 +14,7 @@ export default class Ball {
     this.lMissed=false
     this.rMissed=false
     this.lastPoint="/"
+    this.ballColor = "#FFFFFF"
     //current position of the ball on the canvas x & y
     this.position = {
       x: GAME_WIDTH / 2 - this.size / 2,
@@ -25,13 +28,13 @@ export default class Ball {
   }
 
   draw(ctx) {
-    ctx.drawImage(
-      this.image,
+    ctx.fillStyle=this.ballColor
+    ctx.fillRect(
       this.position.x,
       this.position.y,
       this.size,
       this.size
-    );
+    )
   }
 
   update() {
@@ -53,21 +56,10 @@ export default class Ball {
     this.position.y += this.speed.y;
     //Bounce of Walls
     if(this.position.y > GAME_HEIGHT - this.size&&this.speed.y>0||this.position.y < 0&&this.speed.y<0){
-      this.speed.y *= -1
-      if(this.mod.randomBounce()){
-        if(this.speed.y>0){
-          this.speed.y = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )
-        }else{
-          this.speed.y = Math.floor(Math.random()*-(this.ballSpeedSum/2)-1 )
-        }
-        if(this.speed.x>0){
-          this.speed.x=this.ballSpeedSum-Math.abs(this.speed.y)
-        }else{
-          this.speed.x=(this.ballSpeedSum-Math.abs(this.speed.y))*-1
-        }
-        //console.log(this.speed)
-      }
+      this.yBounce()
     }
+
+    
     //Bounce of rackets und Punkt ende
 
     //CheckHit with Racket
@@ -118,13 +110,7 @@ export default class Ball {
         //miss
         this.rMissed=true
         this.lastPoint="left"
-        
-        /*this.resetSpawn();
-        this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+3 )*-1;
-        this.speed.y=this.ballSpeedSum-Math.abs(this.speed.x)
-        this.score.scoreUp("l");*/
       }
-      
     }
     if(this.position.x+this.size<=0||this.position.x>=GAME_WIDTH){
       this.lMissed=false
@@ -141,7 +127,22 @@ export default class Ball {
       
     }
   }
-  
+  yBounce(){
+    this.speed.y *= -1
+      if(this.mod.randomBounce()){
+        if(this.speed.y>0){
+          this.speed.y = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )
+        }else{
+          this.speed.y = Math.floor(Math.random()*-(this.ballSpeedSum/2)-1 )
+        }
+        if(this.speed.x>0){
+          this.speed.x=this.ballSpeedSum-Math.abs(this.speed.y)
+        }else{
+          this.speed.x=(this.ballSpeedSum-Math.abs(this.speed.y))*-1
+        }
+        //console.log(this.speed)
+      }
+  }
   resetSpawn() {
     //explode mechanism
     //createParticles();
@@ -154,7 +155,7 @@ export default class Ball {
       }
     });*/
     // wait
-    //  setTimeout(function () {
+    
     // Code, der erst nach 2 Sekunden ausgeführt wird
     const randomSpawnPoint = Math.floor(
       Math.random() * (GAME_HEIGHT - this.size)
@@ -162,7 +163,6 @@ export default class Ball {
     this.position.x = GAME_WIDTH / 2 - this.size / 2;
     this.position.y = randomSpawnPoint;
 
-    //}, 2000);
   }
 
   createParticles() {

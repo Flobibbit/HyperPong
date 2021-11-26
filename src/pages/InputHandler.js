@@ -18,9 +18,11 @@ export default class InputHandler {
         if (!this.mods.invertedControlls()) {
           if (event.key === "w") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
           if (event.key === "s") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
+          
 
           if (event.key === "ArrowDown") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
           if (event.key === "ArrowUp") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
+          
         } else {
           if (event.key === "s") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
           if (event.key === "w") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
@@ -28,9 +30,10 @@ export default class InputHandler {
           if (event.key === "ArrowUp") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
           if (event.key === "ArrowDown") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
         }
+        if (event.key == "ArrowLeft") this.racketR.activateSpecialMove()
+        if (event.key == "d") this.racketL.activateSpecialMove()
       } else {
         //MENU
-
         //navigation for PL1->
         if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
         if (event.key === "ArrowDown") this.menu.curCursorPositionUp(event.key);
