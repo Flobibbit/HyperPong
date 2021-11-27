@@ -96,11 +96,11 @@ export default class Menu {
     });
     const backSettings = new MenuElement({
       name: "Back",
-      locationHeight: 570
+      locationHeight: 540
     });
 
     //MANUAL
-    const backManual = new MenuElement({ name: "Back", locationHeight: 570 });
+    const backManual = new MenuElement({ name: "Back", locationHeight: 580 });
 
     //PAUSED
     this.pause = new MenuElement({
@@ -111,7 +111,13 @@ export default class Menu {
     //GAMEOVER
     this.gameOver = new MenuElement({
       name: "GAME OVER",
-      locationHeight: GAME_HEIGHT / 2 - 50
+      locationHeight: GAME_HEIGHT / 2 - 110
+    });
+
+    this.overEnter = new MenuElement({
+      name: "Press ENTER to return to MENU",
+      locationHeight: GAME_HEIGHT - 70,
+      pxSize: 20
     });
 
     //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der  MenuElement Klasse
@@ -135,16 +141,18 @@ export default class Menu {
   draw(ctx) {
     //PAUSED
     if (this.gamestate == GAMESTATE.PAUSED) {
+      this.game.draw(ctx);
       ctx.rect(0, 0, GAME_WIDTH, GAME_HEIGHT);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
       //paused
+
       this.pause.draw(ctx);
     }
     //GAMEOVER
     if (this.gamestate == GAMESTATE.GAMEOVER) {
       ctx.fillStyle = "white";
-      ctx.fillRect(GAME_WIDTH / 2 - 5, GAME_HEIGHT / 2, 10, 200);
+      ctx.fillRect(GAME_WIDTH / 2 - 5, GAME_HEIGHT / 2 - 50, 10, 200);
 
       //Score Looser
       this.game.score.scoreL.draw(ctx);
@@ -152,7 +160,7 @@ export default class Menu {
       //Score winner
       this.gameOver.draw(ctx);
 
-      //GameOver
+      this.overEnter.draw(ctx);
     }
     //TITLE HEADER and BACKGROUND
     if (
@@ -178,7 +186,7 @@ export default class Menu {
         this.menuObjects[this.gamestate][i].draw(ctx);
       }
     }
-
+    //MENUTITLE
     if (this.gamestate == GAMESTATE.MENU_TITLE) {
       this.movingSmiley.draw(ctx);
     }
@@ -278,6 +286,27 @@ export default class Menu {
     if (this.gamestate == GAMESTATE.INGAME) {
       this.game.draw(ctx);
     }
+    //Start
+    if (this.gamestate == GAMESTATE.START) {
+      if (this.currentCursorpositionP1 !== 4) {
+        //Left Rectangle
+        ctx.beginPath();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle =
+          this.menuObjects[this.gamestate][this.currentCursorpositionP1].color;
+        ctx.rect(20, 120, 285, 400);
+        ctx.stroke();
+      }
+      if (this.currentCursorpositionP2 !== 4) {
+        //right Rectangle
+        ctx.beginPath();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle =
+          this.menuObjects[this.gamestate][this.currentCursorpositionP2].color;
+        ctx.rect(GAME_WIDTH - 20 - 285, 120, 285, 400);
+        ctx.stroke();
+      }
+    }
   }
 
   update(lastTime) {
@@ -292,8 +321,17 @@ export default class Menu {
         this.game.score.scoreLInt >= this.game.score.gameOverScore ||
         this.game.score.scoreRInt >= this.game.score.gameOverScore
       ) {
-        this.game.score.scoreL.locationHeight *= 6;
-        this.game.score.scoreR.locationHeight *= 6;
+        this.game.score.scoreL.locationHeight =
+          this.game.score.scoreL.locationHeight * 6 - 65;
+        this.game.score.scoreR.locationHeight =
+          this.game.score.scoreR.locationHeight * 6 - 65;
+        if (this.game.score.scoreLInt > this.game.score.scoreRInt) {
+          this.game.score.scoreL.color = "Green";
+          this.game.score.scoreR.color = "Red";
+        } else {
+          this.game.score.scoreL.color = "Red";
+          this.game.score.scoreR.color = "Green";
+        }
         this.gamestate = GAMESTATE.GAMEOVER;
       }
     }

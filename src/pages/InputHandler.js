@@ -32,12 +32,16 @@ export default class InputHandler {
         if (event.key == "d") this.racketL.activateSpecialMove();
       } else {
         //MENU
-        //navigation for PL1->
-        if (event.key === "ArrowUp") this.menu.curCursorPositionDown(event.key);
-        if (event.key === "ArrowDown") this.menu.curCursorPositionUp(event.key);
-        //navigation for PL2->
-        if (event.key === "w") this.menu.curCursorPositionDown(event.key);
-        if (event.key === "s") this.menu.curCursorPositionUp(event.key);
+        if (this.menu.gamestate !== "GameOver") {
+          //navigation for PL1->
+          if (event.key === "ArrowUp")
+            this.menu.curCursorPositionDown(event.key);
+          if (event.key === "ArrowDown")
+            this.menu.curCursorPositionUp(event.key);
+          //navigation for PL2->
+          if (event.key === "w") this.menu.curCursorPositionDown(event.key);
+          if (event.key === "s") this.menu.curCursorPositionUp(event.key);
+        }
 
         if (event.key === "Enter") {
           //Audio Changes
