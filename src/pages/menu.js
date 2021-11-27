@@ -96,11 +96,11 @@ export default class Menu {
     });
     const backSettings = new MenuElement({
       name: "Back",
-      locationHeight: 540
+      locationHeight: 570
     });
 
     //MANUAL
-    const backManual = new MenuElement({ name: "Back", locationHeight: 500 });
+    const backManual = new MenuElement({ name: "Back", locationHeight: 570 });
 
     //PAUSED
     this.pause = new MenuElement({
