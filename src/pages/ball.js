@@ -33,6 +33,26 @@ export default class Ball {
   }
 
   update() {
+    if(this.mod.speedUp()){
+      if(this.racketL.blueMoveData.activated||this.racketR.blueMoveData.activated){
+        this.ballSpeedSum=this.racketL.blueMoveData.speedUpSpeed
+      }else{
+        this.ballSpeedSum=16
+      }
+      var oldSum=Math.abs(this.speed.x)+Math.abs(this.speed.y)
+      this.speed.x=Math.round(this.speed.x*(this.ballSpeedSum/oldSum))
+      this.speed.y=Math.round(this.speed.y*(this.ballSpeedSum/oldSum))
+    }else{
+      if(this.racketL.blueMoveData.activated||this.racketR.blueMoveData.activated){
+        this.ballSpeedSum=this.racketL.blueMoveData.speed
+        console.log(this.ballSpeedSum)
+      }else{
+        this.ballSpeedSum=10
+      }
+      var oldSum=Math.abs(this.speed.x)+Math.abs(this.speed.y)
+      this.speed.x=Math.round(this.speed.x*(this.ballSpeedSum/oldSum))
+      this.speed.y=Math.round(this.speed.y*(this.ballSpeedSum/oldSum))
+    }
     //change Ball position
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
