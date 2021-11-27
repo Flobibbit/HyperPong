@@ -6,6 +6,19 @@ export default class Racket {
       duration: 1000,
       activated: false
     };
+    this.blueMoveData={
+      starttime: 0,
+      duration: 1000,
+      activated: false,
+      speed: 8,
+      speedUpSpeed: 12,
+    };
+    this.greenMoveData={
+      starttime: 0,
+      duration: 2000,
+      activated: false,
+      height: 150
+    };
     this.ball=null;
     this.color = color;
     this.starttime = 0;
@@ -80,15 +93,25 @@ export default class Racket {
     if(this.timePassed>=this.cooldownLength){
       this.timePassed = this.cooldownLength
     }
+    if(this.yellowMoveData.activated&&timestamp-this.yellowMoveData.starttime>this.yellowMoveData.duration){
+      this.ball.ballColor="#FFFFFF"
+      this.yellowMoveData.activated=false
+    }
+    if(this.blueMoveData.activated&&timestamp-this.blueMoveData.starttime>this.blueMoveData.duration){
+      this.blueMoveData.activated=false
+    }
+    if(this.greenMoveData.activated&&timestamp-this.greenMoveData.starttime>this.greenMoveData.duration){
+      this.greenMoveData.activated=false
+      this.height=100
+      this.position.y+=(this.greenMoveData.height-this.height)/2
+    }
     this.position.y += this.speed;
     //Border control
     if (this.position.y < 0) this.position.y = 0;
     if (this.position.y + this.height > GAME_HEIGHT)
       this.position.y = GAME_HEIGHT - this.height;
-    if(this.yellowMoveData.activated&&timestamp-this.yellowMoveData.starttime>this.yellowMoveData.duration){
-      this.ball.ballColor="#FFFFFF"
-      this.yellowMoveData.activated=false
-    }
+    
+    
   }
 
   activateSpecialMove(){
@@ -116,7 +139,6 @@ export default class Racket {
   }
 
   specialMoveRed(){
-    console.log("Special move Red getriggert")
     this.ball.yBounce()
   }
   specialMoveYellow(){
@@ -124,11 +146,23 @@ export default class Racket {
     this.yellowMoveData.activated=true
     this.yellowMoveData.starttime=this.timestamp
   }
+
   specialMoveBlue(){
     console.log("Special move Blue getriggert")
+    this.blueMoveData.activated=true
+    this.blueMoveData.starttime=this.timestamp
   }
   specialMoveGreen(){
     console.log("Special move green getriggert")
+    this.position.y-=(this.greenMoveData.height-this.height)/2
+    this.height=this.greenMoveData.height
+    
+    this.greenMoveData.activated=true
+    this.greenMoveData.starttime=this.timestamp
+    this.position.y
+    /*this.position.y=this.ball.position.y+this.ball.size/2-this.height/2
+    console.log(this.ball.position.y+this.ball.size/2)
+    console.log(this.position.y+this.height/2)*/
   }
 }
 
