@@ -2,18 +2,19 @@ import Racket from "/src/pages/Racket.js";
 import Ball from "/src/pages/Ball.js";
 import InputHandler from "/src/pages/InputHandler.js";
 import Score from "/src/pages/Score.js";
-import gameMods from "/src/pages/gameMod.js"
+import GameMod from "/src/pages/gameMod.js";
 
 export default class Game {
-  constructor() {
+  constructor(racketColorL, racketColorR) {
     //ALL GAMEOBJECTS
+    const mods = new GameMod();
     this.score = new Score();
 
-    const racketL = new Racket("l");
-    const racketR = new Racket("r");
+    const racketL = new Racket("l", racketColorL);
+    const racketR = new Racket("r", racketColorR);
 
-    const ball = new Ball(racketL, racketR, this.score);
-    const mods = new gameMods()
+    const ball = new Ball(racketL, racketR, this.score, mods);
+
     this.gameObjects = {
       racketL: racketL,
       racketR: racketR,

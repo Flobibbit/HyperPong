@@ -10,7 +10,7 @@ export default class GameOver {
     }
   }
   GameOverScreen(){
-    console.log("Game Over")
-    console.log("Winner:" + this.winner)
+    /*console.log("Game Over")
+    console.log("Winner:" + this.winner)*/
   }
 }

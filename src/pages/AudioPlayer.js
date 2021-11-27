@@ -1,10 +1,9 @@
 export default class AudioPlayer {
   constructor() {
-    this.music = document.getElementById("music"); //recieves an audio included into the index.html
-    //interact with the document
+    this.music = document.getElementById("music");//recieves an audio included into the index.html
 
-    //this.soundScroll = document.getElementById("scroll");//recieves an audio included into the index.html
-    //this.soundEnter = document.getElementById("enter");//recieves an audio included into the index.html
+    this.soundScroll = document.getElementById("scroll");//recieves an audio included into the index.html
+    this.soundEnter = document.getElementById("enter");//recieves an audio included into the index.html
 
     this.musicTracks = [this.music];
     this.sounds = [this.soundScroll, this.soundEnter];
@@ -19,7 +18,7 @@ export default class AudioPlayer {
     } else {
       this.musicState = true;
     }
-    console.log("Music: " + this.musicState);
+    console.log("Music: "+this.musicState)
   }
   changeSoundState() {
     if (this.soundState) {
@@ -28,11 +27,11 @@ export default class AudioPlayer {
     } else {
       this.soundState = true;
     }
-    console.log("Sound: " + this.soundState);
+    console.log("Sound: "+this.soundState)
   }
   musicStop() {
     for (const obj of Object.values(this.musicTracks)) {
-      // obj.stop();
+     // obj.stop();
     }
   }
   soundStop() {

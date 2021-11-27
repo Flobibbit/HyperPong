@@ -1,7 +1,7 @@
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 export default class MovingSmiley {
   constructor() {
-    this.size = 130;
+    this.size = 120;
     this.borderDistance = 200;
 
     this.position = {

@@ -6,19 +6,19 @@ export default class Score {
   constructor() {
     this.scoreLInt = 0; //number of the score for player ->left side
     this.scoreRInt = 0; //number of the score for player ->right side
-    this.gameOverScore = 3;
+    this.gameOverScore = 1;
     this.scoreL = new MenuElement({
       name: "0",
       pxSize: 40,
       locationHeight: GAME_HEIGHT / 8,
-      locationWidth: GAME_WIDTH / 4,
+      locationWidth: GAME_WIDTH / 4
     });
 
     this.scoreR = new MenuElement({
       name: "0",
       pxSize: 40,
       locationHeight: GAME_HEIGHT / 8,
-      locationWidth: (GAME_WIDTH / 4) * 3,
+      locationWidth: (GAME_WIDTH / 4) * 3
     });
   }
 
@@ -29,14 +29,6 @@ export default class Score {
     } else {
       this.scoreLInt += 1;
       this.scoreL.name = this.scoreLInt.toString();
-    }
-    //view GameOver screen when the players score is as high as the gameOverscore
-    if (
-      this.scoreLInt >= this.gameOverScore ||
-      this.scoreRInt >= this.gameOverScore
-    ) {
-      this.GameOverScreen = new GameOver();
-      this.GameOverScreen.GameOverScreen();
     }
   }
   draw(ctx) {
