@@ -12,10 +12,10 @@ export default class AudioPlayer {
     this.invisible = document.getElementById("invisible");
     this.slowDown = document.getElementById("slowDown");
     this.newMod = document.getElementById("newMod");
+
     this.musicTracks = [this.music];
     this.sounds = [this.soundScroll, this.soundEnter];
    
-
     this.musicState = false;
     this.soundState = true;
   }

@@ -24,6 +24,9 @@ export default class Menu {
     this.timeStamp = 0; //?
     this.timePauseOn = 0; //?
 
+    this.imageControl = document.getElementById("control.png");
+    this.imageControlWS = document.getElementById("controlWs.png");
+
     //GAME
     this.game = null; //gets value when the view/gamestate turns Ingame
     //AUDIO
@@ -202,6 +205,13 @@ export default class Menu {
     //Start
     if (this.gamestate == GAMESTATE.START) {
       this.drawSpecialSkillsRect(ctx);
+
+      if (this.currentCursorpositionP1 !== 4) {
+        ctx.drawImage(this.imageControl, 70, 360, 150, 150);
+      }
+      if (this.currentCursorpositionP2 !== 4) {
+        ctx.drawImage(this.imageControlWS, 870, 360, 150, 150);
+      }
     }
   }
 
@@ -233,7 +243,7 @@ export default class Menu {
           this.game.score.scoreR.color = "Green";
         }
         this.gamestate = GAMESTATE.GAMEOVER;
-        this.audioPlayer.playGameOver()
+        this.audioPlayer.playGameOver();
       }
     }
   }
@@ -250,7 +260,7 @@ export default class Menu {
         ];
       //start zeit
     } else {
-      this.audioPlayer.playPause()
+      this.audioPlayer.playPause();
       this.gamestate = GAMESTATE.PAUSED;
       this.timePauseOn = this.timeStamp;
       //pause zeit
@@ -262,7 +272,7 @@ export default class Menu {
 
   curCursorPositionUp(eventKey) {
     //go up with the  cursorposition --> MOVE DOWN in menu
-    this.audioPlayer.playScrollUp()
+    this.audioPlayer.playScrollUp();
     if (eventKey == "ArrowDown") {
       if (
         this.currentCursorpositionP1 <
@@ -291,7 +301,7 @@ export default class Menu {
     console.log("PRESSED: ArrowDown or S");
   }
   curCursorPositionDown(eventKey) {
-    this.audioPlayer.playScrollUp()
+    this.audioPlayer.playScrollUp();
     //go down with the cursorposition  --> MOVE UP in menu
     if (eventKey == "ArrowUp") {
       if (this.currentCursorpositionP1 > 0) {
@@ -363,10 +373,10 @@ export default class Menu {
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].color,
       this.gamestate
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
-      this.game.gameObjects.ball.audioPlayer=this.audioPlayer
-      this.game.gameObjects.racketL.audioPlayer=this.audioPlayer
-      this.game.gameObjects.racketR.audioPlayer=this.audioPlayer
-      this.game.gameObjects.mods.audioPlayer=this.audioPlayer
+    this.game.gameObjects.ball.audioPlayer = this.audioPlayer;
+    this.game.gameObjects.racketL.audioPlayer = this.audioPlayer;
+    this.game.gameObjects.racketR.audioPlayer = this.audioPlayer;
+    this.game.gameObjects.mods.audioPlayer = this.audioPlayer;
     this.gamestate = GAMESTATE.INGAME;
   }
   changeGamestateToTitleScreen() {
