@@ -3,6 +3,7 @@ import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class GameMod {
   constructor() {
+    this.audioPlayer = null
     this.modTime = 3000.0;
     this.modActive = [false, false, false, false];
     this.modNames = [
@@ -109,6 +110,7 @@ export default class GameMod {
     }
   }
   modActivate(mod, timestamp) {
+    this.audioPlayer.playNewMod()
     this.modActive[mod] = true;
     this.modStartTime[mod] = timestamp;
     if (this.timer > 3000) this.timer -= 1000;

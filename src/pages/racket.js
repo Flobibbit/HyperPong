@@ -29,7 +29,7 @@ export default class Racket {
     this.timePassed;
     this.speed = 0;
     this.maxSpeed = 10;
-
+    this.audioPlayer = null;
     switch (location) {
       case "l":
         this.position = {
@@ -124,12 +124,15 @@ export default class Racket {
         break;
       case "yellow":
         this.specialMoveYellow()
+        this.audioPlayer.playInvisible()
         break;
       case "blue":
         this.specialMoveBlue()
+        this.audioPlayer.playSlowDown()
         break;
       case "green":
        this.specialMoveGreen()
+       this.audioPlayer.playPowerUp()
         break;
       default:
       console.log("Farbe ungülitg")

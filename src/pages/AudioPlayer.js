@@ -8,9 +8,13 @@ export default class AudioPlayer {
     this.enterSound = document.getElementById("enter");
     this.pauseSound = document.getElementById("pause");
     this.gameOverSound = document.getElementById("gameOver");
-
+    this.powerUp = document.getElementById("powerUp");
+    this.invisible = document.getElementById("invisible");
+    this.slowDown = document.getElementById("slowDown");
+    this.newMod = document.getElementById("newMod");
     this.musicTracks = [this.music];
     this.sounds = [this.soundScroll, this.soundEnter];
+   
 
     this.musicState = false;
     this.soundState = true;
@@ -65,5 +69,17 @@ export default class AudioPlayer {
   }
   playGameOver(){
     if(this.soundState)this.gameOverSound.play()
+  }
+  playPowerUp(){
+    if(this.soundState)this.powerUp.play()
+  }
+  playInvisible(){
+    if(this.soundState)this.invisible.play()
+  }
+  playSlowDown(){
+    if(this.soundState)this.slowDown.play()
+  }
+  playNewMod(){
+    if(this.soundState)this.newMod.play()
   }
 }

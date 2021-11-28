@@ -364,6 +364,9 @@ export default class Menu {
       this.gamestate
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
       this.game.gameObjects.ball.audioPlayer=this.audioPlayer
+      this.game.gameObjects.racketL.audioPlayer=this.audioPlayer
+      this.game.gameObjects.racketR.audioPlayer=this.audioPlayer
+      this.game.gameObjects.mods.audioPlayer=this.audioPlayer
     this.gamestate = GAMESTATE.INGAME;
   }
   changeGamestateToTitleScreen() {
