@@ -17,8 +17,7 @@ export default class MenuElement {
     this.checkBox = null; // receives a checkbox element via new MenuCheckbox(), that then will be rendered next to the text string
     this.disableColorActive = false; //if not set, defaults to false
 
-    Object.assign(this, config);
-    
+    Object.assign(this, config); 
   }
   draw(ctx) {
     this.textWidth = ctx.measureText(this.name).width;

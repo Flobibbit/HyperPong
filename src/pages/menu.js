@@ -17,16 +17,17 @@ const GAMESTATE = {
 
 export default class Menu {
   constructor() {
-    this.gamestate = GAMESTATE.MENU_TITLE;
+    this.gamestate = GAMESTATE.MENU_TITLE; //active gamstate when loading the page for the 1st time
     this.currentCursorpositionP1 = 0;
     this.currentCursorpositionP2 = 0;
     this.checkBoxsize = 60;
-    this.timeStamp = 0;
-    this.timePauseOn = 0;
+    this.timeStamp = 0; //?
+    this.timePauseOn = 0; //?
+
     //GAME
-    this.game = null;
+    this.game = null; //gets value when the view/gamestate turns Ingame
     //AUDIO
-    this.audioPlayer = new AudioPlayer();
+    this.audioPlayer = new AudioPlayer(); //handles audio and decides wether sound || music is played or not
 
     //ALL MENUOBJECTS
     this.titleHeader = new MenuElement({
@@ -99,28 +100,28 @@ export default class Menu {
       locationHeight: 540
     });
 
-    //MANUAL
+    //Manual
     const backManual = new MenuElement({ name: "Back", locationHeight: 580 });
 
-    //PAUSED
+    //Paused
     this.pause = new MenuElement({
       name: "Paused",
       locationHeight: GAME_HEIGHT / 2
     });
 
-    //GAMEOVER
+    //GameOver
     this.gameOver = new MenuElement({
       name: "GAME OVER",
       locationHeight: GAME_HEIGHT / 2 - 110
     });
 
-    this.overEnter = new MenuElement({
+    this.overPressEnter = new MenuElement({
       name: "Press ENTER to return to MENU",
       locationHeight: GAME_HEIGHT - 70,
       pxSize: 20
     });
 
-    //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der  MenuElement Klasse
+    //hier kommen noch zum zeichnen, die zwei checkboxen music und sound rein | vielleicht auch in die draw von der MenuElement Klasse
     this.menuObjects = {
       menuTitle: [start, settings, manual],
       Start: [
@@ -134,7 +135,7 @@ export default class Menu {
       Manual: [backManual]
     };
 
-    this.menuPath = [this.gamestate];
+    this.menuPath = [this.gamestate]; //keeps track of the open views
     this.paintMenuColors();
   }
 
@@ -142,29 +143,27 @@ export default class Menu {
     //PAUSED
     if (this.gamestate == GAMESTATE.PAUSED) {
       this.game.draw(ctx);
+
       ctx.rect(0, 0, GAME_WIDTH, GAME_HEIGHT);
       ctx.fillStyle = "#000000AA";
       ctx.fill();
-      //paused
 
-      this.pause.draw(ctx);
+      this.pause.draw(ctx); //paused
     }
     //GAMEOVER
     if (this.gamestate == GAMESTATE.GAMEOVER) {
       ctx.fillStyle = "white";
       ctx.fillRect(GAME_WIDTH / 2 - 5, GAME_HEIGHT / 2 - 50, 10, 200);
 
-      //Score Looser
       this.game.score.scoreL.draw(ctx);
       this.game.score.scoreR.draw(ctx);
-      //Score winner
       this.gameOver.draw(ctx);
+      this.overPressEnter.draw(ctx);
 
-      this.overEnter.draw(ctx);
+      this.drawBorder3(ctx);
     }
     //TITLE HEADER and BACKGROUND
     if (
-      this.gamestate !== GAMESTATE.RUNNING &&
       this.gamestate !== GAMESTATE.PAUSED &&
       this.gamestate !== GAMESTATE.INGAME
     ) {
@@ -193,104 +192,7 @@ export default class Menu {
 
     //SETTINGS
     if (this.gamestate == GAMESTATE.MENU_SETTINGS) {
-      ctx.beginPath();
-      ctx.fillStyle = "orange";
-      this.checkBoxsize = 60;
-     
-      if (this.currentCursorpositionP1 == 0) {
-        this.checkBoxsize = 60;
-        ctx.fillRect(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
-          this.menuObjects.Settings[0].locationHeight-this.checkBoxsize,
-          this.checkBoxsize,
-          this.checkBoxsize
-        ); //big music
-        if(this.audioPlayer.musicState){
-        ctx.moveTo(GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2, this.menuObjects.Settings[0].locationHeight-this.checkBoxsize);
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
-          this.menuObjects.Settings[0].locationHeight
-        );
-        ctx.moveTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
-          this.menuObjects.Settings[0].locationHeight-this.checkBoxsize
-        );
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
-          this.menuObjects.Settings[0].locationHeight
-        );
-      }
-      } else {
-        this.checkBoxsize = 55;
-        ctx.fillRect(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
-          this.menuObjects.Settings[0].locationHeight-this.checkBoxsize,
-          this.checkBoxsize,
-          this.checkBoxsize
-        ); //small music
-        if(this.audioPlayer.musicState){
-        ctx.moveTo(GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50, this.menuObjects.Settings[0].locationHeight-this.checkBoxsize);
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
-          this.menuObjects.Settings[0].locationHeight
-        );
-        ctx.moveTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
-          this.menuObjects.Settings[0].locationHeight-this.checkBoxsize
-        );
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
-          this.menuObjects.Settings[0].locationHeight
-        );
-        }
-      }
-      if (this.currentCursorpositionP1 == 1) {
-        this.checkBoxsize = 60;
-        ctx.fillRect(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2, 
-          this.menuObjects.Settings[1].locationHeight-this.checkBoxsize, 
-          this.checkBoxsize, 
-          this.checkBoxsize); //big sound
-      if(this.audioPlayer.soundState){
-        ctx.moveTo(GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2, this.menuObjects.Settings[1].locationHeight-this.checkBoxsize);
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
-          this.menuObjects.Settings[1].locationHeight
-        );
-        ctx.moveTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
-          this.menuObjects.Settings[1].locationHeight-this.checkBoxsize
-        );
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
-          this.menuObjects.Settings[1].locationHeight
-        );
-      }
-    } else {
-        this.checkBoxsize = 55;
-        ctx.fillRect(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
-          this.menuObjects.Settings[1].locationHeight-this.checkBoxsize,
-          this.checkBoxsize,
-          this.checkBoxsize
-        ); //small sound
-        if(this.audioPlayer.soundState){
-        ctx.moveTo(GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,  this.menuObjects.Settings[1].locationHeight-this.checkBoxsize);
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
-          this.menuObjects.Settings[1].locationHeight
-        );
-        ctx.moveTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
-          this.menuObjects.Settings[1].locationHeight-this.checkBoxsize
-        );
-        ctx.lineTo(
-          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
-          this.menuObjects.Settings[1].locationHeight
-        );
-        }
-      }
-      ctx.stroke();
+      this.drawCheckBox(ctx);
     }
 
     //INGAME
@@ -299,24 +201,7 @@ export default class Menu {
     }
     //Start
     if (this.gamestate == GAMESTATE.START) {
-      if (this.currentCursorpositionP1 !== 4) {
-        //Left Rectangle
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle =
-          this.menuObjects[this.gamestate][this.currentCursorpositionP1].color;
-        ctx.rect(20, 120, 285, 400);
-        ctx.stroke();
-      }
-      if (this.currentCursorpositionP2 !== 4) {
-        //right Rectangle
-        ctx.beginPath();
-        ctx.lineWidth = "6";
-        ctx.strokeStyle =
-          this.menuObjects[this.gamestate][this.currentCursorpositionP2].color;
-        ctx.rect(GAME_WIDTH - 20 - 285, 120, 285, 400);
-        ctx.stroke();
-      }
+      this.drawSpecialSkillsRect(ctx);
     }
   }
 
@@ -336,6 +221,10 @@ export default class Menu {
           this.game.score.scoreL.locationHeight * 6 - 65;
         this.game.score.scoreR.locationHeight =
           this.game.score.scoreR.locationHeight * 6 - 65;
+
+        this.game.score.scoreL.locationWidth += 50;
+        this.game.score.scoreR.locationWidth -= 50;
+
         if (this.game.score.scoreLInt > this.game.score.scoreRInt) {
           this.game.score.scoreL.color = "Green";
           this.game.score.scoreR.color = "Red";
@@ -467,12 +356,15 @@ export default class Menu {
     //Start the game with the choosen colors
     this.game = new Game(
       this.menuObjects[this.gamestate][this.currentCursorpositionP2].color,
-      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color,
+      this.gamestate
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
 
     this.gamestate = GAMESTATE.INGAME;
   }
   changeGamestateToTitleScreen() {
+    delete this.game;
+    console.log(this.game);
     this.gamestate == GAMESTATE.MENU_TITLE;
   }
   changeCheckedState() {}
@@ -481,5 +373,150 @@ export default class Menu {
     //select the first element
     this.currentCursorpositionP1 = 0;
     this.currentCursorpositionP2 = 0;
+  }
+
+  drawCheckBox(ctx) {
+    ctx.beginPath();
+    ctx.fillStyle = "orange";
+    this.checkBoxsize = 60;
+
+    if (this.currentCursorpositionP1 == 0) {
+      this.checkBoxsize = 60;
+      ctx.fillRect(
+        GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+        this.menuObjects.Settings[0].locationHeight - this.checkBoxsize,
+        this.checkBoxsize,
+        this.checkBoxsize
+      ); //big music
+      if (this.audioPlayer.musicState) {
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+          this.menuObjects.Settings[0].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
+          this.menuObjects.Settings[0].locationHeight
+        );
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
+          this.menuObjects.Settings[0].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+          this.menuObjects.Settings[0].locationHeight
+        );
+      }
+    } else {
+      this.checkBoxsize = 55;
+      ctx.fillRect(
+        GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+        this.menuObjects.Settings[0].locationHeight - this.checkBoxsize,
+        this.checkBoxsize,
+        this.checkBoxsize
+      ); //small music
+      if (this.audioPlayer.musicState) {
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+          this.menuObjects.Settings[0].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
+          this.menuObjects.Settings[0].locationHeight
+        );
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
+          this.menuObjects.Settings[0].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+          this.menuObjects.Settings[0].locationHeight
+        );
+      }
+    }
+    if (this.currentCursorpositionP1 == 1) {
+      this.checkBoxsize = 60;
+      ctx.fillRect(
+        GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+        this.menuObjects.Settings[1].locationHeight - this.checkBoxsize,
+        this.checkBoxsize,
+        this.checkBoxsize
+      ); //big sound
+      if (this.audioPlayer.soundState) {
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+          this.menuObjects.Settings[1].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
+          this.menuObjects.Settings[1].locationHeight
+        );
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2 + this.checkBoxsize,
+          this.menuObjects.Settings[1].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 - 2,
+          this.menuObjects.Settings[1].locationHeight
+        );
+      }
+    } else {
+      this.checkBoxsize = 55;
+      ctx.fillRect(
+        GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+        this.menuObjects.Settings[1].locationHeight - this.checkBoxsize,
+        this.checkBoxsize,
+        this.checkBoxsize
+      ); //small sound
+      if (this.audioPlayer.soundState) {
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+          this.menuObjects.Settings[1].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
+          this.menuObjects.Settings[1].locationHeight
+        );
+        ctx.moveTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50 + this.checkBoxsize,
+          this.menuObjects.Settings[1].locationHeight - this.checkBoxsize
+        );
+        ctx.lineTo(
+          GAME_WIDTH / 2 + GAME_WIDTH / 5 - 50,
+          this.menuObjects.Settings[1].locationHeight
+        );
+      }
+    }
+    ctx.stroke();
+  }
+  drawBorder3(ctx) {
+    ctx.beginPath();
+    // ctx.lineWidth = "3";
+    ctx.strokeStyle = "Yellow";
+
+    ctx.rect(10, 40, 0.1, 550); //1.Left Rectangle || line
+    ctx.rect(GAME_WIDTH - 11, 40, 0.1, 550); //2.right Rectangle|| line
+    ctx.rect(11, 590, GAME_WIDTH - 10 - 12, 0.1); //3.bottom Rectangle || line
+
+    ctx.stroke();
+  }
+  drawSpecialSkillsRect(ctx) {
+    if (this.currentCursorpositionP1 !== 4) {
+      //Left Rectangle
+      ctx.beginPath();
+      ctx.lineWidth = "2";
+      ctx.strokeStyle =
+        this.menuObjects[this.gamestate][this.currentCursorpositionP1].color;
+      ctx.rect(20, 120, 285, 400);
+      ctx.stroke();
+    }
+    if (this.currentCursorpositionP2 !== 4) {
+      //right Rectangle
+      ctx.beginPath();
+      ctx.lineWidth = "2";
+      ctx.strokeStyle =
+        this.menuObjects[this.gamestate][this.currentCursorpositionP2].color;
+      ctx.rect(GAME_WIDTH - 20 - 285, 120, 285, 400);
+      ctx.stroke();
+    }
   }
 }

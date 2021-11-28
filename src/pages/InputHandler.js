@@ -8,7 +8,6 @@ export default class InputHandler {
     //Menu
     this.menu = menu; //needed to handle interactions with Objects in the menu
 
-    //?
     this.audioPlayer = audioPlayer; //handles the audio states-- decides wether music | sound is played or not
 
     //KeyDown
@@ -16,17 +15,17 @@ export default class InputHandler {
       //INGAME
       if (this.menu.gamestate == "Ingame") {
         if (!this.mods.invertedControlls()) {
-          if (event.key === "w") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
-          if (event.key === "s") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
+          if (event.key === "w") this.racketL.moveUp();
+          if (event.key === "s") this.racketL.moveDown();
 
-          if (event.key === "ArrowDown") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
-          if (event.key === "ArrowUp") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
+          if (event.key === "ArrowDown") this.racketR.moveDown();
+          if (event.key === "ArrowUp") this.racketR.moveUp();
         } else {
-          if (event.key === "s") this.racketL.moveUp(); //when w pressed, change -- y position of racketL
-          if (event.key === "w") this.racketL.moveDown(); //when s pressed, change ++ y position of racketL
+          if (event.key === "s") this.racketL.moveUp();
+          if (event.key === "w") this.racketL.moveDown();
 
-          if (event.key === "ArrowUp") this.racketR.moveDown(); //when ArrowDown pressed, change -- y position of racketR
-          if (event.key === "ArrowDown") this.racketR.moveUp(); //when ArrowUp pressed, change ++ y position of racketR
+          if (event.key === "ArrowUp") this.racketR.moveDown();
+          if (event.key === "ArrowDown") this.racketR.moveUp();
         }
         if (event.key == "ArrowLeft") this.racketR.activateSpecialMove();
         if (event.key == "d") this.racketL.activateSpecialMove();
@@ -56,7 +55,6 @@ export default class InputHandler {
                 this.menu.audioPlayer.changeSoundState();
                 break;
               default:
-              //  return;
             }
           }
           switch (this.menu.gamestate) {
@@ -78,11 +76,9 @@ export default class InputHandler {
               break;
             case "GameOver":
               this.menu.changeGamestateToTitleScreen();
-              console.log("Titlescreen");
 
             case "menuTitle":
               this.menu.changeGamestate();
-              console.log("aktueller menu.gamestate: " + this.menu.gamestate);
               break;
 
             default:
@@ -93,46 +89,8 @@ export default class InputHandler {
                   this.menu.menuObjects[this.menu.gamestate].length - 1
               ) {
                 this.menu.changeGamestate();
-                console.log("aktueller menu.gamestate: " + this.menu.gamestate);
               }
-            //  return;
           }
-
-          /*
-          //cursor isn't on "back" , but on an element at start screen
-          if (
-            this.menu.gamestate === "Start" &&
-            this.menu.currentCursorpositionP1 !==
-              this.menu.menuObjects[this.menu.gamestate].length - 1 &&
-            this.menu.currentCursorpositionP2 !==
-              this.menu.menuObjects[this.menu.gamestate].length - 1
-          ) {
-            this.menu.changeGamestateToIngame(); //also instantiates the game Object
-
-            //if the game Object is instantiated ... declare the following to handle events
-            this.racketL = this.menu.game.gameObjects.racketL;
-            this.racketR = this.menu.game.gameObjects.racketR;
-            this.mods = this.menu.game.gameObjects.mods;
-          } else if (this.menu.gamestate == "GameOver") {
-            this.menu.changeGamestateToTitleScreen();
-            console.log("Titlescreen");
-          }
-          //Open and Close Views
-          else if (
-            this.menu.gamestate == "menuTitle" ||
-            this.menu.currentCursorpositionP1 ==
-              this.menu.menuObjects[this.menu.gamestate].length - 1
-          ) {
-            this.menu.changeGamestate();
-            console.log("aktueller menu.gamestate: " + this.menu.gamestate);
-          } else if (
-            this.menu.currentCursorpositionP2 ==
-              this.menu.menuObjects[this.menu.gamestate].length - 1 &&
-            menu.gamestate != "Settings"
-          ) {
-            this.menu.changeGamestate();
-            console.log(this.menu.gamestate);
-          }*/
         }
       }
 
