@@ -1,22 +1,27 @@
 export default class AudioPlayer {
   constructor() {
     this.music = document.getElementById("music");//recieves an audio included into the index.html
-
-    this.soundScroll = document.getElementById("scroll");//recieves an audio included into the index.html
-    this.soundEnter = document.getElementById("enter");//recieves an audio included into the index.html
+    this.scrollDown = document.getElementById("scrollDown");
+    this.scrollUp = document.getElementById("scrollUp");
+    this.hitLeft = document.getElementById("hitLeft");
+    this.hitRight = document.getElementById("hitRight");
+    this.enterSound = document.getElementById("enter");
+    this.pauseSound = document.getElementById("pause");
+    this.gameOverSound = document.getElementById("gameOver");
 
     this.musicTracks = [this.music];
     this.sounds = [this.soundScroll, this.soundEnter];
 
-    this.musicState = true;
+    this.musicState = false;
     this.soundState = true;
   }
   changeMusicState() {
     if (this.musicState) {
       this.musicState = false;
-      this.musicStop();
+      this.music.pause();
     } else {
       this.musicState = true;
+      this.music.play()
     }
     console.log("Music: "+this.musicState)
   }
@@ -38,5 +43,27 @@ export default class AudioPlayer {
     for (const obj of Object.values(this.sounds)) {
       //obj.stop();
     }
+  }
+
+  playScrollDown(){
+    if(this.soundState)this.scrollDown.play()
+  }
+  playScrollUp(){
+    if(this.soundState)this.scrollUp.play()
+  }
+  playHitLeft(){
+    if(this.soundState)this.hitLeft.play()
+  }
+  playHitRight(){
+    if(this.soundState)this.hitRight.play()
+  }
+  playEnter(){
+    if(this.soundState)this.enterSound.play()
+  }
+  playPause(){
+    if(this.soundState)this.pauseSound.play()
+  }
+  playGameOver(){
+    if(this.soundState)this.gameOverSound.play()
   }
 }

@@ -233,6 +233,7 @@ export default class Menu {
           this.game.score.scoreR.color = "Green";
         }
         this.gamestate = GAMESTATE.GAMEOVER;
+        this.audioPlayer.playGameOver()
       }
     }
   }
@@ -249,6 +250,7 @@ export default class Menu {
         ];
       //start zeit
     } else {
+      this.audioPlayer.playPause()
       this.gamestate = GAMESTATE.PAUSED;
       this.timePauseOn = this.timeStamp;
       //pause zeit
@@ -260,6 +262,7 @@ export default class Menu {
 
   curCursorPositionUp(eventKey) {
     //go up with the  cursorposition --> MOVE DOWN in menu
+    this.audioPlayer.playScrollUp()
     if (eventKey == "ArrowDown") {
       if (
         this.currentCursorpositionP1 <
@@ -288,6 +291,7 @@ export default class Menu {
     console.log("PRESSED: ArrowDown or S");
   }
   curCursorPositionDown(eventKey) {
+    this.audioPlayer.playScrollUp()
     //go down with the cursorposition  --> MOVE UP in menu
     if (eventKey == "ArrowUp") {
       if (this.currentCursorpositionP1 > 0) {
@@ -359,7 +363,7 @@ export default class Menu {
       this.menuObjects[this.gamestate][this.currentCursorpositionP1].color,
       this.gamestate
     ); //LeftRacket = Pl2 ......RightRacket = Pl1
-
+      this.game.gameObjects.ball.audioPlayer=this.audioPlayer
     this.gamestate = GAMESTATE.INGAME;
   }
   changeGamestateToTitleScreen() {

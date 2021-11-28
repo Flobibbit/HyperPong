@@ -15,6 +15,7 @@ export default class Ball {
     this.rMissed=false
     this.lastPoint="/"
     this.ballColor = "#FFFFFF"
+    this.audioPlayer = null
     //current position of the ball on the canvas x & y
     this.position = {
       x: GAME_WIDTH / 2 - this.size / 2,
@@ -64,6 +65,7 @@ export default class Ball {
     //Bounce of Walls
     if(this.position.y > GAME_HEIGHT - this.size&&this.speed.y>0||this.position.y < 0&&this.speed.y<0){
       this.yBounce()
+      
     }
 
     
@@ -80,6 +82,7 @@ export default class Ball {
       ) {
         //hit
         this.speed.x *= -1;
+        this.audioPlayer.playHitLeft()
         if(this.mod.randomBounce()){
           this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )
           if(Math.floor(Math.random()*2)==0){
@@ -103,6 +106,7 @@ export default class Ball {
       ) {
         //hit
         this.speed.x *= -1;
+        this.audioPlayer.playHitRight()
         if(this.mod.randomBounce()){
           this.speed.x = Math.floor(Math.random()*(this.ballSpeedSum/2)+1 )*-1
           if(Math.floor(Math.random()*2)==0){
@@ -135,6 +139,7 @@ export default class Ball {
     }
   }
   yBounce(){
+    this.audioPlayer.playScrollDown()
     this.speed.y *= -1
       if(this.mod.randomBounce()){
         if(this.speed.y>0){

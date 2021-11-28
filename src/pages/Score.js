@@ -6,7 +6,7 @@ export default class Score {
   constructor() {
     this.scoreLInt = 0; //number of the score for player ->left side
     this.scoreRInt = 0; //number of the score for player ->right side
-    this.gameOverScore = 2;
+    this.gameOverScore = 10;
     this.scoreL = new MenuElement({
       name: "0",
       pxSize: 40,
