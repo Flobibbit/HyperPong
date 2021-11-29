@@ -25,6 +25,7 @@ export default class Menu {
 
     this.imageControl = document.getElementById("control.png");
     this.imageControlWS = document.getElementById("controlWs.png");
+    this.imageTutorial = document.getElementById("img_Tutorial");
 
     //GAME
     this.game = null; //gets value when the view/gamestate turns Ingame
@@ -170,6 +171,9 @@ export default class Menu {
       ctx.fill();
 
       this.pause.draw(ctx); //paused
+    }
+    if(this.gamestate==GAMESTATE.MENU_MANUAL){
+      ctx.drawImage(this.imageTutorial, 100, 100,  693, 390);
     }
     //GAMEOVER
     if (this.gamestate == GAMESTATE.GAMEOVER) {
