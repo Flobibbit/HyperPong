@@ -2,7 +2,6 @@ import MovingSmiley from "/src/pages/MovingSmiley.js";
 import { GAME_WIDTH, GAME_HEIGHT } from "./constant.js";
 import MenuElement from "./MenuElement.js";
 import AudioPlayer from "./AudioPlayer.js";
-import MenuCheckbox from "./MenuCheckbox.js";
 import Game from "./game.js";
 
 const GAMESTATE = {
@@ -104,18 +103,13 @@ export default class Menu {
     });
 
     //Settingss
-    const checkBoxMusic = new MenuCheckbox();
-    const checkBoxSound = new MenuCheckbox();
-
     const music = new MenuElement({
       name: "Music",
-      locationHeight: 220,
-      checkBox: checkBoxMusic
+      locationHeight: 220
     });
     const sound = new MenuElement({
       name: "Sound",
-      locationHeight: 350,
-      checkBox: checkBoxSound
+      locationHeight: 350
     });
     const backSettings = new MenuElement({
       name: "Back",
@@ -562,13 +556,9 @@ export default class Menu {
       ctx.stroke();
     }
   }
-drawSpecialSkillsText(ctx,specialSkill,height,width){
-
-
-for (let index = 0; index < array.length; index++) {
-  
-  ctx.fillText(specialSkill[index],width,height)
-}
-
-}
+  drawSpecialSkillsText(ctx, specialSkill, height, width) {
+    for (let index = 0; index < array.length; index++) {
+      ctx.fillText(specialSkill[index], width, height);
+    }
+  }
 }

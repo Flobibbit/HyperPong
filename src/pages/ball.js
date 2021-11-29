@@ -1,4 +1,3 @@
-import Particle from "/src/pages/Particle.js";
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 //test
 export default class Ball {
@@ -24,7 +23,6 @@ export default class Ball {
 
     this.ballSpeedSum = 10; //the sum of the speed for the x and y
     this.speed = { x: this.ballSpeedSum / 2, y: this.ballSpeedSum / 2 }; //the px lenght that the ball moves with each update into x & y
-    this.particleObjects = [];
   }
 
   draw(ctx) {

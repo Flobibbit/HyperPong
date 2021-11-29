@@ -1,6 +1,5 @@
 import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 import MenuElement from "./MenuElement.js";
-import GameOver from "./GameOver.js";
 
 export default class Score {
   constructor() {
