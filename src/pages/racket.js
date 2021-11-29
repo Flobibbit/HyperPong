@@ -144,7 +144,6 @@ export default class Racket {
       case "green":
         return this.greenMoveData;
       default:
-        console.log("Farbe ungülitg");
         break;
     }
   }
@@ -152,12 +151,10 @@ export default class Racket {
     this.starttime += timeCorrection;
     var correctMoveData = this.getCorrectMoveData();
     if (correctMoveData != this.redMoveData) {
-      console.log(this.getCorrectMoveData().starttime);
       correctMoveData.starttime += timeCorrection;
     }
   }
   activateSpecialMove() {
-    console.log("Special move");
     if (this.timePassed >= this.getCorrectMoveData().cooldownLength) {
       this.starttime = this.timestamp;
       switch (this.color) {
@@ -177,7 +174,6 @@ export default class Racket {
           this.audioPlayer.playPowerUp();
           break;
         default:
-          console.log("Farbe ungülitg");
           break;
       }
     }
