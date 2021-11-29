@@ -62,7 +62,7 @@ export default class Menu {
       color: "red",
       disableColorActive: true
     });
-    console.log(characterBlue.pxSize);
+
     const characterRed = new MenuElement({
       name: "BLUE",
       locationHeight: 285,
@@ -326,7 +326,6 @@ export default class Menu {
       }
     }
     this.paintMenuColors();
-    console.log("PRESSED: ArrowDown or S");
   }
   curCursorPositionDown(eventKey) {
     this.audioPlayer.playScrollUp();
@@ -352,7 +351,6 @@ export default class Menu {
       }
     }
     this.paintMenuColors();
-    console.log("PRESSED: Arrow UP or W");
   }
   paintMenuColors() {
     //first paint all white , normal size
@@ -409,7 +407,6 @@ export default class Menu {
   }
   changeGamestateToTitleScreen() {
     delete this.game;
-    console.log(this.game);
     this.gamestate == GAMESTATE.MENU_TITLE;
   }
 
@@ -423,6 +420,7 @@ export default class Menu {
     ctx.beginPath();
     ctx.fillStyle = "orange";
     this.checkBoxsize = 60;
+    ctx.strokeStyle = "black";
 
     if (this.currentCursorpositionP1 == 0) {
       this.checkBoxsize = 60;

@@ -49,7 +49,6 @@ export default class Ball {
         this.racketR.blueMoveData.activated
       ) {
         this.ballSpeedSum = this.racketL.blueMoveData.speed;
-        console.log(this.ballSpeedSum);
       } else {
         this.ballSpeedSum = 10;
       }
@@ -118,8 +117,6 @@ export default class Ball {
           } else {
             this.speed.y = (this.ballSpeedSum - Math.abs(this.speed.x)) * -1;
           }
-
-          //console.log(this.speed)
         }
       } else {
         //miss
@@ -156,7 +153,6 @@ export default class Ball {
       } else {
         this.speed.x = (this.ballSpeedSum - Math.abs(this.speed.y)) * -1;
       }
-      //console.log(this.speed)
     }
   }
 

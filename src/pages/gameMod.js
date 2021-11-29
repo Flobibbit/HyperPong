@@ -45,7 +45,6 @@ export default class GameMod {
   update(timeStamp) {
     if (this.timeLeftStart == 0) {
       this.timeLeftStart = timeStamp;
-      //console.log(this.timeLeftStart)
     }
     this.timeLeftInt = this.timer - (timeStamp - this.timeLeftStart);
     if (this.timeLeftInt <= "0") {
@@ -53,7 +52,6 @@ export default class GameMod {
       this.modActivate(Math.floor(Math.random() * 4), timeStamp);
     }
     this.timeLeft.name = Math.ceil(this.timeLeftInt / 1000).toString();
-    //console.log("Zeit:" +timeStamp)
     for (let i in this.modActive) {
       if (this.modActive[i]) {
         if (timeStamp - this.modStartTime[i] >= this.modTime) {
