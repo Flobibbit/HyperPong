@@ -4,32 +4,38 @@ export default class Racket {
     this.yellowMoveData={
       starttime: 0,
       duration: 1000,
-      activated: false
+      activated: false,
+      cooldownLength: 8000
     };
     this.blueMoveData={
       starttime: 0,
       duration: 1000,
       activated: false,
-      speed: 8,
+      speed: 6,
       speedUpSpeed: 12,
+      cooldownLength: 1000
     };
     this.greenMoveData={
       starttime: 0,
       duration: 2000,
       activated: false,
-      height: 150
+      height: 150,
+      cooldownLength: 1000
+    };
+    this.redMoveData={
+      cooldownLength: 10000
     };
     this.ball=null;
     this.color = color;
     this.starttime = 0;
     this.timestamp = 0;
-    this.cooldownLength= 5000;
     this.width = 20;
     this.height = 100;
     this.timePassed;
     this.speed = 0;
     this.maxSpeed = 10;
     this.audioPlayer = null;
+
     switch (location) {
       case "l":
         this.position = {
@@ -62,9 +68,6 @@ export default class Racket {
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
-    ctx.fillStyle = "#DB7093"
     switch (this.color) {
       case "red":
         ctx.fillStyle = "#DB7093"
@@ -82,16 +85,19 @@ export default class Racket {
       ctx.fillStyle ="FFFFFF"
         break;
     }
-    ctx.fillRect(this.position.x, this.position.y+this.height, this.width, -this.height*(this.timePassed/this.cooldownLength))
+    ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.position.x, this.position.y+this.height, this.width, -this.height*(this.timePassed/this.getCorrectMoveData().cooldownLength))
   }
   update(timestamp) {
+    var correctMoveData=this.getCorrectMoveData()
     this.timestamp = timestamp
     if(this.starttime==0){
       this.starttime=timestamp
     }
     this.timePassed = timestamp-this.starttime
-    if(this.timePassed>=this.cooldownLength){
-      this.timePassed = this.cooldownLength
+    if(this.timePassed>=correctMoveData.cooldownLength){
+      this.timePassed = correctMoveData.cooldownLength
     }
     if(this.yellowMoveData.activated&&timestamp-this.yellowMoveData.starttime>this.yellowMoveData.duration){
       this.ball.ballColor="#FFFFFF"
@@ -110,13 +116,34 @@ export default class Racket {
     if (this.position.y < 0) this.position.y = 0;
     if (this.position.y + this.height > GAME_HEIGHT)
       this.position.y = GAME_HEIGHT - this.height;
-    
-    
   }
 
+  getCorrectMoveData(){
+    switch (this.color) {
+      case "red":
+        return this.redMoveData
+      case "yellow":
+        return this.yellowMoveData
+      case "blue":
+        return this.blueMoveData
+      case "green":
+        return this.greenMoveData
+      default:
+      console.log("Farbe ungülitg")
+        break;
+    }
+  }
+  correctTimesAfterPause(timeCorrection){
+    this.starttime+=timeCorrection
+    var correctMoveData=this.getCorrectMoveData()
+    if(correctMoveData!=this.redMoveData){
+    console.log(this.getCorrectMoveData().starttime)
+    correctMoveData.starttime+=timeCorrection
+    }
+  }
   activateSpecialMove(){
     console.log("Special move")
-    if(this.timePassed>=this.cooldownLength){
+    if(this.timePassed>=this.getCorrectMoveData().cooldownLength){
     this.starttime = this.timestamp
     switch (this.color) {
       case "red":
@@ -151,12 +178,10 @@ export default class Racket {
   }
 
   specialMoveBlue(){
-    console.log("Special move Blue getriggert")
     this.blueMoveData.activated=true
     this.blueMoveData.starttime=this.timestamp
   }
   specialMoveGreen(){
-    console.log("Special move green getriggert")
     this.position.y-=(this.greenMoveData.height-this.height)/2
     this.height=this.greenMoveData.height
     

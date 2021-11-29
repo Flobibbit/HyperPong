@@ -253,6 +253,8 @@ export default class Menu {
       this.gamestate = GAMESTATE.INGAME;
       this.game.gameObjects.mods.timeLeftStart +=
         this.timeStamp - this.timePauseOn;
+        this.game.gameObjects.racketL.correctTimesAfterPause(this.timeStamp - this.timePauseOn)
+        this.game.gameObjects.racketR.correctTimesAfterPause(this.timeStamp - this.timePauseOn)
       for (let i in this.game.gameObjects.mods.modStartTime)
         [
           (this.game.gameObjects.mods.modStartTime[i] +=
