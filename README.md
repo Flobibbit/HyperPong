@@ -49,7 +49,7 @@ Safari in der Version
 Der Internet Explorer funktioniert nicht.
 Ältere Versionen der kompatiblen Browser können auch funtkionieren, das wurde aber nicht getestet und ist damit nicht offiziell. 
 
-Eigene Lizenzdatei:
+## Eigene Lizenzdatei:
 https://creativecommons.org/licenses/by-sa/3.0/legalcode
 Grund: Wir haben Code von Stack Overflow verwendet. Dieser benutzt diese Lizenz. Teil der Lizenz ist, dass man den Code nur benutzen darf, wenn man die selber Lizenz verwendet.
 
