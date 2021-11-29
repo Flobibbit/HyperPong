@@ -3,27 +3,27 @@ export default class Racket {
   constructor(location, color = "#ff0") {
     this.yellowMoveData={
       starttime: 0,
-      duration: 1000,
+      duration: 800,
       activated: false,
       cooldownLength: 8000
     };
     this.blueMoveData={
       starttime: 0,
-      duration: 1000,
+      duration: 1200,
       activated: false,
       speed: 6,
       speedUpSpeed: 12,
-      cooldownLength: 1000
+      cooldownLength: 6000
     };
     this.greenMoveData={
       starttime: 0,
       duration: 2000,
       activated: false,
       height: 150,
-      cooldownLength: 1000
+      cooldownLength: 6000
     };
     this.redMoveData={
-      cooldownLength: 10000
+      cooldownLength: 7000
     };
     this.ball=null;
     this.color = color;
