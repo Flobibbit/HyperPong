@@ -18,6 +18,14 @@ Einzelne verwendete Videos:
 
 "8-Bit Retro Video Game Sound Effects 5" Online unter https://www.youtube.com/watch?v=7UZQ7NvLNgA&list=PLBtCJCy4TzZTkjWuiIm7RidconrtD_ylj&index=3
 
+CodeSchnipsel / Denkanstöße zur Weiterverarbeitung:
+
+"GameLoop" https://spicyyoghurt.com/tutorials/html5-javascript-game-development/create-a-proper-game-loop-with-requestanimationframe Copyright https://spicyyoghurt.com/terms
+
+"Anti-Scroll-Logic" -komplett übernommen https://stackoverflow.com/a/8916697 https://creativecommons.org/licenses/by-sa/4.0/ (komplett übernommen)
+
+"Konstruktor-Schreibweise" https://stackoverflow.com/a/41486946 https://creativecommons.org/licenses/by-sa/3.0/
+
 ## Known Bugs
 Bei der Auwahl der Rackets steuert der Spieler mit den Pfeiltasten den linken Curser und der mit "W" und "S" den Rechten. Das ist nicht direkt ein Bug aber unschön.
 
@@ -54,4 +62,6 @@ Neuß:
 
 Programmierung des "Grundgerüsts", der Spielphysik und des Menüs
 
-Gemeinsam doer beide: Design des Grafikstils, Testen, gegenseitige Hilfe bei Problemen
+Gemeinsam:
+
+Design des Grafikstils, Testen, gegenseitige Hilfe bei Problemen
