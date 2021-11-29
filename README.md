@@ -2,7 +2,7 @@
 ## Projektname
 Hyperpong
 ## Autoren
-Florian Neusß, Jan-Philipp Sautmann
+Florian Neuß, Jan-Philipp Sautmann
 ## Erstelldatum
 Projektzeitraum: 08.10.2021-29.11.2021
 ## Versionsnummer
