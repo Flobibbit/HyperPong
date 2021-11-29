@@ -43,7 +43,7 @@ export default class InputHandler {
         }
 
         if (event.key === "Enter") {
-          this.menu.audioPlayer.playEnter()
+          this.menu.audioPlayer.playEnter();
           //Audio Changes
           if (this.menu.gamestate == "Settings") {
             switch (this.menu.currentCursorpositionP1) {

@@ -8,7 +8,7 @@ let lastTime = 0;
 
 //Create and start the game
 const game = new GameMaster(ctx);
-
+requestAnimationFrame(gameLoop);
 //runs every frame -- calculates how much time has passed -- clears the screen -- updates the paddle --redraws the racket -- calls gameloop again with the next frames-timestamp
 function gameLoop(timeStamp) {
   //let deltaTime = timeStamp - lastTime;.........................???
@@ -26,4 +26,3 @@ function gameLoop(timeStamp) {
   //when next frame is ready -- every frame --source of the timestamp
   requestAnimationFrame(gameLoop);
 }
-requestAnimationFrame(gameLoop);
