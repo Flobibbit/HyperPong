@@ -9,9 +9,10 @@ export default class Game {
     //ALL GAMEOBJECTS
     const mods = new GameMod();
 
-    const ball = new Ball(racketL, racketR, this.score, mods);
+    this.score = new Score(); //können wir den als const deklarieren?
     const racketL = new Racket("l", racketColorL);
     const racketR = new Racket("r", racketColorR);
+    const ball = new Ball(racketL, racketR, this.score, mods);
 
     this.gameObjects = {
       racketL: racketL,
@@ -19,7 +20,6 @@ export default class Game {
       ball: ball,
       mods: mods
     };
-    this.score = new Score();//können wir den als const deklarieren?
   }
   //capable of drawing all Objects in the gameObjects list
   draw(ctx) {

@@ -83,10 +83,15 @@ export default class Menu {
     });
     const backStart = new MenuElement({ name: "Back", locationHeight: 580 });
 
-    const redSpecialSkillText = "Make the ball bounce at any place";
+    const redSpecialSkillText = "Make the ball bounce\nat any place";
+    const blueSpecialSkillText = "Make the ball\nslow down";
+    const yellowSpecialSkillText = "Make the ball\ninvisible";
     const greenSpecialSkillText = "Makes himself bigger";
-    const yellowSpecialSkillText = "Makes the ball invisible";
-    const blueSpecialSkillText = "Make the ball slow down";
+
+    this.red = redSpecialSkillText.split("\n");
+    this.blue = blueSpecialSkillText.split("\n");
+    this.yellow = yellowSpecialSkillText.split("\n");
+    this.green = greenSpecialSkillText.split("\n");
 
     this.leftSpecialSkill = new MenuElement({
       name: "",
@@ -220,6 +225,8 @@ export default class Menu {
       this.drawSpecialSkillsRect(ctx);
       this.leftSpecialSkill.draw(ctx);
       this.rightSpecialSkill.draw(ctx);
+
+      this.textManagerForSpecialSkill(ctx);
 
       if (this.currentCursorpositionP1 !== 4) {
         ctx.drawImage(this.imageControl, 70, 360, 150, 150);
@@ -556,9 +563,66 @@ export default class Menu {
       ctx.stroke();
     }
   }
-  drawSpecialSkillsText(ctx, specialSkill, height, width) {
-    for (let index = 0; index < array.length; index++) {
+  drawSpecialSkillsText(ctx, specialSkill, width, height, pxSize, fillstyle) {
+    ctx.fillStyle = fillstyle;
+    ctx.font = pxSize.toString() + "px PressStart2P";
+    for (let index = 0; index < specialSkill.length; index++) {
       ctx.fillText(specialSkill[index], width, height);
+      height += 40;
+    }
+  }
+
+  textManagerForSpecialSkill(ctx) {
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color ===
+      "red"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.red, 164, 150, 14, "red");
+    }
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].color ===
+      "red"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.red, 938, 150, 14, "red");
+    }
+
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color ===
+      "blue"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.blue, 164, 150, 14, "blue");
+    }
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].color ===
+      "blue"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.blue, 938, 150, 14, "blue");
+    }
+
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color ===
+      "yellow"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.yellow, 164, 150, 14, "yellow");
+    }
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].color ===
+      "yellow"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.yellow, 938, 150, 14, "yellow");
+    }
+
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP1].color ===
+      "green"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.green, 164, 150, 14, "green");
+    }
+    if (
+      this.menuObjects[this.gamestate][this.currentCursorpositionP2].color ===
+      "green"
+    ) {
+      this.drawSpecialSkillsText(ctx, this.green, 938, 150, 14, "green");
     }
   }
 }
