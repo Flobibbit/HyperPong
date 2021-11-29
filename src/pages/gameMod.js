@@ -3,7 +3,8 @@ import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
 
 export default class GameMod {
   constructor() {
-    this.audioPlayer = null
+    this.audioPlayer = null;
+    //MODS
     this.modTime = 3000.0;
     this.modActive = [false, false, false, false];
     this.modNames = [
@@ -12,12 +13,12 @@ export default class GameMod {
       "Inverted Controlls",
       "Dodgeball"
     ];
-    this.modStartTime = [0, 0, 0, 0];
-    this.modRemainingTime = [0, 0, 0, 0];
-    //timerStart=
+
+    //TIME
     this.timer = 15000.0;
     this.timeLeftInt = 0;
     this.timeLeftStart = 0;
+
     this.timeLeft = new MenuElement({
       name: "",
       pxSize: 40,
@@ -25,10 +26,22 @@ export default class GameMod {
       locationWidth: GAME_WIDTH / 2,
       color: "#bc42f5"
     });
-    console.log(this.timeLeft);
+    
+    //MOD & TIME
+    this.modStartTime = [0, 0, 0, 0];
+    this.modRemainingTime = [0, 0, 0, 0];
     this.modDisplayItems = [];
     this.modDisplayTimes = [];
   }
+
+  draw(ctx) {
+    this.timeLeft.draw(ctx);
+    for (let i in this.modDisplayItems) {
+      this.modDisplayItems[i].draw(ctx);
+      this.modDisplayTimes[i].draw(ctx);
+    }
+  }
+
   update(timeStamp) {
     if (this.timeLeftStart == 0) {
       this.timeLeftStart = timeStamp;
@@ -102,15 +115,9 @@ export default class GameMod {
     }
     return amountOfActiveMods;
   }
-  draw(ctx) {
-    this.timeLeft.draw(ctx);
-    for (let i in this.modDisplayItems) {
-      this.modDisplayItems[i].draw(ctx);
-      this.modDisplayTimes[i].draw(ctx);
-    }
-  }
+
   modActivate(mod, timestamp) {
-    this.audioPlayer.playNewMod()
+    this.audioPlayer.playNewMod();
     this.modActive[mod] = true;
     this.modStartTime[mod] = timestamp;
     if (this.timer > 3000) this.timer -= 1000;

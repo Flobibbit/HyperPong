@@ -84,6 +84,25 @@ export default class Menu {
     });
     const backStart = new MenuElement({ name: "Back", locationHeight: 580 });
 
+    const redSpecialSkillText = "Make the ball bounce at any place";
+    const greenSpecialSkillText = "Makes himself bigger";
+    const yellowSpecialSkillText = "Makes the ball invisible";
+    const blueSpecialSkillText = "Make the ball slow down";
+
+    this.leftSpecialSkill = new MenuElement({
+      name: "",
+      locationHeight: 150,
+      locationWidth: 20,
+      color: "yellow"
+    });
+
+    this.rightSpecialSkill = new MenuElement({
+      name: "",
+      locationHeight: 150,
+      locationWidth: 500,
+      color: "yellow"
+    });
+
     //Settingss
     const checkBoxMusic = new MenuCheckbox();
     const checkBoxSound = new MenuCheckbox();
@@ -205,6 +224,8 @@ export default class Menu {
     //Start
     if (this.gamestate == GAMESTATE.START) {
       this.drawSpecialSkillsRect(ctx);
+      this.leftSpecialSkill.draw(ctx);
+      this.rightSpecialSkill.draw(ctx);
 
       if (this.currentCursorpositionP1 !== 4) {
         ctx.drawImage(this.imageControl, 70, 360, 150, 150);
@@ -253,8 +274,12 @@ export default class Menu {
       this.gamestate = GAMESTATE.INGAME;
       this.game.gameObjects.mods.timeLeftStart +=
         this.timeStamp - this.timePauseOn;
-        this.game.gameObjects.racketL.correctTimesAfterPause(this.timeStamp - this.timePauseOn)
-        this.game.gameObjects.racketR.correctTimesAfterPause(this.timeStamp - this.timePauseOn)
+      this.game.gameObjects.racketL.correctTimesAfterPause(
+        this.timeStamp - this.timePauseOn
+      );
+      this.game.gameObjects.racketR.correctTimesAfterPause(
+        this.timeStamp - this.timePauseOn
+      );
       for (let i in this.game.gameObjects.mods.modStartTime)
         [
           (this.game.gameObjects.mods.modStartTime[i] +=
@@ -386,7 +411,6 @@ export default class Menu {
     console.log(this.game);
     this.gamestate == GAMESTATE.MENU_TITLE;
   }
-  changeCheckedState() {}
 
   resetCursorPosition() {
     //select the first element
@@ -538,4 +562,13 @@ export default class Menu {
       ctx.stroke();
     }
   }
+drawSpecialSkillsText(ctx,specialSkill,height,width){
+
+
+for (let index = 0; index < array.length; index++) {
+  
+  ctx.fillText(specialSkill[index],width,height)
+}
+
+}
 }
