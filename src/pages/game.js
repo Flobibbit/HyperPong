@@ -8,12 +8,10 @@ export default class Game {
   constructor(racketColorL, racketColorR) {
     //ALL GAMEOBJECTS
     const mods = new GameMod();
-    this.score = new Score();
-
-    const racketL = new Racket("l", racketColorL);
-    const racketR = new Racket("r", racketColorR);
 
     const ball = new Ball(racketL, racketR, this.score, mods);
+    const racketL = new Racket("l", racketColorL);
+    const racketR = new Racket("r", racketColorR);
 
     this.gameObjects = {
       racketL: racketL,
@@ -21,6 +19,7 @@ export default class Game {
       ball: ball,
       mods: mods
     };
+    this.score = new Score();//können wir den als const deklarieren?
   }
   //capable of drawing all Objects in the gameObjects list
   draw(ctx) {

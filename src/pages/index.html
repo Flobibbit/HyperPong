@@ -20,6 +20,10 @@
     <canvas id="gameScreen" width="1100" height="600"></canvas>
     <audio src="/src/assets/music/Thunderstruck.mp3" s id="music"></audio>
     <audio src="/src/assets/music/Sounds/Hit sound.mp3" s id="scrollUp"></audio>
+    <audio src="/src/assets/music/Sounds/enterSound.mp3" s id="enter"></audio>
+    <audio src="/src/assets/music/Sounds/pauseSound.mp3" s id="pause"></audio>
+    <audio src="/src/assets/music/Sounds/slow down.mp3" s id="slowDown"></audio>
+    <audio src="/src/assets/music/Sounds/newMod.mp3" s id="newMod"></audio>
     <audio
       src="/src/assets/music/Sounds/hit sound 2.mp3"
       s
@@ -35,8 +39,7 @@
       s
       id="hitRight"
     ></audio>
-    <audio src="/src/assets/music/Sounds/enterSound.mp3" s id="enter"></audio>
-    <audio src="/src/assets/music/Sounds/pauseSound.mp3" s id="pause"></audio>
+
     <audio
       src="/src/assets/music/Sounds/gameOverSound.mp3"
       s
@@ -47,13 +50,12 @@
       s
       id="powerUp"
     ></audio>
-    <audio src="/src/assets/music/Sounds/slow down.mp3" s id="slowDown"></audio>
+
     <audio
       src="/src/assets/music/Sounds/invisibleSound.mp3"
       s
       id="invisible"
     ></audio>
-    <audio src="/src/assets/music/Sounds/newMod.mp3" s id="newMod"></audio>
     <div class="menu-container">
       <p class="big-text" id="start">Higher Resolution Monitors:</p>
       <span>Press "strg +" ..to zoom in || "strg -" ..to zoom out</span>
@@ -61,7 +63,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const canvas = document.querySelector("canvas");
-        canvas.focus();
+        canvas.focus(); //focus on the canvas
       });
     </script>
     <script type="module" src="App.js"></script>

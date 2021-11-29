@@ -1,5 +1,5 @@
-import GameMaster from "/src/pages/GameMaster.js";
-import { GAME_WIDTH, GAME_HEIGHT } from "/src/pages/constant.js";
+import GameMaster from "./GameMaster.js";
+import { GAME_WIDTH, GAME_HEIGHT } from "./constant.js";
 
 let canvas = document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");

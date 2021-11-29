@@ -7,13 +7,13 @@ export default class Score {
     this.scoreLInt = 0; //number of the score for player ->left side
     this.scoreRInt = 0; //number of the score for player ->right side
     this.gameOverScore = 10;
+
     this.scoreL = new MenuElement({
       name: "0",
       pxSize: 40,
       locationHeight: GAME_HEIGHT / 8,
       locationWidth: GAME_WIDTH / 4
     });
-
     this.scoreR = new MenuElement({
       name: "0",
       pxSize: 40,
