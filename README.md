@@ -40,3 +40,18 @@ Safari in der Version
 
 Der Internet Explorer funktioniert nicht.
 Ältere Versionen der kompatiblen Browser können auch funtkionieren, das wurde aber nicht getestet und ist damit nicht offiziell. 
+
+Eigene Lizenzdatei:
+
+
+## Aufteilung der Aufgaben:
+Sautmann: 
+
+Idee für Spiel, der Modifikatoren und Fähigkeiten
+Programmierung der Modifikatoren, Fähigkeiten, des "Hit" des Balls mit dem Racket und einzelne Teile des Menüs
+
+Neuß: 
+
+Programmierung des "Grundgerüsts", der Spielphysik und des Menüs
+
+Gemeinsam doer beide: Design des Grafikstils, Testen, gegenseitige Hilfe bei Problemen
