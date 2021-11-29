@@ -1,7 +1,7 @@
 export default class AudioPlayer {
   constructor() {
     this.music = document.getElementById("music"); //recieves an audio included into the index.html
-
+    this.music.loop = true
     //MENU
     this.scrollDown = document.getElementById("scrollDown");
     this.scrollUp = document.getElementById("scrollUp");
@@ -31,7 +31,6 @@ export default class AudioPlayer {
       this.musicState = true;
       this.music.play();
     }
-    console.log("Music: " + this.musicState);
   }
   changeSoundState() {
     if (this.soundState) {
@@ -40,7 +39,6 @@ export default class AudioPlayer {
     } else {
       this.soundState = true;
     }
-    console.log("Sound: " + this.soundState);
   }
   musicStop() {
     for (const obj of Object.values(this.musicTracks)) {

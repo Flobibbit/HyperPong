@@ -5,7 +5,7 @@ export default class GameMod {
   constructor() {
     this.audioPlayer = null;
     //MODS
-    this.modTime = 3000.0;
+    this.modTime = 6000.0;
     this.modActive = [false, false, false, false];
     this.modNames = [
       "Random Bounce",
@@ -15,7 +15,7 @@ export default class GameMod {
     ];
 
     //TIME
-    this.timer = 15000.0;
+    this.timer = 3000.0;
     this.timeLeftInt = 0;
     this.timeLeftStart = 0;
 
@@ -121,7 +121,7 @@ export default class GameMod {
     this.modActive[mod] = true;
     this.modStartTime[mod] = timestamp;
     if (this.timer > 3000) this.timer -= 1000;
-    if (this.modTime < 7000) this.modTime += 500;
+    if (this.modTime < 6000) this.modTime += 500;
   }
 
   randomBounce() {
