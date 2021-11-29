@@ -26,4 +26,17 @@ Im Spiel fliegt der Ball manchmal von der Seite durch die Rackets. Das liegt dar
 In den Einstellungen entspricht die Farbe des Kreuzes die des Rechten Spielers. Das tritt auf, wenn man bereits ein Speil gespielt hat und zurück im Menü ist. 
 
 Die "W" und "S" Taste löst im Menü einen Ton aus und hat in den Einstellungen auch Funktion. Die Bewegungen werden nicht vom Curser wieder gegeben. Eigentlich soll das Menü nur mit den Pfeiltasten steuerbar sein.
-## änderung An der Datei
+## Browserkompabilität
+Offiziell unterstützt werden Chrome, Firefox, Edge und Safari in den folgenden Versionen oder neuer.
+Gestestet wurde 
+
+Chrome in der Version 96.0.4664.45
+
+Firefox in der Version 94.0.2
+
+Edge in der Version 96.0.1054.34
+
+Safari in der Version
+
+Der Internet Explorer funktioniert nicht.
+Ältere Versionen der kompatiblen Browser können auch funtkionieren, das wurde aber nicht getestet und ist damit nicht offiziell. 
